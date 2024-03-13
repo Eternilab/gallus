@@ -1,0 +1,99 @@
+<job id="CopyHardeningKittyFiles">
+	<script language="VBScript" src="ZTIUtility.vbs"/>
+	<script language="VBScript">
+
+'//----------------------------------------------------------------------------
+'//    Copyright (C) 2024 Eternilab <support@eternilab.com>
+'//
+'//    Author: Dionys Colson <dionys.colson@eternilab.com>
+'//
+'//    This program is free software: you can redistribute it and/or modify
+'//    it under the terms of the GNU Affero General Public License as
+'//    published by the Free Software Foundation, either version 3 of the
+'//    License, or (at your option) any later version.
+'//    This program is distributed in the hope that it will be useful,
+'//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+'//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+'//    GNU Affero General Public License for more details.
+'//    You should have received a copy of the GNU Affero General Public License
+'//    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+'//
+'//----------------------------------------------------------------------------
+
+Option Explicit
+RunNewInstance
+
+
+'//  Class
+
+Class CopyHardeningKittyFiles
+
+	'//  Variables
+
+	Public FilesToCopy
+	Public SourcePath
+	Public TargetPath
+
+	'//  Class constructor
+
+	Private Sub Class_Initialize
+
+		' Those are the files copied by this script.
+
+		FilesToCopy = Array("finding_list_cis_microsoft_windows_11_enterprise_22h2_machine.scv", _
+			"HardeningKitty.psd1", "HardeningKitty.psm1", "HardeningScript.ps1")
+
+		SourcePath = oUtility.ScriptDir & "\"
+		TargetPath = oUtility.LocalRootPath & "\Scripts\"
+
+
+	End Sub
+
+	Function Main
+
+		'// Variables
+
+		Dim sSourceFile
+		Dim sTargetFile
+		Dim sFilenamename
+
+		oLogging.CreateEntry "--------- Script Start ---------", LogTypeInfo
+
+		'// Check if SourcePath exists
+
+		oUtility.VerifyPathExists SourcePath
+
+		'//  Copy the files
+
+		For each sFilename in FilesToCopy
+
+			sTargetFile = TargetPath & sFilename
+			sSourceFile = SourcePath & sFilename
+
+			If oFSO.FileExists(sTargetFile) then
+
+				oLogging.CreateEntry "File " & sTargetFile & " already exists in Target", LogTypeInfo
+
+			ElseIf not oFSO.FileExists(sSourceFile) then
+
+				oLogging.CreateEntry "File " & sSourceFile & " not found in ource.", LogTypeInfo
+
+			Else
+
+				oLogging.CreateEntry "Copying file " & sSourceFile & " to " & sTargetFile, LogTypeInfo
+				oFSO.CopyFile sSourceFile, sTargetFile, true
+				TestAndLog SUCCESS, "Copied " & sSourceFile & " to " & sTargetFile
+
+			End if
+		Next
+
+		Main = SUCCESS
+
+	End Function
+
+
+End class
+
+
+	</script>
+</job>
