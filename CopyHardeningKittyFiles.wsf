@@ -1,0 +1,112 @@
+<job id="CopyHardeningKittyFiles">
+	<script language="VBScript" src="ZTIUtility.vbs"/>
+	<script language="VBScript">
+
+'//----------------------------------------------------------------------------
+'//    Copyright (C) 2024 Eternilab <support@eternilab.com>
+'//
+'//    Author: Dionys Colson <dionys.colson@eternilab.com>
+'//
+'//    This program is free software: you can redistribute it and/or modify
+'//    it under the terms of the GNU Affero General Public License as
+'//    published by the Free Software Foundation, either version 3 of the
+'//    License, or (at your option) any later version.
+'//    This program is distributed in the hope that it will be useful,
+'//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+'//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+'//    GNU Affero General Public License for more details.
+'//    You should have received a copy of the GNU Affero General Public License
+'//    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+'//
+'//----------------------------------------------------------------------------
+
+Option Explicit
+RunNewInstance
+
+
+'//----------------------------------------------------------------------------
+'//  Main Class
+'//----------------------------------------------------------------------------
+
+Class CopyHardeningKittyFiles
+
+	'//----------------------------------------------------------------------------
+	'//  Class instance variable declarations
+	'//----------------------------------------------------------------------------
+
+	Public ScriptsToCopy
+	Public SourcePath
+	Public TargetPath
+	
+
+	'//----------------------------------------------------------------------------
+	'//  Constructor to initialize needed global objects
+	'//----------------------------------------------------------------------------
+
+	Private Sub Class_Initialize
+
+		' Create a list of scripts to copy.
+		
+		ScriptsToCopy = Array("finding_list_cis_microsoft_windows_11_enterprise_22h2_machine.scv", _
+			"HardeningKitty.psd1", "HardeningKitty.psm1", "HardeningScript.ps1", "AuditingScript.ps1", _
+			"Eternilab.png", "ReportScript.js", "ReportStyle.css", "tsorter.min.js")
+			
+		SourcePath = oUtility.ScriptDir & "\"		
+		TargetPath = oUtility.LocalRootPath & "\Scripts\"
+						
+
+	End Sub
+	
+	
+	'//----------------------------------------------------------------------------
+	'//  Main routine
+	'//----------------------------------------------------------------------------
+
+	Function Main
+	
+		Dim sTarget
+		Dim sSource
+		Dim sFile
+		
+		oLogging.CreateEntry "--------- Script Start ---------", LogTypeInfo		
+	
+		'//----------------------------------------------------------------------------
+		'//  Copy the necessary scripts to bootstrap the process; the rest will come
+		'//  from the deployment Share.
+		'//----------------------------------------------------------------------------
+
+		oUtility.VerifyPathExists oUtility.LocalRootPath & "\Scripts"
+
+		For each sFile in ScriptsToCopy
+
+			sTarget = TargetPath & sFile
+			sSource = SourcePath & sFile
+
+			If oFSO.FileExists(sTarget) then
+
+				oLogging.CreateEntry "File " & sTarget & " already exists in Target", LogTypeInfo
+
+			ElseIf not oFSO.FileExists(sSource) then
+
+				oLogging.CreateEntry "File " & sSource & " does not exist in Source.", LogTypeInfo
+
+			Else
+				
+				oLogging.CreateEntry "Copying file " & sSource & " to " & sTarget, LogTypeInfo
+				oFSO.CopyFile sSource, sTarget, true
+				TestAndLog SUCCESS, "Copy " & sSource & " to " & sTarget
+
+			End if
+		Next
+		
+		Main = SUCCESS
+
+	End Function
+
+
+End class
+
+
+	</script>
+</job>
+

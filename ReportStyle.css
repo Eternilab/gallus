@@ -1,0 +1,81 @@
+.header-left, .header-right {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.header-left {
+    margin-left: 60px;
+    float: left;
+    text-align: center;
+}
+
+.header-right {
+    margin-right: 30px;
+    float: right;
+}
+
+body {
+    Font-Family: Segoe UI;
+    Font-Size: 11pt;
+}
+
+h1 {
+    font-size: 2.3rem;
+}
+
+h1, h5 {
+    font-family: Segoe UI;
+}
+
+.tablecontainer {
+    margin-right: 2%;
+    margin-left: 2%;
+}
+
+#report-table {
+    float: left;
+    margin-right: auto;
+    margin-left: 0px;
+    border: 1px solid rgb(190, 190, 190);
+    background-color:#ffffff;
+    font-family: Segoe UI;
+}
+
+tr:hover td
+{
+    Background-Color: rgb(59, 80, 59);
+    Color: #ffffff;
+}
+
+tr:nth-child(even)
+{
+    Background-Color: rgb(213, 239, 235);
+}
+
+th {
+    Text-Align: Left;
+    Color: white;
+    Padding: 8px;
+    font-size: 1.1rem;
+    background-color: #4C534C;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    border-bottom: 1px solid rgb(190, 190, 190);
+    cursor: pointer;
+}
+
+td {
+    Vertical-Align: Top;
+    Padding: 5px;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    word-wrap: break-word;
+    max-width: 250px;
+}
+
+
+tr td:first-child {
+    white-space: nowrap;
+    border: 0;
+}
