@@ -16,10 +16,21 @@
 #
 #----------------------------------------------------------------------------
 
-# This file contains all necessary variables for "AuditingScript.ps1" and "CopyAuditingFiles.ps1".
+# This file copies all necessary files for the final Gallus Auditing Report in the target directory.
 
 . .\Variables.ps1
 
-Import-Module ".\HardeningKitty.psm1"
+#If destination folder doesn't exist
+if (!(Test-Path $TargetPath -PathType Container)) {
+    #Create destination folder
+    New-Item -Path $TargetPath -ItemType Directory -Force
+}
 
-Invoke-HardeningKitty -Mode HailMary -FileFindingList $findinglist
+foreach (
+$FileToCopy in $CopyFilesList)
+{
+    $SourceFile = $SourcePath + $FileToCopy
+    $TargetFile = $TargetPath + $FileToCopy
+    Copy-Item -Path $SourceFile -Destination $TargetFile
+    echo "Copied $($SourceFile) to $($TargetFile)"
+}
