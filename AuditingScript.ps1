@@ -24,13 +24,13 @@ Import-Module $HKModule
 
 # Executing HardeningKitty
 
-Invoke-HardeningKitty -Mode Audit -Log $LogOutputFile -Report $CsvOutputFile -FileFindingList $findinglist
+Invoke-HardeningKitty -Mode Audit -Log $HKLogOutputFile -Report $HKCsvOutputFile -FileFindingList $findinglist
 
 # Generating the HTML report file
 
-$ReportData = Import-CSV $CsvOutputFile
+$ReportData = Import-CSV $HKCsvOutputFile
 
-$ReportData | ConvertTo-Html -CSSUri $CssFile -Title $HtmlTitle -PreContent $ReportHeader -PostContent $ReportFooter | Out-File -Encoding utf8 $HtmlOutputFile
+$ReportData | ConvertTo-Html -CSSUri $CssFile -Title $ReportHtmlTitle -PreContent $ReportHeader -PostContent $HtmlFooter | Out-File -Encoding utf8 $ReportHtmlOutputFile
 
 # Opening the HTML file in the default browser
-Invoke-Item $HtmlOutputFile
+Invoke-Item $ReportHtmlOutputFile
