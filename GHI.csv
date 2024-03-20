@@ -1,0 +1,158 @@
+Groupes,Règles,Intitulé,Cibles,Point de vérification,Preuve,Conformité standard,Conformité renforcé,Remarque
+1,Sensibiliser et former,,,,,,,
+,1,Former les équipes opérationnelles à la sécurité des systèmes d’information.,"Administrateurs réseau, sécurité et système, chefs de projet, développeurs, RSSI","La législation en vigueur ;
+Les principaux risques et menaces ;
+Le maintien en condition de sécurité ;
+L’authentification et le contrôle d’accès ;
+Le paramétrage fin et le durcissement des systèmes ;
+Le cloisonnement réseau ;
+Et la journalisation.",,X,N/A,
+,2,Sensibiliser les utilisateurs aux bonnes pratiques élémentaires de sécurité informatique.,Chaque utilisateur,"Les objectifs et enjeux que rencontre l’entité en matière de sécurité des systèmes d’information ;
+Les informations considérées comme sensibles ;
+Les réglementations et obligations légales ;
+Les règles et consignes de sécurité régissant l’activité quotidienne : respect de la politique de sécurité, non-connexion d’équipements personnels au réseau de l’entité, non-divulgation de mots de passe à un tiers, non-réutilisation de mots de passe professionnels dans la sphère privée et inversement, signalement d’événements suspects, etc. ;
+Les moyens disponibles et participant à la sécurité du système : verrouillage systématique de la session lorsque l’utilisateur quitte son poste, outil de protection des mots de passe, etc",,X,X,
+,3,Maîtriser les risques de l’infogérance.,L'entité,"D’étudier attentivement les conditions des offres, la possibilité de les adapter à des besoins spécifiques et les limites de responsabilité du prestataire ;
+D’imposer une liste d’exigences précises au prestataire : réversibilité du contrat, réalisation d’audits, sauvegarde et restitution des données dans un format ouvert normalisé, maintien à niveau de la sécurité dans le temps, etc .",,X,N/A,
+2,Connaître le système d’information,,,,,,,
+,4,Identifier les informations et serveurs les plus sensibles et maintenir un schéma du réseau.,L'entité,,,X,N/A,
+,5,Disposer d’un inventaire exhaustif des comptes privilégiés et le maintenir à jour.,L’entité,"Les utilisateurs ayant un compte administrateur ou des droits supérieurs à ceux d’un utilisateur standard sur le système d’information ;
+Les utilisateurs disposant de suffisamment de droits pour accéder aux répertoires de travail des responsables ou de l’ensemble des utilisateurs ;
+Les utilisateurs utilisant un poste non administré par le service informatique et qui ne fait pas l’objet de mesures de sécurité édictées par la politique de sécurité générale de l’entité.",,X,N/A,
+,6,"Organiser les procédures d’arrivée, de départ et de changement de fonction des utilisateurs.",L'entité,"La création et la suppression des comptes informatiques et boîtes aux lettres associées ;
+Les droits et accès à attribuer et retirer à une personne dont la fonction change ;
+La gestion des accès physiques aux locaux (attribution, restitution des badges et des clés, etc.) ;
+L’affectation des équipements mobiles (ordinateur portable, clé USB, disque dur, ordiphone, etc.) ;
+La gestion des documents et informations sensibles (transfert de mots de passe, changement des mots de passe ou des codes sur les systèmes existants).",,X,X,
+,7,Autoriser la connexion au réseau de l’entité aux seuls équipements maîtrisés.,L’entité,,,X,X,
+3,Authentifier et contrôler les accès,,,,,,,
+,8,Identifier nommément chaque personne accédant au système et distinguer les rôles utilisateur/administrateur.,L'admin,,,X,X,
+,9,Attribuer les bons droits sur les ressources sensibles du système d’information.,Les utilisateurs,"De définir quelle population peut y avoir accès ;
+De contrôler strictement son accès, en s’assurant que les utilisateurs sont authentifiés et font partie de la population ciblée ;
+D’éviter sa dispersion et sa duplication à des endroits non maîtrisés ou soumis à un contrôle d’accès moins strict.",,X,N/A,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,10,Définir et vérifier des règles de choix et de dimensionnement des mots de passe.,L’entité,"Le blocage des comptes à l’issue de plusieurs échecs de connexion ;
+La désactivation des options de connexion anonyme ;",,X,N/A,
+,,,,,,,,
+,,,,,,,,
+,11,Protéger les mots de passe stockés sur les systèmes.,L'utilisateur,,,X,N/A,
+,12,Changer les éléments d’authentification par défaut sur les équipements et services.,L'entité,,,X,X,
+,13,Privilégier lorsque c’est possible une authentification forte.,L'entité,"Quelque chose que je sais (mot de passe, tracé de déverrouillage, signature) ;
+Quelque chose que je possède (carte à puce, jeton USB, carte magnétique, RFID, un téléphone pour recevoir un code SMS) ;
+Quelque chose que je suis (une empreinte biométrique).",,X,X,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+4,Sécuriser les postes,,,,,,,
+,14,Mettre en place un niveau de sécurité minimal sur l’ensemble du parc informatique.,L’utilisateur,"Limiter les applications installées et modules optionnels des navigateurs web aux seuls nécessaires ;
+Doter les postes utilisateurs d’un pare-feu local et d’un anti-virus (ceux-ci sont parfois inclus dans le système d’exploitation) ;
+Chiffrer les partitions où sont stockées les données des utilisateurs ;
+Désactiver les exécutions automatiques (autorun)",,X,X,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,15,Se protéger des menaces relatives à l’utilisation de supports amovibles.,les postes utilisateur,,,X,X,
+,16,Utiliser un outil de gestion centralisée afin d’homogénéiser les politiques de sécurité.,Les administrateurs,,,X,X,
+,17,Activer et configurer le pare-feu local des postes de travail.,Un poste de travail,,,X,X,
+,18,Chiffrer les données sensibles transmises par voie Internet.,Cloud,,,X,N/A,
+5,Sécuriser le réseau,,,,,,,
+,19,Segmenter le réseau et mettre en place un cloisonnement entre ces zones.,Le réseau,,,X,N/A,
+,20,S’assurer de la sécurité des réseaux d’accès Wi-Fi et de la séparation des usages.,Le Wi-Fi,,,X,N/A,
+,21,Utiliser des protocoles sécurisés dès qu’ils existent.,L'entité,,,X,N/A,
+,22,Mettre en place une passerelle d’accès sécurisé à Internet.,L’accès à Internet,,,X,X,
+,23,Cloisonner les services visibles depuis Internet du reste du système d’information.,L'entité,,,X,N/A,
+,24,Protéger sa messagerie professionnelle.,La messagerie,"De disposer d’un système d’analyse antivirus en amont des boîtes aux lettres des utilisateurs pour prévenir la réception de fichiers infectés ;
+De l’activation du chiffrement TLS des échanges entre serveurs de messagerie (de l’entité ou publics) ainsi qu’entre les postes utilisateur et les serveurs hébergeant les boîtes aux lettres.",,X,X,
+,,,,,,,,
+,,,,,,,,
+,25,Sécuriser les interconnexions réseau dédiées avec les partenaires.,"L'entité, le fournisseur",,,X,X,
+,26,Contrôler et protéger l’accès aux salles serveurs et aux locaux techniques.,Les locaux techniques,,,X,N/A,
+6,Sécuriser l’administration,,,,,,,
+,27,Interdire l’accès à Internet depuis les postes ou serveurs utilisés pour l’administration du système d’information.,Un poste de travail ou un serveur,,,X,X,
+,28,Utiliser un réseau dédié et cloisonné pour l’administration du système d’information.,Le réseau d’administration,"De privilégier en premier lieu un cloisonnement physique des réseaux dès que cela est possible, cette solution pouvant représenter des coûts et un temps de déploiement importants ; /RENFORcé
+A défaut, de mettre en œuvre un cloisonnement logique cryptographique reposant sur la mise en place de tunnels IPsec. Ceci permet d’assurer l’intégrité et la confidentialité des informations véhiculées sur le réseau d’administration vis-à-vis du réseau bureautique des utilisateurs ;/sTANDARD
+Au minimum, de mettre en œuvre un cloisonnement logique par VLAN./sTANDARD",,X,X,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,29,Limiter au strict besoin opérationnel les droits d’administration sur les postes de travail.,Le personnel,,,X,N/A,
+7,Gérer le nomadisme,,,,,,,
+,30,Prendre des mesures de sécurisation physique des terminaux nomades.,"Ordinateurs portables, tablettes, ordiphones",,,X,X,
+,31,"Chiffrer les données sensibles, en particulier sur le matériel potentiellement perdable.","Ordinateurs portables, ordiphones, clés USB, disques durs externes, etc",,,X,N/A,
+,32,Sécuriser la connexion réseau des postes utilisés en situation de nomadisme.,L'entité,,,X,X,
+,33,Adopter des politiques de sécurité dédiées aux terminaux mobiles.,Les ordiphones et tablettes,,,X,X,
+8,Maintenir à jour le système d’information,,,,,,,
+,34,Définir une politique de mise à jour des composants du système d’information.,L'entité,"La manière dont l’inventaire des composants du système d’information est réalisé ;
+Les sources d’information relatives à la publication des mises à jour ;
+Les outils pour déployer les correctifs sur le parc (par exemple WSUS pour les mises à jour des composants Microsoft, des outils gratuits ou payants pour les composants tiers et autres systèmes d’exploitation) ;
+L’éventuelle qualification des correctifs et leur déploiement progressif sur le parc.",,X,N/A,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,35,Anticiper la fin de la maintenance des logiciels et systèmes et limiter les adhérences logicielles.,Système ou logiciel obsolète,"Etablir et tenir à jour un inventaire des systèmes et applications du système d’information ;
+Choisir des solutions dont le support est assuré pour une durée correspondant à leur utilisation ;
+Assurer un suivi des mises à jour et des dates de fin de support des logiciels ;
+Maintenir un parc logiciel homogène (la coexistence de versions différentes d’un même produit multiplie les risques et complique le suivi) ;
+Limiter les adhérences logicielles, c’est-à-dire les dépendances de fonctionnement d’un logiciel par rapport à un autre, en particulier lorsque le support de ce dernier arrive à son terme ;
+Inclure dans les contrats avec les prestataires et fournisseurs des clauses garantissant le suivi des correctifs de sécurité et la gestion des obsolescences ;
+Identifier les délais et ressources nécessaires (matérielles, humaines, budgétaires) à la migration de chaque logiciel en fin de vie (tests de non-régression, procédure de sauvegarde, procédure de migration des données, etc.).",,X,N/A,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+9,"Superviser, auditer, réagir",,,,,,,
+,36,Activer et configurer les journaux des composants les plus importants.,Les journaux des composants,"Pare-feu : paquets bloqués ;
+Systèmes et applications : authentifications et autorisations (échecs et succès), arrêts inopinés ;
+Services : erreurs de protocoles (par exemples les erreurs 403, 404 et 500 pour les services hTTP), traçabilité des flux applicatifs aux interconnexions (URL sur un relai hTTP, en-têtes des messages sur un relai SMTP, etc.)",,X,X,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,37,Définir et appliquer une politique de sauvegarde des composants critiques.,Les logiciels et les systèmes,"Cette politique doit au moins intégrer les éléments suivants :
+La liste des données jugées vitales pour l’organisme et les serveurs concernés ;
+Les différents types de sauvegarde (par exemple le mode hors ligne) ;
+La fréquence des sauvegardes ;
+La procédure d’administration et d’exécution des sauvegardes ;
+Les informations de stockage et les restrictions d’accès aux sauvegardes ;
+Les procédures de test de restauration ;
+La destruction des supports ayant contenu les sauvegardes.
+Les tests de restauration peuvent être réalisés de plusieurs manières :
+Systématique, par un ordonnanceur de tâches pour les applications importantes ;
+Ponctuelle, en cas d’erreur sur les fichiers ;
+Générale, pour une sauvegarde et restauration entières du système d’information.",,X,X,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,38,Procéder à des contrôles et audits de sécurité réguliers puis appliquer les actions correctives associées.,L'entité,,,N/A,X,
+,39,Désigner un référent en sécurité des systèmes d’information et le faire connaître auprès du personnel.,L'entité,"Définition des règles à appliquer selon le contexte ;
+Vérification de l’application des règles ;
+Sensibilisation des utilisateurs et définition d’un plan de formation des acteurs informatiques ;
+Centralisation et traitement des incidents de sécurité constatés ou remontés par les utilisateurs.",,X,N/A,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,40,Définir une procédure de gestion des incidents de sécurité.,L'entité,,,X,N/A,
+10,Pour aller plus loin,,,,,,,
+,41,Mener une analyse de risques formelle.,L'entité,"Le recours aux bonnes pratiques de sécurité informatique ;
+Une analyse de risques systématique fondée sur les retours d’expérience des utilisateurs ;
+Une gestion structurée des risques formalisée par une méthodologie dédiée.",,N/A,X,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,42,Privilégier l’usage de produits et de services qualifiés par l’ANSSI.,L'entité,,,N/A,X,
