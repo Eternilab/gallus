@@ -1,0 +1,4 @@
+#Download HardeningKitty psm and hardening list
+Invoke-WebRequest https://raw.githubusercontent.com/scipag/HardeningKitty/master/HardeningKitty.psm1 -OutFile $PWD\DSGallus\Scripts\HardeningKitty.psm1
+Invoke-WebRequest https://raw.githubusercontent.com/scipag/HardeningKitty/master/HardeningKitty.psd1 -OutFile $PWD\DSGallus\Scripts\HardeningKitty.psd1
+Invoke-WebRequest https://raw.githubusercontent.com/scipag/HardeningKitty/master/lists/finding_list_cis_microsoft_windows_11_enterprise_22h2_machine.csv -OutFile $PWD\DSGallus\Scripts\finding_list_cis_microsoft_windows_11_enterprise_22h2_machine.csv

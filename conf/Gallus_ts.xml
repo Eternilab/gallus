@@ -238,6 +238,15 @@
       <step name="Copy scripts" disable="false" continueOnError="false" successCodeList="0 3010" description="" startIn="">
         <action>cscript.exe "%SCRIPTROOT%\LTICopyScripts.wsf"</action>
       </step>
+      <step name="Copy Gallus Files" disable="false" continueOnError="false" successCodeList="0 3010" description="" startIn="">
+        <action>cscript.exe "%SCRIPTROOT%\CopyGallusFiles.wsf"</action>
+        <defaultVarList>
+          <variable name="RunAsUser" property="RunAsUser">false</variable>
+          <variable name="SMSTSRunCommandLineUserName" property="SMSTSRunCommandLineUserName"></variable>
+          <variable name="SMSTSRunCommandLineUserPassword" property="SMSTSRunCommandLineUserPassword"></variable>
+          <variable name="LoadProfile" property="LoadProfile">false</variable>
+        </defaultVarList>
+      </step>
     </group>
     <group name="Offline User State Capture" disable="true" continueOnError="false" description="" expand="false">
       <condition>
