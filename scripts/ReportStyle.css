@@ -40,6 +40,71 @@ h1, h5 {
     font-family: Segoe UI;
 }
 
+tr:nth-child(even).red
+{
+   Background-Color: rgb(255,150,150);
+    border: 1px inset black;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+tr:nth-child(odd).red
+{
+   Background-Color: rgb(255,209,223);
+    border: 1px inset black;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+tr:hover.red > td
+{
+    Background-Color: rgb(109, 0, 0);
+    Color: #ffffff;
+}
+
+tr:nth-child(even).orange
+{
+   Background-Color: rgb(255,146,72);
+    border: 1px inset black;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+tr:nth-child(odd).orange
+{
+   Background-Color: rgb(255,179,138);
+    border: 1px inset black;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+tr:hover.orange > td
+{
+    Background-Color: rgb(207,82,1);
+    Color: #ffffff;
+}
+
+tr:nth-child(even).yellow
+{
+   Background-Color: rgb(238,220,130);
+    border: 1px inset black;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+tr:nth-child(odd).yellow
+{
+   Background-Color: rgb(255,250,187);
+    border: 1px inset black;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+tr:hover.yellow > td
+{
+    Background-Color: rgb(154, 143, 0);
+}
+
 tr:hover td
 {
     Background-Color: rgb(59, 80, 59);
@@ -79,3 +144,4 @@ tr td:first-child {
     white-space: nowrap;
     border: 0;
 }
+    

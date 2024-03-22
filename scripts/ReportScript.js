@@ -18,4 +18,25 @@ window.onload = () => {
     // http://www.terrill.ca/sorting/
     // Make it sortable
     const sorter = tsorter.create('report-table')
+
+    var rows = document.getElementsByTagName("table")[0].getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+
+    // loops through each row
+    for (i = 0; i < rows.length; i++) {
+        cells = rows[i].getElementsByTagName('td');
+	console.log(cells)
+        if (cells[6].innerHTML == 'Failed'){
+	    switch (cells[7].innerHTML) {
+                case 'High':
+                    rows[i].className = "red";
+                    break;
+                case 'Medium':
+                    rows[i].className = "orange";
+                    break;
+                case 'Low':
+                    rows[i].className = "yellow";
+                    break;
+            }
+        }
+    }
 }
