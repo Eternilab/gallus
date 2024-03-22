@@ -274,7 +274,7 @@
     </step>
     <step type="BDD_InjectDrivers" name="Inject Drivers" description="" disable="false" continueOnError="false" runIn="WinPEandFullOS" successCodeList="0 3010">
       <defaultVarList>
-        <variable name="DriverSelectionProfile" property="DriverSelectionProfile">All Drivers</variable>
+        <variable name="DriverSelectionProfile" property="DriverSelectionProfile">gallus_win11</variable>
         <variable name="DriverInjectionMode" property="DriverInjectionMode">AUTO</variable>
       </defaultVarList>
       <action>cscript.exe "%SCRIPTROOT%\ZTIDrivers.wsf"</action>
@@ -323,6 +323,9 @@
     </condition>
     <step name="Copy Scripts" disable="false" continueOnError="false" successCodeList="0 3010" description="" startIn="">
       <action>cscript.exe "%SCRIPTROOT%\LTICopyScripts.wsf"</action>
+    </step>
+    <step name="Copy Gallus Files" disable="false" continueOnError="false" successCodeList="0 3010" description="" startIn="">
+      <action>cscript.exe "%SCRIPTROOT%\CopyGallusFiles.wsf"</action>
     </step>
     <step name="Configure" disable="false" continueOnError="false" successCodeList="0 3010" description="" startIn="">
       <action>cscript.exe "%SCRIPTROOT%\ZTIConfigure.wsf"</action>
@@ -394,7 +397,40 @@
     <step name="Windows Update (Post-Application Installation)" disable="true" continueOnError="true" successCodeList="0 3010" description="" startIn="">
       <action>cscript.exe "%SCRIPTROOT%\ZTIWindowsUpdate.wsf"</action>
     </step>
-    <group name="Custom Tasks" disable="false" continueOnError="false" expand="true" description=""></group>
+    <group name="Custom Tasks" disable="false" continueOnError="false" expand="true" description="">
+      <step type="BDD_RunPowerShellAction" name="Harden System" description="Run Hardening Kitty on the deployed Machine, in HailMary mode, applying all security measures stored in the finding_list_cis_microsoft_windows_11_enterprise_22h2_machine.csv file." disable="false" continueOnError="false" successCodeList="0 3010">
+        <defaultVarList>
+          <variable name="ScriptName" property="ScriptName">%SCRIPTROOT%\HardeningScript.ps1</variable>
+          <variable name="Parameters" property="Parameters"></variable>
+          <variable name="PackageID" property="PackageID"></variable>
+        </defaultVarList>
+        <action>cscript.exe "%SCRIPTROOT%\ZTIPowerShell.wsf</action>
+      </step>
+      <step type="BDD_RunPowerShellAction" name="Copy Auditing Files" description="" disable="false" continueOnError="false" successCodeList="0 3010">
+        <defaultVarList>
+          <variable name="ScriptName" property="ScriptName">%SCRIPTROOT%\CopyAuditingFiles.ps1</variable>
+          <variable name="Parameters" property="Parameters"></variable>
+          <variable name="PackageID" property="PackageID"></variable>
+        </defaultVarList>
+        <action>cscript.exe "%SCRIPTROOT%\ZTIPowerShell.wsf</action>
+      </step>
+      <step type="BDD_RunPowerShellAction" name="Audit System" description="Run Hardening Kitty on the deployed Machine, in Audit mode, verifying all security measures stored in the finding_list_cis_microsoft_windows_11_enterprise_22h2_machine.csv file." disable="false" continueOnError="false" successCodeList="0 3010">
+        <defaultVarList>
+          <variable name="ScriptName" property="ScriptName">%SCRIPTROOT%\AuditingScript.ps1</variable>
+          <variable name="Parameters" property="Parameters"></variable>
+          <variable name="PackageID" property="PackageID" />
+        </defaultVarList>
+        <action>cscript.exe "%SCRIPTROOT%\ZTIPowerShell.wsf</action>
+      </step>
+      <step type="BDD_RunPowerShellAction" name="Generate GHI Table" description="" disable="false" continueOnError="false" successCodeList="0 3010">
+        <defaultVarList>
+          <variable name="ScriptName" property="ScriptName">%SCRIPTROOT%\GenerateGHITable.ps1</variable>
+          <variable name="Parameters" property="Parameters"></variable>
+          <variable name="PackageID" property="PackageID"></variable>
+        </defaultVarList>
+        <action>cscript.exe "%SCRIPTROOT%\ZTIPowerShell.wsf</action>
+      </step>
+    </group>
     <step type="SMS_TaskSequence_EnableBitLockerAction" name="Enable BitLocker" continueOnError="true" successCodeList="0 3010" description="" startIn="">
       <action>cscript.exe "%SCRIPTROOT%\ZTIBde.wsf"</action>
       <condition>
