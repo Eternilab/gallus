@@ -406,6 +406,23 @@
     <step name="Windows Update (Post-Application Installation)" disable="true" continueOnError="true" successCodeList="0 3010" description="" startIn="">
       <action>cscript.exe "%SCRIPTROOT%\ZTIWindowsUpdate.wsf"</action>
     </step>
+    <step type="SMS_TaskSequence_EnableBitLockerAction" name="Enable BitLocker" continueOnError="true" successCodeList="0 3010" description="" startIn="">
+      <action>cscript.exe "%SCRIPTROOT%\ZTIBde.wsf"</action>
+      <condition>
+        <expression type="SMS_TaskSequence_VariableConditionExpression">
+          <variable name="Variable">BdeInstallSuppress</variable>
+          <variable name="Operator">notEquals</variable>
+          <variable name="Value">YES</variable>
+        </expression>
+      </condition>
+      <defaultVarList>
+        <variable name="OSDBitLockerTargetDrive" property="BdeTargetDriveLetter"></variable>
+        <variable name="OSDBitLockerMode" property="BdeInstall">TPM</variable>
+        <variable name="OSDBitLockerStartupKeyDrive" property="BdeKeyLocation"></variable>
+        <variable name="OSDBitLockerCreateRecoveryPassword" property="BdeRecoveryPassword">None</variable>
+        <variable name="OSDBitLockerWaitForEncryption" property="WaitForEncryption">true</variable>
+      </defaultVarList>
+    </step>
     <group name="Custom Tasks" disable="false" continueOnError="false" expand="true" description="">
       <step type="BDD_RunPowerShellAction" name="Harden System" description="Run Hardening Kitty on the deployed Machine, in HailMary mode, applying all security measures stored in the finding_list_cis_microsoft_windows_11_enterprise_22h2_machine.csv file." disable="false" continueOnError="false" successCodeList="0 3010">
         <defaultVarList>
@@ -440,23 +457,6 @@
         <action>cscript.exe "%SCRIPTROOT%\ZTIPowerShell.wsf</action>
       </step>
     </group>
-    <step type="SMS_TaskSequence_EnableBitLockerAction" name="Enable BitLocker" continueOnError="true" successCodeList="0 3010" description="" startIn="">
-      <action>cscript.exe "%SCRIPTROOT%\ZTIBde.wsf"</action>
-      <condition>
-        <expression type="SMS_TaskSequence_VariableConditionExpression">
-          <variable name="Variable">BdeInstallSuppress</variable>
-          <variable name="Operator">notEquals</variable>
-          <variable name="Value">YES</variable>
-        </expression>
-      </condition>
-      <defaultVarList>
-        <variable name="OSDBitLockerTargetDrive" property="BdeTargetDriveLetter"></variable>
-        <variable name="OSDBitLockerMode" property="BdeInstall">TPM</variable>
-        <variable name="OSDBitLockerStartupKeyDrive" property="BdeKeyLocation"></variable>
-        <variable name="OSDBitLockerCreateRecoveryPassword" property="BdeRecoveryPassword">None</variable>
-        <variable name="OSDBitLockerWaitForEncryption" property="WaitForEncryption">true</variable>
-      </defaultVarList>
-    </step>
     <step name="Restore User State" disable="true" continueOnError="false" successCodeList="0 3010" description="" startIn="">
       <action>cscript.exe "%SCRIPTROOT%\ZTIUserState.wsf" /restore</action>
     </step>
