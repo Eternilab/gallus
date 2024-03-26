@@ -1,5 +1,5 @@
 # List of Gallus parts
-$baseURL="https://"
+$baseURL="https://raw.githubusercontent.com/Jerome-Maurin/Gallus/master/"
 $parts=@(
 "conf/Bootstrap.ini",
 "conf/CustomSettings.ini",
