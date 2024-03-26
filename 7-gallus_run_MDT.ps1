@@ -4,7 +4,7 @@ New-PSDrive -Name "DS001" -PSProvider "MDTProvider" -Root "$PWD\DSGallus" -Descr
 # 2
 New-Item -Path "DS001:\Operating Systems" -Enable "True" -Name "Win11" -Comments "" -ItemType "folder" -Verbose
 # 3
-Import-MDTOperatingSystem -Path "DS001:\Operating Systems\Win11" -SourcePath "G:\Windows11x64_Pro_en-US_22H2" -DestinationFolder "Windows11x64_Pro_en-US_22H2" -Verbose
+Import-MDTOperatingSystem -Path "DS001:\Operating Systems\Win11" -SourcePath $PWD\Windows11x64_Pro_en-US_22H2 -DestinationFolder "Windows11x64_Pro_en-US_22H2" -Verbose
 # 4
 New-item -Path "DS001:\Out-of-Box Drivers" -Enable "True" -Name "Network" -Comments "" -ItemType "folder" -Verbose
 # 5
