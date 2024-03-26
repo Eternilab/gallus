@@ -1,7 +1,8 @@
 #----------------------------------------------------------------------------
 #    Copyright (C) 2024 Eternilab <support@eternilab.com>
 #
-#    Author: Dionys Colson <dionys.colson@eternilab.com>
+#    Authors: Dionys Colson <dionys.colson@eternilab.com>,
+#             Jérôme Maurin <jerome.maurin@eternilab.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -25,6 +26,10 @@
 $CsvData = Import-CSV $GhiCsvFile
 
 $CsvData | ConvertTo-Html -CSSUri $CssFile -Title $GhiHtmlTitle -PreContent $GhiHeader -PostContent $HtmlFooter | Out-File -Encoding utf8 $GhiHtmlOutputFile
+
+# Removing EDGE First Run Experience
+New-Item -Path HKLM:\Software\Policies\Microsoft -Name Edge
+New-ItemProperty HKLM:\Software\Policies\Microsoft\Edge -Type DWord -Name "HideFirstRunExperience" -Value "1"
 
 # Opening the HTML file in the default browser
 Invoke-Item $GhiHtmlOutputFile

@@ -31,6 +31,3 @@ Invoke-HardeningKitty -Mode Audit -Log $HKLogOutputFile -Report $HKCsvOutputFile
 $ReportData = Import-CSV $HKCsvOutputFile
 
 $ReportData | ConvertTo-Html -CSSUri $CssFile -Title $ReportHtmlTitle -PreContent $ReportHeader -PostContent $HtmlFooter | Out-File -Encoding utf8 $ReportHtmlOutputFile
-
-# Opening the HTML file in the default browser
-Invoke-Item $ReportHtmlOutputFile
