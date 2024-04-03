@@ -15,7 +15,7 @@ New-item -Path "DS001:\Out-of-Box Drivers" -Enable "True" -Name "Storage" -Comme
 Import-MDTDriver -Path "DS001:\Out-of-Box Drivers\Storage" -SourcePath "$PWD\drivers\Storage" -Verbose
 # 8
 Copy-Item -Path $PWD\scripts\* -Destination $PWD\DSGallus\Scripts\
-Copy-Item -Path $PWD\hk\* -Destination $PWD\DSGallus\Scripts\
+Copy-Item -Path $PWD\hkdl\* -Destination $PWD\DSGallus\Scripts\
 # 9
 New-item -Path "DS001:\Task Sequences" -Enable "True" -Name "Gallus" -Comments "" -ItemType "folder" -Verbose
 # 10
