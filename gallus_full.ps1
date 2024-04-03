@@ -55,5 +55,5 @@ $PWD\7-gallus_cleanup_MDT.ps1
 # 8
 $PWD\8-gallus_run_MDT.ps1
 # 9
-$cleUSB = Read-Host -Prompt 'Veuillez saisir le périphérique USB où déployer l''installateur (ex: "F:")'
+$cleUSB = Read-Host -Verbose -Prompt 'Veuillez saisir le périphérique USB où déployer l''installateur (ex: "F:")'
 $PWD\9-gallus_build_USB_media.ps1 $cleUSB

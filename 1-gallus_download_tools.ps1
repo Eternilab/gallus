@@ -1,6 +1,6 @@
 # Cleanup potential old files
 Remove-Item -Verbose -Recurse -Force -Path $PWD\tmpdl
-# Create directory tmpdl
+# Create directory
 New-Item -Verbose -ItemType Directory -Path $PWD\tmpdl
 # Disable progress bar to speedup download
 $ProgressPreference = 'SilentlyContinue'

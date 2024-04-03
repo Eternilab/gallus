@@ -1,6 +1,6 @@
 # Remove PSDrives
-Remove-PSDrive -Name "GALLUSMEDIA" -Verbose
-Remove-PSDrive -Name "DS001" -Verbose
-# Delete build directory DSGallus and GMedia
-Remove-Item -Recurse -Force -Path "$PWD/GMedia"
-Remove-Item -Recurse -Force -Path "$PWD/DSGallus"
+Remove-PSDrive -Verbose -Name "GALLUSMEDIA"
+Remove-PSDrive -Verbose -Name "DS001" -Verbose
+# Delete build directories DSGallus and GMedia
+Remove-Item -Verbose -Recurse -Force -Path "$PWD/GMedia"
+Remove-Item -Verbose -Recurse -Force -Path "$PWD/DSGallus"

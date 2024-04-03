@@ -14,8 +14,8 @@ New-item -Path "DS001:\Out-of-Box Drivers" -Enable "True" -Name "Storage" -Comme
 # 7
 Import-MDTDriver -Path "DS001:\Out-of-Box Drivers\Storage" -SourcePath "$PWD\drivers\Storage" -Verbose
 # 8
-Copy-Item -Path $PWD\scripts\* -Destination $PWD\DSGallus\Scripts\
-Copy-Item -Path $PWD\hkdl\* -Destination $PWD\DSGallus\Scripts\
+Copy-Item -Path $PWD\scripts\* -Destination $PWD\DSGallus\Scripts\ -Verbose
+Copy-Item -Path $PWD\hkdl\* -Destination $PWD\DSGallus\Scripts\ -Verbose
 # 9
 New-item -Path "DS001:\Task Sequences" -Enable "True" -Name "Gallus" -Comments "" -ItemType "folder" -Verbose
 # 10
@@ -25,20 +25,20 @@ New-Item -Path "DS001:\Selection Profiles" -Enable "True" -Name "gallus_winPE" -
 # 12
 New-Item -Path "DS001:\Selection Profiles" -Enable "True" -Name "gallus_win11" -Comments "" -Definition "<SelectionProfile><Include path=`"Applications`" /><Include path=`"Operating Systems`" /><Include path=`"Out-of-Box Drivers`" /><Include path=`"Packages`" /><Include path=`"Task Sequences`" /></SelectionProfile>" -ReadOnly "False" -Verbose
 # 13
-New-Item -Path "$PWD\GMedia\Content\Deploy" -ItemType directory
+New-Item -Path "$PWD\GMedia\Content\Deploy" -ItemType directory -Verbose
 New-Item -Path "DS001:\Media" -Enable "True" -Name "GALLUSMEDIA" -Comments "" -Root "$PWD\GMedia" -SelectionProfile "gallus_win11" -SupportX86 "False" -SupportX64 "True" -GenerateISO "True" -ISOName "LiteTouchMedia.iso" -Verbose
 New-PSDrive -Name "GALLUSMEDIA" -PSProvider "MDTProvider" -Root "$PWD\GMedia\Content\Deploy" -Description "Embedded media deployment share" -Force -Verbose
 # 14
-Set-ItemProperty -Path "DS001:\" -Name SupportX86 -Value False
-Set-ItemProperty -Path "GALLUSMEDIA:\" -Name SupportX86 -Value False
+Set-ItemProperty -Path "DS001:\" -Name SupportX86 -Value False -Verbose
+Set-ItemProperty -Path "GALLUSMEDIA:\" -Name SupportX86 -Value False -Verbose
 # 15
-Set-ItemProperty -Path "DS001:\" -Name Boot.x64.SelectionProfile -Value "gallus_winPE"
-Set-ItemProperty -Path "GALLUSMEDIA:\" -Name Boot.x64.SelectionProfile -Value "gallus_winPE"
+Set-ItemProperty -Path "DS001:\" -Name Boot.x64.SelectionProfile -Value "gallus_winPE" -Verbose
+Set-ItemProperty -Path "GALLUSMEDIA:\" -Name Boot.x64.SelectionProfile -Value "gallus_winPE" -Verbose
 # 16
-Copy-Item -Path $PWD\conf\Bootstrap.ini -Destination $PWD\DSGallus\Control\Bootstrap.ini
-Copy-Item -Path $PWD\conf\Bootstrap.ini -Destination $PWD\GMedia\Content\Deploy\Control\Bootstrap.ini
-Copy-Item -Path $PWD\conf\CustomSettings.ini -Destination $PWD\DSGallus\Control\CustomSettings.ini
-Copy-Item -Path $PWD\conf\CustomSettings.ini -Destination $PWD\GMedia\Content\Deploy\Control\CustomSettings.ini
+Copy-Item -Path $PWD\conf\Bootstrap.ini -Destination $PWD\DSGallus\Control\Bootstrap.ini -Verbose
+Copy-Item -Path $PWD\conf\Bootstrap.ini -Destination $PWD\GMedia\Content\Deploy\Control\Bootstrap.ini -Verbose
+Copy-Item -Path $PWD\conf\CustomSettings.ini -Destination $PWD\DSGallus\Control\CustomSettings.ini -Verbose
+Copy-Item -Path $PWD\conf\CustomSettings.ini -Destination $PWD\GMedia\Content\Deploy\Control\CustomSettings.ini -Verbose
 # 17
 Update-MDTDeploymentShare -Path "DS001:" -Verbose
 # 18
