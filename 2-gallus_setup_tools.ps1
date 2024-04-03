@@ -5,4 +5,4 @@ $PWD\adkpe.exe /features OptionId.WindowsPreinstallationEnvironment /quiet /ceip
 # Install MDT
 $PWD\mdt.msi /passive
 # Patch MDT, x86 ... Maybe ?
-#TODO
+#TODO MDT needs patch ? Test in a new machine to find out
