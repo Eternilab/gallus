@@ -1,5 +1,5 @@
 # List of Gallus parts
-$baseURL="https://gitlab.unmondelibre.fr/gallus/core/-/raw/main/"
+$baseURL="https://raw.githubusercontent.com/Eternilab/gallus/main/"
 $parts=@(
 "conf/Bootstrap.ini",
 "conf/CustomSettings.ini",
