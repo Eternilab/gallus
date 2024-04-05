@@ -35,25 +35,25 @@ New-Item -Verbose -ItemType Directory -Path $PWD\conf
 New-Item -Verbose -ItemType Directory -Path $PWD\scripts
 # Download parts
 foreach ($part in $parts) {
-  Invoke-WebRequest -Verbose -Uri $baseURL$part -OutFile $PWD\$part"
+  Invoke-WebRequest -Verbose -Uri $baseURL$part -OutFile $PWD\$part
 }
 
 # 1
-$PWD\1-gallus_download_tools.ps1
+&$PWD\1-gallus_download_tools.ps1
 # 2
-$PWD\2-gallus_setup_tools.ps1
+&$PWD\2-gallus_setup_tools.ps1
 # 3
-$PWD\3-gallus_download_windows_image.ps1
+&$PWD\3-gallus_download_windows_image.ps1
 # 4
-$PWD\4-gallus_extract_windows_image.ps1
+&$PWD\4-gallus_extract_windows_image.ps1
 # 5
-$PWD\5-gallus_download_drivers.ps1
+&$PWD\5-gallus_download_drivers.ps1
 # 6
-$PWD\6-gallus_download_HardeningKitty.ps1
+&$PWD\6-gallus_download_HardeningKitty.ps1
 # 7
-$PWD\7-gallus_cleanup_MDT.ps1
+&$PWD\7-gallus_cleanup_MDT.ps1
 # 8
-$PWD\8-gallus_run_MDT.ps1
+&$PWD\8-gallus_run_MDT.ps1
 # 9
 $cleUSB = Read-Host -Verbose -Prompt 'Veuillez saisir le périphérique USB où déployer l''installateur (ex: "F:")'
-$PWD\9-gallus_build_USB_media.ps1 $cleUSB
+&$PWD\9-gallus_build_USB_media.ps1 $cleUSB
