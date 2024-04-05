@@ -28,7 +28,7 @@ h1, h5 {
 
 .tablecontainer {
     margin-right: 2%;
-    margin-left: 2%;
+    margin-left: 0%;
 }
 
 #report-table {
@@ -38,6 +38,10 @@ h1, h5 {
     border: 1px solid rgb(190, 190, 190);
     background-color:#ffffff;
     font-family: Segoe UI;
+}
+
+tr {
+    font-size: 0.7rem;
 }
 
 tr:nth-child(even).red
