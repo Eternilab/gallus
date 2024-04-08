@@ -19,7 +19,7 @@ Copy-Item -Path $PWD\hkdl\* -Destination $PWD\DSGallus\Scripts\ -Verbose
 # 9
 New-item -Path "DS001:\Task Sequences" -Enable "True" -Name "Gallus" -Comments "" -ItemType "folder" -Verbose
 # 10
-Import-MDTTaskSequence -Path "DS001:\Task Sequences\Gallus" -Name "Gallus Defaut Task Sequence" -Template "$PWD\conf\Gallus_ts.xml" -Comments "" -ID "GALLUS" -Version "1.0" -OperatingSystemPath "DS001:\Operating Systems\Win11\Windows 11 Pro in Windows11x64_Pro_en-US_22H2 install.wim" -FullName "Utilisateur Windows" -OrgName "Organization" -HomePage "about:blank" -AdminPassword "local" -Verbose
+Import-MDTTaskSequence -Path "DS001:\Task Sequences\Gallus" -Name "Gallus Defaut Task Sequence" -Template "$PWD\conf\Gallus_ts.xml" -Comments "" -ID "GALLUS" -Version "1.0" -OperatingSystemPath "DS001:\Operating Systems\Win11\Windows 11 Enterprise N in Windows11x64_Pro_en-US_22H2 install.wim" -FullName "Utilisateur Windows" -OrgName "Organization" -HomePage "about:blank" -AdminPassword "local" -Verbose
 # 11
 New-Item -Path "DS001:\Selection Profiles" -Enable "True" -Name "gallus_winPE" -Comments "" -Definition "<SelectionProfile><Include path=`"Operating Systems`" /><Include path=`"Out-of-Box Drivers\Storage`" /><Include path=`"Task Sequences\Gallus`" /></SelectionProfile>" -ReadOnly "False" -Verbose
 # 12
