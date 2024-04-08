@@ -1,4 +1,4 @@
-Téléchargez le fichier gallus_full.ps1 dans un nouveau répertoire et executez-le sur la machine utilisée pour construire l'installateur
+Téléchargez le fichier gallus_full.ps1 dans un nouveau répertoire (si possible à la racine d'un volume, il y a un risque que les chemins soient trop long lors de l'installation sinon) et executez-le sur la machine utilisée pour construire l'installateur
 
 ou éxecutez dans powershell :
 
