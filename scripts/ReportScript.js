@@ -1,42 +1,50 @@
 window.onload = () => {
-    // Find the table
+    // on définie la valeur qui fait référence à la table qu'on veut trier
     const dataTable = document.querySelector('table')
 
-    // Give it an ID so it's easier to work with for CSS or subsequent JS
-    dataTable.id = 'report-table'
+    // fonction qui récupère la valeur d'une cellule en fonction de sa ligne et de son index dans la ligne
+    // Si innertext ne renvoie rien (car innerText renvoie le texte VISIBLE d'un objet) on prend textContent,
+    // qui renvoie le texte comme étant dans le fichier HTML, visible ou non.
+    const getValeurCellule = (tr, index) => tr.children[index].innerText || tr.children[index].textContent;
 
-    // Move the first row into a THEAD element that PowerShell doesn't add but is necessary for sorting
-    const headerRow = dataTable.querySelector('tr:nth-child(1)')
-    const thead = document.createElement('thead')
-    thead.appendChild(headerRow)
-    dataTable.prepend(thead)
+    // comparateur est une fonction qui, en lui passant un index de colonne (le numéro de
+    // colonne, la troisième colonne sera columnIndex 2) et un sens de tri (estAscendant :
+    // booléen, si Faux : sens descendant), peut trier en utilisant ses sous-fonctions
+    // chaque case de cette colonne par rapport à la case suivante.
+    // Ici, on fixe deux valeurs qui seront alors écrites en dur dans les sous-fonctions :
+    // l'index de la colonne et le sens de tri.
+    var comparateur = function(columnIndex, estAscendant) { 
 
-    // Mark the first row as numeric so it sorts correctly
-    const numberRow = document.querySelector('#report-table tr:nth-child(1)').querySelector(':nth-child(1)')
-    numberRow.setAttribute('data-tsorter', 'numeric')
-    
-    // http://www.terrill.ca/sorting/
-    // Make it sortable
-    const sorter = tsorter.create('report-table')
+        // a et b ne sont pas passés explicitement, ils sont égaux aux cases N et N+1 de
+	// la colonne que l'on trie. Sort() les passera implicitement lorsqu'il sera appelé.
+        return function(a, b) { 
 
-    var rows = document.getElementsByTagName("table")[0].getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+            // Cette fonction est appelée directement (quelques lignes plus bas qu'ici !).
+	    // En fonction du sens de tri, v1 et v2 seront égaux à a et b, interchangeablement.
+            return function(v1, v2) {
 
-    // loops through each row
-    for (i = 0; i < rows.length; i++) {
-        cells = rows[i].getElementsByTagName('td');
-	console.log(cells)
-        if (cells[6].innerHTML == 'Failed'){
-	    switch (cells[7].innerHTML) {
-                case 'High':
-                    rows[i].className = "red";
-                    break;
-                case 'Medium':
-                    rows[i].className = "orange";
-                    break;
-                case 'Low':
-                    rows[i].className = "yellow";
-                    break;
-            }
+                // Si v1 et v2 sont numériques : on fait simplement v1 - v2, et ça renvoie un
+		// nombre négatif (v1 vient avant v2), 0 (c'est égal) ou nombre positif (v2 vient après v1).
+		// Si v1 et/ou v2 est une / sont des string(s), on utilise localeCompare() pour
+		// renvoyer -1 (v1 vient avant v2), 0 (c'est égal) ou 1 (v2 vient après v1).
+                return (v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2)) 
+                    ? v1 - v2 
+                    : v1.toString().localeCompare(v2, undefined, {numeric: true});
+	    // On passe à v1 et v2 les valeurs a puis b respectivement si c'est ascendant, ou b puis a si c'est descendant
+            }(getValeurCellule(estAscendant ? a : b, columnIndex), getValeurCellule(estAscendant ? b : a, columnIndex));
         }
-    }
-}
+    };
+
+    // on ajoute un évènement click au titre de chaque colonne
+    document.querySelectorAll('th').forEach(th => th.addEventListener('click', (() => {
+	// pour chaque ligne à partir de la seconde
+        Array.from(dataTable.querySelectorAll('tr:nth-child(n+2)'))
+	    // On la compare avec la suivante en l'envoyant dans comparateur.
+            // Pour ce faire, on passe à comparateur l'index de la colonne (en prenant l'index de th dans
+	    // la liste des enfants de sa ligne parente), ainsi que la propriété ascendante / descendante
+	    // du tri, qu'on inverse en même temps !
+	    // Comparateur, avec ces paramètres, crée et renvoie la fonction (a,b) que sort() utilise.
+            .sort(comparateur(Array.from(th.parentNode.children).indexOf(th), this.estAscendant = !this.estAscendant))
+            .forEach(tr => dataTable.appendChild(tr));
+    })));
+};
