@@ -27,9 +27,5 @@ $CsvData = Import-CSV $GhiCsvFile
 
 $CsvData | ConvertTo-Html -CSSUri $CssFile -Title $GhiHtmlTitle -PreContent $GhiHeader -PostContent $HtmlFooter | Out-File -Encoding utf8 $GhiHtmlOutputFile
 
-# Removing EDGE First Run Experience
-New-Item -Path HKLM:\Software\Policies\Microsoft -Name Edge
-New-ItemProperty HKLM:\Software\Policies\Microsoft\Edge -Type DWord -Name "HideFirstRunExperience" -Value "1"
-
 # Opening the HTML file in the default browser
 Invoke-Item $GhiHtmlOutputFile

@@ -31,3 +31,13 @@ Invoke-HardeningKitty -Mode Audit -Log $HKLogOutputFile -Report $HKCsvOutputFile
 $ReportData = Import-CSV $HKCsvOutputFile
 
 $ReportData | ConvertTo-Html -CSSUri $CssFile -Title $ReportHtmlTitle -PreContent $ReportHeader -PostContent $HtmlFooter | Out-File -Encoding utf8 $ReportHtmlOutputFile
+
+# Customizing EDGE to display hardening results
+New-Item -Path HKLM:\Software\Policies\Microsoft -Name Edge
+# Removing EDGE First Run Experience
+New-ItemProperty HKLM:\Software\Policies\Microsoft\Edge -Type DWord -Name "HideFirstRunExperience" -Value "1"
+# Disable Translate pop-up
+New-ItemProperty HKLM:\Software\Policies\Microsoft\Edge -Type DWord -Name "TranslateEnabled" -Value "0"
+
+# Opening the HTML file in the default browser
+Invoke-Item $ReportHtmlOutputFile
