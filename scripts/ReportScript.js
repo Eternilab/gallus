@@ -13,11 +13,11 @@ window.onload = () => {
     // chaque case de cette colonne par rapport à la case suivante.
     // Ici, on fixe deux valeurs qui seront alors écrites en dur dans les sous-fonctions :
     // l'index de la colonne et le sens de tri.
-    var comparateur = function(columnIndex, estAscendant) { 
+    var comparateur = function(columnIndex, estAscendant) {
 
         // a et b ne sont pas passés explicitement, ils sont égaux aux cases N et N+1 de
 	// la colonne que l'on trie. Sort() les passera implicitement lorsqu'il sera appelé.
-        return function(a, b) { 
+        return function(a, b) {
 
             // Cette fonction est appelée directement (quelques lignes plus bas qu'ici !).
 	    // En fonction du sens de tri, v1 et v2 seront égaux à a et b, interchangeablement.
@@ -27,10 +27,10 @@ window.onload = () => {
 		// nombre négatif (v1 vient avant v2), 0 (c'est égal) ou nombre positif (v2 vient après v1).
 		// Si v1 et/ou v2 est une / sont des string(s), on utilise localeCompare() pour
 		// renvoyer -1 (v1 vient avant v2), 0 (c'est égal) ou 1 (v2 vient après v1).
-                return (v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2)) 
-                    ? v1 - v2 
+                return (v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2))
+                    ? v1 - v2
                     : v1.toString().localeCompare(v2, undefined, {numeric: true});
-	    // On passe à v1 et v2 les valeurs a puis b respectivement si c'est ascendant, ou b puis a si c'est descendant
+	    // On passe à v1 et v2 les valeurs des cellules a puis b respectivement si c'est ascendant, ou b puis a si c'est descendant
             }(getValeurCellule(estAscendant ? a : b, columnIndex), getValeurCellule(estAscendant ? b : a, columnIndex));
         }
     };
@@ -47,4 +47,25 @@ window.onload = () => {
             .sort(comparateur(Array.from(th.parentNode.children).indexOf(th), this.estAscendant = !this.estAscendant))
             .forEach(tr => dataTable.appendChild(tr));
     })));
+
+    // Enfin, on crée une liste des lignes de la table...
+    var rows = dataTable.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+
+    // Et on itère à travers chacune de ces lignes pour changer sa couleur en fonction de son statut :
+    // Réussi ou Échoué (Gravité basse - moyenne - haute).
+    Array.from(rows).forEach((row) => {
+        if (getValeurCellule(row, 6) == 'Failed'){
+	    switch (getValeurCellule(row, 7)) {
+                case 'High':
+                    row.className = "red";
+                    break;
+                case 'Medium':
+                    row.className = "orange";
+                    break;
+                case 'Low':
+                    row.className = "yellow";
+                    break;
+            }
+        }
+    });
 };
