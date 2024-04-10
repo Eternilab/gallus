@@ -21,13 +21,12 @@
 # ----- Variables for multiple scripts
 
 # Desktop by default
-$TargetPath = [System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::Desktop) + "\GallusAuditReport\"
+$TargetPath = [System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::Desktop) + "\GallusAuditReport"
 
 $CssFile = "$TargetPath\ReportStyle.css"
-$JsModuleFile = "$TargetPath\tsorter.min.js"
 $JsFile = "$TargetPath\ReportScript.js"
 
-$HtmlFooter = "</div><script src=$($JsModuleFile)></script><script src=$($JsFile)></script>"
+$HtmlFooter = "</div><script src=$($JsFile)></script>"
 
 $EternilabLogo = "$TargetPath\Eternilab.png"
 
@@ -37,11 +36,9 @@ $SourcePath = ".\"
 
 $CopyFilesList = (
 "Eternilab.png",
-"ReportScript.js", 
-"ReportStyle.css",
-"tsorter.min.js"
+"ReportScript.js",
+"ReportStyle.css"
 )
-
 
 # ----- Variables for the AuditingScript script
 
