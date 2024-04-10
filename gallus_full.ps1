@@ -59,5 +59,5 @@ Write-Host ""
 Write-Host "Création du média d'installation USB"
 Write-Host "Attention les fichiers présents sur le média vont être supprimés"
 Write-Host "Si vous voulez interrompre le processus utilisez le raccourcis clavier Ctrl + C"
-$cleUSB = Read-Host -Verbose -Prompt 'Veuillez saisir le nom du média USB où déployer l''installateur (ex: "F")'
+$cleUSB = Read-Host -Verbose -Prompt 'Veuillez saisir le nom du média USB où déployer l''installateur (ex: "F:")'
 &$PWD\9-gallus_build_USB_media.ps1 $cleUSB
