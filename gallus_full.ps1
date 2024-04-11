@@ -1,5 +1,9 @@
+param(
+     [Parameter()]
+     [string]$Repo="main"
+ )
 # List of Gallus parts
-$baseURL="https://raw.githubusercontent.com/Eternilab/gallus/main/"
+$baseURL="https://raw.githubusercontent.com/Eternilab/gallus/$Repo/"
 $parts=@(
 "conf/Bootstrap.ini",
 "conf/CustomSettings.ini",
