@@ -1,5 +1,5 @@
 # Cleanup potential old files
-Remove-Item -Verbose -Recurse -Force -Path $PWD\Win11x64_EntN_en-US_22H2
+Remove-Item -Verbose -Recurse -Force -Path $PWD\Win11x64_EntN_en-US_22H2 -ErrorAction SilentlyContinue
 # Create directory
 New-Item -Verbose -ItemType Directory -Path $PWD\Win11x64_EntN_en-US_22H2
 # Extract setup files WIM

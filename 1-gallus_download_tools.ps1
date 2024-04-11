@@ -1,5 +1,5 @@
 # Cleanup potential old files
-Remove-Item -Verbose -Recurse -Force -Path $PWD\toolsdl
+Remove-Item -Verbose -Recurse -Force -Path $PWD\toolsdl -ErrorAction SilentlyContinue
 # Create directory
 New-Item -Verbose -ItemType Directory -Path $PWD\toolsdl
 # Disable progress bar to speedup download

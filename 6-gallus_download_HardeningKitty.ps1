@@ -1,5 +1,5 @@
 # Cleanup potential old files
-Remove-Item -Verbose -Recurse -Force -Path $PWD\hkdl
+Remove-Item -Verbose -Recurse -Force -Path $PWD\hkdl -ErrorAction SilentlyContinue
 # Create directory
 New-Item -Verbose -ItemType Directory -Path $PWD\hkdl
 #Download HardeningKitty psm and hardening list

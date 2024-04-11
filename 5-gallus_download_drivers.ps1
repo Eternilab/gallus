@@ -1,5 +1,5 @@
 # Cleanup potential old files
-Remove-Item -Verbose -Recurse -Force -Path $PWD\drivers
+Remove-Item -Verbose -Recurse -Force -Path $PWD\drivers -ErrorAction SilentlyContinue
 # Create directory
 New-Item -Verbose -ItemType Directory -Path $PWD\drivers
 # Create directory

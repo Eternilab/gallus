@@ -27,8 +27,8 @@ $parts=@(
 )
 
 # Cleanup potential old files
-Remove-Item -Verbose -Recurse -Force -Path $PWD\conf
-Remove-Item -Verbose -Recurse -Force -Path $PWD\scripts
+Remove-Item -Verbose -Recurse -Force -Path $PWD\conf -ErrorAction SilentlyContinue
+Remove-Item -Verbose -Recurse -Force -Path $PWD\scripts -ErrorAction SilentlyContinue
 # Create directories
 New-Item -Verbose -ItemType Directory -Path $PWD\conf
 New-Item -Verbose -ItemType Directory -Path $PWD\scripts
