@@ -37,7 +37,7 @@ Remove-Item -Recurse -Force -Path $PWD\scripts -ErrorAction SilentlyContinue
 $null = $null = New-Item -ItemType Directory -Path $PWD\conf
 $null = $null = New-Item -ItemType Directory -Path $PWD\scripts
 # Download parts
-Write-Host -ForegroundColor Green "Telechargement des elements de Gallus"
+Write-Host -ForegroundColor Green "0-Telechargement des elements de Gallus"
 foreach ($part in $parts) {
   Invoke-WebRequest -Uri $baseURL$part -OutFile $PWD\$part
 }
