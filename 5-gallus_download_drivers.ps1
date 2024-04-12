@@ -8,6 +8,6 @@ New-Item -ItemType Directory -Path $PWD\drivers\Storage
 # Create directory
 New-Item -ItemType Directory -Path $PWD\drivers\Network
 # Download Storage Drivers
-Copy-Item -Path $PWD\..\drivers\Storage\* -Destination $PWD\drivers\Storage\
+Copy-Item -Path $PWD\..\drivers\Storage\* -Destination $PWD\drivers\Storage\ -ErrorAction SilentlyContinue
 # Download Network Drivers
-Copy-Item -Path $PWD\..\drivers\Network\* -Destination $PWD\drivers\Network\
+Copy-Item -Path $PWD\..\drivers\Network\* -Destination $PWD\drivers\Network\ -ErrorAction SilentlyContinue
