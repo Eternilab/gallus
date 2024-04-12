@@ -1,8 +1,8 @@
-Write-Host -ForegroundColor Green "Téléchargement de l'image Windows 11 x64 22H2 officielle"
+Write-Host -ForegroundColor Green "3 - Telechargement de l'image Windows 11 x64 22H2 officielle"
 # Cleanup potential old files
 Remove-Item -Recurse -Force -Path $PWD\windl -ErrorAction SilentlyContinue
 # Create directory
-New-Item -ItemType Directory -Path $PWD\windl
+$null = New-Item -ItemType Directory -Path $PWD\windl
 # Disable progress bar to speedup download
 $ProgressPreference = 'SilentlyContinue'
 #Download Windows11 VOL esd | TODO should be downloading CAB to products.xml first and then looking for correct URL in it (see MediaCreationTool.bat on github line 153)

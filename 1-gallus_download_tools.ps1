@@ -1,8 +1,8 @@
-Write-Host -ForegroundColor Green "Téléchargement des outils Microsoft nécessaires (ADK et MDT)"
+Write-Host -ForegroundColor Green "1 - Telechargement des outils Microsoft necessaires (ADK et MDT)"
 # Cleanup potential old files
 Remove-Item -Recurse -Force -Path $PWD\toolsdl -ErrorAction SilentlyContinue
 # Create directory
-New-Item -ItemType Directory -Path $PWD\toolsdl
+$null = New-Item -ItemType Directory -Path $PWD\toolsdl
 # Disable progress bar to speedup download
 $ProgressPreference = 'SilentlyContinue'
 # Download ADK

@@ -1,4 +1,4 @@
-Write-Host -ForegroundColor Green "Nettoyage d'éventuels anciens projets MDT"
+Write-Host -ForegroundColor Green "7 - Nettoyage d'eventuels anciens projets MDT"
 # Remove PSDrives
 Remove-PSDrive -Name "GALLUSMEDIA" -ErrorAction SilentlyContinue
 Remove-PSDrive -Name "DS001" -ErrorAction SilentlyContinue
