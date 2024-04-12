@@ -1,83 +1,79 @@
-<a name="readme-top"></a>
+<a name="haut-readme"></a>
 
-<!-- PROJECT SHIELDS -->
+<!-- SHIELDS DU PROJET -->
 <!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+*** Les badges de ce document contiennent des liens, qui sont définis dans des variables.
+*** Voyez le bas du document pour les déclarations.
+*** Référence :
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
+[![Étoiles ajoutées][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
+[![Licence AGPLv3][license-shield]][license-url]
 
 
 
-<!-- PROJECT LOGO -->
+<!-- LOGO DU PROJET -->
+<!--
 <br />
 <div align="center">
   <a href="https://github.com/Eternilab/gallus">
-    <img src="TODO" alt="Gallus Logo" width="80" height="80">
+    <img src="TODO" alt=Logo Gallus" width="80" height="80">
   </a>
+-->
 
+<!-- TITRE -->
 <h1 align="center">Gallus</h1>
 
   <p align="center">
     Constructeur de média d'installation de postes sécurisés sous Microsoft Windows
     <br />
-    <a href="https://github.com/Eternilab/gallus/wiki/Home-fr#"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/Eternilab/gallus/wiki/Home-fr#"><strong>Documentation »</strong></a>
     <br />
     <br />
-    <a href="TODO">View Demo</a>
+    <a href="https://github.com/Eternilab/gallus/issues/new?labels=TODO(bug)&template=bug---.md">Signaler un bug</a>
     ·
-    <a href="https://github.com/Eternilab/gallus/issues/new?labels=TODO(bug)&template=bug-report---.md">Report Bug</a>
-    ·
-    <a href="https://github.com/Eternilab/gallus/issues/new?labels=TODO(amelioration)&template=feature-request---.md">Request Feature</a>
+    <a href="https://github.com/Eternilab/gallus/issues/new?labels=TODO(amelioration)&template=feature-request---.md">Demander une fonctionnalité</a>
   </p>
 </div>
 
 
 
-<!-- TABLE OF CONTENTS -->
+<!-- Table des matières -->
 <details>
-  <summary>Table of Contents</summary>
+  <summary>Table des matières</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
+      <a href="#a-propos-du-projet">À propos du projet</a>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href="#bien-demarrer">Bien démarrer</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#prerequis">Prérequis</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
+    <li><a href="#Usage-et-commandes">Usage & commandes</a></li>
+    <li><a href="#fiche-de-route">Fiche de route</a></li>
+    <li><a href="#contribuer">Contribuer</a></li>
+    <li><a href="#licence">Licence</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <!-- <li><a href="#remerciements">Remerciements</a></li> -->
   </ol>
 </details>
 
 
 
-<!-- ABOUT THE PROJECT -->
-# About The Project
+# À propos du projet
 
-[![Gallus Screen Shot][product-screenshot]](https://example.com) TODO
+<!-- [![Capture d'écran de Gallus][gallus-screenshot]](https://example.com) TODO -->
 
-Ce projet a pour but de générer avec le minimum d'interaction humaine un installateur de postes sécurisés sous Microsoft Windows 11.
+Ce projet a pour but de générer avec le minimum d'interaction humaine des médias d'installation de postes sécurisés sous Microsoft Windows 11.
 
 
-### Powered by
+### Propulsé par
 
 * [![Powershell][Powershell-badge]][Powershell-url]
 * [![Windows 11][Windows11-badge]][Windows11-url]
@@ -85,20 +81,19 @@ Ce projet a pour but de générer avec le minimum d'interaction humaine un insta
 * [![CSS3][CSS3-badge]][CSS3-url]
 * [![JavaScript][JavaScript-badge]][JavaScript-url]
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
 
 
-<!-- GETTING STARTED -->
-# Getting Started
+# Bien démarrer
 
-## Prerequisites
+## Prérequis
 
 Gallus nécessite d'être exécuté sous Windows (préciser TODO, 10/11/2016/Server 2022) avec une connexion internet active. Il peut être exécuté sur un poste déployé par lui-même.
 
 ## Installation
 
-*Note : Il est possible que des drivers supplémentaires soient nécessaires afin d'assurer le bon fonctionnement de Gallus sur les postes à déployer. Référez-vous à la [documentation](https://github.com/Eternilab/gallus/wiki#Problemes-drivers).*
+*Note : Il est possible que des drivers supplémentaires soient nécessaires afin d'assurer le bon fonctionnement de Gallus sur les postes à déployer. Référez-vous à la [documentation](https://github.com/Eternilab/gallus/wiki/Home-fr#Problemes-drivers).*
 
 ### Installation et exécution (Rapide)
 *Installe Gallus à la racine du système et l'exécute avec ses options par défaut.*
@@ -108,13 +103,13 @@ Gallus nécessite d'être exécuté sous Windows (préciser TODO, 10/11/2016/Ser
 ```powershell
 mkdir \Gallus; cd \Gallus; Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus_full.ps1')))
 ```
-Attendez la fin de son exécution, qui peut [prendre un moment](https://github.com/Eternilab/gallus/wiki#Installation-duree). Gallus est installé !
+Attendez la fin de son exécution, qui peut [prendre un moment](https://github.com/Eternilab/gallus/wiki/Home-fr#Installation-duree). Gallus est installé.
 </br>
 
-### <a name="Installation-avance"></a>Installation uniquement (Usage avancé)
-*Installe Gallus à l'emplacement désiré et vous permet d'exécuter [chaque commande](#Usage) pour adapter votre utilisation de Gallus à vos besoins.*
+### Installation uniquement (Usage avancé)
+*Installe Gallus à l'emplacement désiré et vous permet d'exécuter [chaque commande](#Usage-et-commandes) pour adapter votre utilisation de Gallus à vos besoins.*
 
-<table style="width: 100%">
+<table>
 <tr>
 	<td>
 		<details>
@@ -148,58 +143,52 @@ Attendez la fin de son exécution, qui peut [prendre un moment](https://github.c
 </table>
 
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
 
 
-<!-- USAGE EXAMPLES -->
-## <a name="usage"></a>Usage & Commands
+## Usage & commandes
 
-Si vous avez installé Gallus avec [la méthode avancée](#Installation-avance), vous aurez besoin d'exécuter chaque étape de Gallus manuellement afin de personnaliser votre expérience.
+Si vous avez installé Gallus avec [la méthode avancée](#Installation-uniquement), vous aurez besoin d'exécuter chaque étape de Gallus manuellement afin de personnaliser votre expérience.
 
-*Pour plus de détails sur chaque commande, incluant des exemples, référez-vous à la [documentation](https://github.com/Eternilab/gallus/wiki#Commandes).*
+*Pour plus de détails sur chaque commande, incluant des exemples, référez-vous à la [documentation](https://github.com/Eternilab/gallus/wiki/Home-fr#Commandes).*
 
 TODO :
 
-1 - Gallus Build ([docs / details ? nom? TODO](https://github.com/Eternilab/gallus/wiki#Commandes-build))
+1 - Gallus Build ([docs](https://github.com/Eternilab/gallus/wiki/Home-fr#Commandes-build))
 ```powershell
 gallus build
 ```
-2 - Gallus Run ([docs](https://github.com/Eternilab/gallus/wiki#Commandes-run))
+2 - Gallus Run ([docs](https://github.com/Eternilab/gallus/wiki/Home-fr#Commandes-run))
 ```powershell
 gallus run
 ```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
 
 
-<!-- ROADMAP -->
-## Roadmap
-
+## Fiche de route
+<!--
 - [ ] TODO
 - [ ] TODO
 - [ ] TODO
     - [ ] TODO
-
+-->
 Accédez aux [tickets](https://github.com/Eternilab/gallus/issues) pour une liste exhaustive des fonctionnalités proposées et problèmes connus.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
 
 
-<!-- CONTRIBUTING -->
-## Contributing
+## Contribuer
 
-TODO
+Si vous avez une suggestion qui améliorerait ce projet, Veuillez s'il vous plaît bifurquer le dépôt et créer une demande d'intégration. Vous pouvez aussi simplement [créer un ticket avec le tag "amélioration"](https://github.com/Eternilab/gallus/issues/new?labels=TODO(amelioration)&template=feature-request---.md).
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-Si vous avez une suggestion qui améliorerait ce projet, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+Toute contribution sera **grandement appréciée**.
 
 1. [Bifurquez (Fork) le dépôt](https://github.com/Eternilab/gallus/fork)
-2. Créez dans votre shell votre branche :
+2. Créez une branche dans votre shell:
 ```shell
 git checkout -b TODO (feature/AmazingFeature)
 ```
@@ -213,34 +202,30 @@ git push origin feature/AmazingFeature
 ```
 5. [Ouvrez une demande d'intégration (Pull Request)](https://github.com/Eternilab/gallus/compare)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
 
 
-<!-- LICENSE -->
-## License
+## Licence
 
-Distribué sous licence AGPLv3. Voir [LICENSE.txt](https://github.com/Eternilab/gallus/LICENCE.txt) pour plus d'information.
+Distribué sous licence AGPLv3. Voir [Licence.txt](https://github.com/Eternilab/gallus/LICENCE.txt) pour plus d'information.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
+<p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
 
-<!-- CONTACT -->
+
 ## Contact
 
-TODO :
-
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Eternilab - [@eternilab](https://twitter.com/eternilab) - [tech@eternilab.com](mailto:tech@eternilab.com)
 
 Lien du dépôt : [https://github.com/Eternilab/gallus](https://github.com/Eternilab/gallus)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
 
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
+<!-- Remerciements -->
+<!-- les remerciements aux contributions seront ajoutés ici
+## Remerciements
 
 TODO :
 
@@ -248,12 +233,17 @@ TODO :
 * []()
 * []()
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
+-->
 
-
-<!-- MARKDOWN LINKS & IMAGES -->
+<!-- LIENS ET IMAGES MARKDOWN -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+<!--
+[gallus-logo]: images/gallus-logo
+[gallus-screenshot]: images/gallus-screenshot
+-->
+
 [contributors-shield]: https://img.shields.io/github/contributors/Eternilab/gallus.svg?style=for-the-badge
 [contributors-url]: https://github.com/Eternilab/gallus/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/Eternilab/gallus.svg?style=for-the-badge
