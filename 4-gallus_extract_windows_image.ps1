@@ -1,3 +1,4 @@
+Write-Host -ForegroundColor Green "Extraction des fichiers Windows 11 22H2 Enterprise N de l'image officielle"
 # Cleanup potential old files
 Remove-Item -Verbose -Recurse -Force -Path $PWD\Win11x64_EntN_en-US_22H2 -ErrorAction SilentlyContinue
 # Create directory

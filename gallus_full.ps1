@@ -58,10 +58,12 @@ foreach ($part in $parts) {
 # 8
 &$PWD\8-gallus_run_MDT.ps1
 # 9
-Write-Host "Média d'installation LiteTouch.iso créé dans le sous-dossier GMedia"
 Write-Host ""
-Write-Host "Création du média d'installation USB"
-Write-Host "Attention les fichiers présents sur le média vont être supprimés"
-Write-Host "Si vous voulez interrompre le processus utilisez le raccourcis clavier Ctrl + C"
-$cleUSB = Read-Host -Verbose -Prompt 'Veuillez saisir le nom du média USB où déployer l''installateur (ex: "F:")'
+Write-Host -ForegroundColor Green "Création du média d'installation sur support de stockage amovible"
+Write-Host -ForegroundColor Green "!!! Attention les fichiers présents sur le support vont être supprimés !!!"
+Write-Host -ForegroundColor Green "Si vous voulez interrompre le processus utilisez le raccourcis clavier Ctrl + C"
+$cleUSB = Read-Host -Verbose -Prompt 'Veuillez saisir le nom du support de stockage amovible où déployer l''installateur (ex: "F:")'
 &$PWD\9-gallus_build_USB_media.ps1 $cleUSB
+Write-Host ""
+Write-Host -ForegroundColor Green "Il peut être utilisé pour installer Windows 11 Enterprise N 22H2 sur un machine x64 UEFI sans besoin de connexion internet"
+Write-Host -ForegroundColor Green "Le système d'exploitation sera durcis (sécurisé) automatiquement au premier démarrage"

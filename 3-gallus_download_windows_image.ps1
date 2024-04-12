@@ -1,3 +1,4 @@
+Write-Host -ForegroundColor Green "Téléchargement de l'image Windows 11 x64 22H2 officielle"
 # Cleanup potential old files
 Remove-Item -Verbose -Recurse -Force -Path $PWD\windl -ErrorAction SilentlyContinue
 # Create directory

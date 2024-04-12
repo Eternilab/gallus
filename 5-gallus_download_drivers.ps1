@@ -1,3 +1,4 @@
+Write-Host -ForegroundColor Green "Récupération des drivers supplémentaires"
 # Cleanup potential old files
 Remove-Item -Verbose -Recurse -Force -Path $PWD\drivers -ErrorAction SilentlyContinue
 # Create directory

@@ -1,3 +1,4 @@
+Write-Host -ForegroundColor Green "Téléchargement de l'outil HardeningKitty et de la liste de durcissement CIS Windows 11 Enterprise 22H2"
 # Cleanup potential old files
 Remove-Item -Verbose -Recurse -Force -Path $PWD\hkdl -ErrorAction SilentlyContinue
 # Create directory

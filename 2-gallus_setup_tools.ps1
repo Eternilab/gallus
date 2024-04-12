@@ -1,3 +1,4 @@
+Write-Host -ForegroundColor Green "Installation des outils Microsoft (ADK et MDT)"
 # Install ADK
 Start-Process -PassThru -Wait -FilePath $PWD\toolsdl\adksetup.exe -ArgumentList "/features OptionId.DeploymentTools OptionId.ICDConfigurationDesigner /quiet /ceip off"
 Write-Host "Windows ADK à été installé"

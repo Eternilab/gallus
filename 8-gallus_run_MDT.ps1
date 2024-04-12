@@ -1,3 +1,4 @@
+Write-Host -ForegroundColor Green "Configuration de l'environnement de fabrication de l'installateur"
 # 1
 Import-Module "C:\Program Files\Microsoft Deployment Toolkit\bin\MicrosoftDeploymentToolkit.psd1"
 New-PSDrive -Name "DS001" -PSProvider "MDTProvider" -Root "$PWD\DSGallus" -Description "Gallus MDT Deployment Share" -Verbose | add-MDTPersistentDrive -Verbose
@@ -41,6 +42,10 @@ Copy-Item -Path $PWD\conf\Bootstrap.ini -Destination $PWD\GMedia\Content\Deploy\
 Copy-Item -Path $PWD\conf\CustomSettings.ini -Destination $PWD\DSGallus\Control\CustomSettings.ini -Verbose
 Copy-Item -Path $PWD\conf\CustomSettings.ini -Destination $PWD\GMedia\Content\Deploy\Control\CustomSettings.ini -Verbose
 # 17
+Write-Host -ForegroundColor Green "Production de l'environnement de fabrication de l'installateur"
 Update-MDTDeploymentShare -Path "DS001:" -Verbose
 # 18
+Write-Host -ForegroundColor Green "Production du contenu du média d'installation et génération de l'ISO"
 Update-MDTMedia -Path "DS001:\Media\GALLUSMEDIA" -Verbose
+Write-Host ""
+Write-Host -ForegroundColor Green "Le média d'installation au format ISO est disponible ici : $PWD\GMedia\LiteTouch.iso"

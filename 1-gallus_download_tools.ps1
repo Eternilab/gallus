@@ -1,3 +1,4 @@
+Write-Host -ForegroundColor Green "Téléchargement des outils Microsoft nécessaires (ADK et MDT)"
 # Cleanup potential old files
 Remove-Item -Verbose -Recurse -Force -Path $PWD\toolsdl -ErrorAction SilentlyContinue
 # Create directory
