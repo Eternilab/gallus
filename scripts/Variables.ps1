@@ -21,7 +21,7 @@
 # ----- Variables for multiple scripts
 
 # Desktop by default
-$TargetPath = [System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::Desktop) + "\GallusAuditReport"
+$TargetPath = [System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::Desktop) + "\GallusAuditReport\"
 
 $CssFile = "$TargetPath\ReportStyle.css"
 $JsFile = "$TargetPath\ReportScript.js"
