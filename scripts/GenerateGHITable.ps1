@@ -28,4 +28,4 @@ $CsvData = Import-CSV $GhiCsvFile
 $CsvData | ConvertTo-Html -CSSUri $CssFile -Title $GhiHtmlTitle -PreContent $GhiHeader -PostContent $HtmlFooter | Out-File -Encoding utf8 $GhiHtmlOutputFile
 
 # Opening the HTML file in the default browser
-Invoke-Item $GhiHtmlOutputFile
+#Invoke-Item $GhiHtmlOutputFile
