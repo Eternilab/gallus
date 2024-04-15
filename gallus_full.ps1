@@ -34,8 +34,8 @@ $parts=@(
 Remove-Item -Recurse -Force -Path $PWD\conf -ErrorAction SilentlyContinue
 Remove-Item -Recurse -Force -Path $PWD\scripts -ErrorAction SilentlyContinue
 # Create directories
-$null = $null = New-Item -ItemType Directory -Path $PWD\conf
-$null = $null = New-Item -ItemType Directory -Path $PWD\scripts
+$null = New-Item -ItemType Directory -Path $PWD\conf
+$null = New-Item -ItemType Directory -Path $PWD\scripts
 # Download parts
 Write-Host -ForegroundColor Green "0 - Telechargement des elements de Gallus"
 foreach ($part in $parts) {
