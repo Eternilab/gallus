@@ -65,6 +65,3 @@ Write-Host -ForegroundColor Green "!!! Attention les fichiers presents sur le su
 Write-Host -ForegroundColor Green "Si vous voulez interrompre le processus utilisez le raccourcis clavier Ctrl + C"
 $cleUSB = Read-Host -Prompt 'Veuillez saisir le nom du support de stockage amovible où deployer l''installateur (ex: "F:")'
 &$PWD\9-gallus_build_USB_media.ps1 $cleUSB
-Write-Host ""
-Write-Host -ForegroundColor Green "Il peut etre utilise pour installer Windows 11 Enterprise N 22H2 sur un machine x64 UEFI sans besoin de connexion internet"
-Write-Host -ForegroundColor Green "Le systeme d'exploitation sera durcis (securise) automatiquement au premier demarrage"
