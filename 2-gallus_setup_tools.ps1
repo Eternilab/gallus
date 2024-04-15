@@ -6,5 +6,5 @@ Write-Host -ForegroundColor Green "2.1 - Windows ADK a ete installe"
 Start-Process -Wait -FilePath $PWD\toolsdl\adkwinpesetup.exe -ArgumentList "/features OptionId.WindowsPreinstallationEnvironment /quiet /ceip off"
 Write-Host -ForegroundColor Green "2.2 - Windows ADP WinPE a ete installe"
 # Install MDT
-Start-Process -Wait -FilePath $PWD\toolsdl\mdt.msi -ArgumentList "/passive"
+Start-Process -Wait -FilePath $PWD\toolsdl\mdt.msi -ArgumentList "/quiet"
 Write-Host -ForegroundColor Green "2.3 - MDT a ete installe"
