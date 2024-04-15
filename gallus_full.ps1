@@ -59,9 +59,4 @@ foreach ($part in $parts) {
 # 8
 &$PWD\8-gallus_run_MDT.ps1
 # 9
-Write-Host ""
-Write-Host -ForegroundColor Green "Creation du media d'installation sur support de stockage amovible"
-Write-Host -ForegroundColor Green "!!! Attention les fichiers presents sur le support vont etre supprimes !!!"
-Write-Host -ForegroundColor Green "Si vous voulez interrompre le processus utilisez le raccourcis clavier Ctrl + C"
-$cleUSB = Read-Host -Prompt 'Veuillez saisir le nom du support de stockage amovible ou deployer l''installateur (ex: "F:")'
-&$PWD\9-gallus_build_USB_media.ps1 $cleUSB
+&$PWD\9-gallus_build_USB_media.ps1
