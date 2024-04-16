@@ -1,7 +1,9 @@
 Write-Host -ForegroundColor Green "9 - Creation du media d'installation sur support de stockage amovible"
+Write-Host ""
 Write-Host -ForegroundColor Green "!!! Attention les fichiers presents sur le support vont etre supprimes !!!"
 Write-Host -ForegroundColor Green "Si vous voulez interrompre le processus utilisez le raccourcis clavier Ctrl + C"
 $DestDrive = Read-Host -Prompt 'Veuillez saisir la lettre correspondant a un volume du support de stockage amovible (ex: "F")'
+write-host ""
 if (-not (Get-Volume -ErrorAction SilentlyContinue $DestDrive)) {
   Write-Host -ForegroundColor Red "Le volume ${DestDrive}: n'exite pas"
   Write-Host -ForegroundColor Red "Pour relancer la creation du media d'installation sur support de stockage amovible,"
@@ -20,6 +22,5 @@ DISM /Quiet /Split-Image /ImageFile:"GMedia\Content\Deploy\Operating Systems\Win
 ((Get-Content -Path "${DestDrive}:\Deploy\Control\GALLUS\Unattend.xml") -replace 'install.wim','install.swm') | Set-Content -Path "${DestDrive}:\Deploy\Control\GALLUS\Unattend.xml"
 Write-Host ""
 Write-Host -ForegroundColor Green "Le media d'installation ${DestDrive}: est pret."
-write-host ""
 write-host -foregroundcolor green "Il peut etre utilise pour installer Windows 11 Enterprise N 22h2 sur un machine x64 uefi sans besoin de connexion internet"
 write-host -foregroundcolor green "Le systeme d'exploitation sera durcis (securise) automatiquement au premier demarrage"

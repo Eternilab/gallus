@@ -54,6 +54,6 @@ Write-Host -ForegroundColor Green "8.7 - Generation du contenu du media d'instal
 Update-MDTMedia -Path "DS001:\Media\GALLUSMEDIA"
 Write-Host ""
 Write-Host -ForegroundColor Green "Le media d'installation au format ISO est disponible ici : $PWD\GMedia\LiteTouch.iso"
-write-host ""
 write-host -foregroundcolor green "Il peut etre utilise pour installer Windows 11 Enterprise N 22h2 sur un machine x64 uefi sans besoin de connexion internet"
 write-host -foregroundcolor green "Le systeme d'exploitation sera durcis (securise) automatiquement au premier demarrage"
+write-host ""
