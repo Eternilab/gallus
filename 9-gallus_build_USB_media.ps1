@@ -18,7 +18,7 @@ ROBOCOPY "GMedia\Content" "${DestDrive}:" /nfl /ndl /njh /njs /nc /ns /np /s /ma
 DISM /Quiet /Split-Image /ImageFile:"GMedia\Content\Deploy\Operating Systems\Win11x64_EntN_en-US_22H2\sources\install.wim" /SWMFile:"${DestDrive}:\Deploy\Operating Systems\Win11x64_EntN_en-US_22H2\sources\install.swm" /FileSize:3800
 ((Get-Content -Path "${DestDrive}:\Deploy\Control\OperatingSystems.xml") -replace 'install.wim','install.swm') | Set-Content -Path "${DestDrive}:\Deploy\Control\OperatingSystems.xml"
 ((Get-Content -Path "${DestDrive}:\Deploy\Control\GALLUS\Unattend.xml") -replace 'install.wim','install.swm') | Set-Content -Path "${DestDrive}:\Deploy\Control\GALLUS\Unattend.xml"
-Write-Host -ForegroundColor Green ""
+Write-Host ""
 Write-Host -ForegroundColor Green "Le media d'installation ${DestDrive}: est pret."
 write-host ""
 write-host -foregroundcolor green "Il peut etre utilise pour installer Windows 11 Enterprise N 22h2 sur un machine x64 uefi sans besoin de connexion internet"
