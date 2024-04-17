@@ -1,21 +1,22 @@
-.header-left, .header-right {
-    margin-top: 30px;
-    margin-bottom: 30px;
+body {
+    Font-Family: Segoe UI;
+    Font-Size: 11pt;
 }
+
+.header {
+    margin: 30px;
+    clear: right;
+    height: 140px;
+}
+
 .header-left {
-    margin-left: 60px;
     float: left;
     text-align: center;
 }
 
 .header-right {
-    margin-right: 30px;
+    margin-top: 10px;
     float: right;
-}
-
-body {
-    Font-Family: Segoe UI;
-    Font-Size: 11pt;
 }
 
 h1 {
@@ -27,12 +28,11 @@ h1, h5 {
 }
 
 .tablecontainer {
-    margin-right: 2%;
-    margin-left: 0%;
+    clear: left;
+    margin: 1%;
 }
 
 #report-table {
-    float: left;
     margin-right: auto;
     margin-left: 0px;
     border: 1px solid rgb(190, 190, 190);
@@ -41,12 +41,12 @@ h1, h5 {
 }
 
 tr {
-    font-size: 0.7rem;
+    font-size: 1rem;
 }
 
 tr:nth-child(even).red
 {
-   Background-Color: rgb(255,150,150);
+    Background-Color: rgb(255,150,150);
     border: 1px inset black;
     border-collapse: collapse;
     border-spacing: 0;
@@ -54,7 +54,7 @@ tr:nth-child(even).red
 
 tr:nth-child(odd).red
 {
-   Background-Color: rgb(255,209,223);
+    Background-Color: rgb(255,209,223);
     border: 1px inset black;
     border-collapse: collapse;
     border-spacing: 0;
@@ -68,7 +68,7 @@ tr:hover.red > td
 
 tr:nth-child(even).orange
 {
-   Background-Color: rgb(255,146,72);
+    Background-Color: rgb(255,146,72);
     border: 1px inset black;
     border-collapse: collapse;
     border-spacing: 0;
@@ -76,7 +76,7 @@ tr:nth-child(even).orange
 
 tr:nth-child(odd).orange
 {
-   Background-Color: rgb(255,179,138);
+    Background-Color: rgb(255,179,138);
     border: 1px inset black;
     border-collapse: collapse;
     border-spacing: 0;
@@ -90,7 +90,7 @@ tr:hover.orange > td
 
 tr:nth-child(even).yellow
 {
-   Background-Color: rgb(238,220,130);
+    Background-Color: rgb(238,220,130);
     border: 1px inset black;
     border-collapse: collapse;
     border-spacing: 0;
@@ -98,7 +98,7 @@ tr:nth-child(even).yellow
 
 tr:nth-child(odd).yellow
 {
-   Background-Color: rgb(255,250,187);
+    Background-Color: rgb(255,250,187);
     border: 1px inset black;
     border-collapse: collapse;
     border-spacing: 0;
@@ -140,7 +140,6 @@ td {
     overflow: hidden; 
     text-overflow: ellipsis; 
     word-wrap: break-word;
-    max-width: 250px;
 }
 
 
