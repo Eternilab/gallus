@@ -47,7 +47,7 @@ function Generate-Header {
     </div>
 </div>
 <div id='disclaimer'>
-    <h4>Please note that this report is only valid at the moment of its generation and in no way predicts the evolution of this computer's compliance to Gallus' policies over time, e.g because of registry or group policy edits applied by hand or by this computer's registration in an Active Directory.</h4>
+    <h4>Please note that this report is only valid at the moment of its generation and in no way predicts the evolution of this computer's compliance to Gallus' policies over time, e.g because of registry or group policy edits, be them applied by hand or by this computer's registration in an Active Directory.</h4>
 </div>
 <div class='tablecontainer'>
 "@
