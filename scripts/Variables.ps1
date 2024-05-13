@@ -39,12 +39,15 @@ function Generate-Header {
     return @"
 <div class='header'>
     <div class='header-left'>
-        <h1>$($Title)</h1>
-        <h5>$($Subtitle)</h5>
+        <h1 id='reporttitle'>$($Title)</h1>
+        <h5 id='reportsubtitle'>$($Subtitle)</h5>
     </div>
     <div class='header-right'>
         <img alt='Eternilab logo' src='$($EternilabLogo)' width='512px' height='120px'>
     </div>
+</div>
+<div id='disclaimer'>
+    <h4>Please note that this report is only valid at the moment of its generation and in no way predicts the evolution of this computer's compliance to Gallus' policies over time, e.g because of registry or group policy edits applied by hand or by this computer's registration in an Active Directory.</h4>
 </div>
 <div class='tablecontainer'>
 "@

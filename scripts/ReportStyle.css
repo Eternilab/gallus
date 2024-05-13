@@ -19,12 +19,12 @@ body {
     float: right;
 }
 
-h1 {
+#reporttitle {
     font-size: 2.3rem;
 }
 
-h1, h5 {
-    font-family: Segoe UI;
+#disclaimer {
+    text-align: center;
 }
 
 .tablecontainer {
@@ -33,11 +33,8 @@ h1, h5 {
 }
 
 #report-table {
-    margin-right: auto;
-    margin-left: 0px;
     border: 1px solid rgb(190, 190, 190);
     background-color:#ffffff;
-    font-family: Segoe UI;
 }
 
 tr {
@@ -137,8 +134,8 @@ th {
 td {
     Vertical-Align: Top;
     Padding: 5px;
-    overflow: hidden; 
-    text-overflow: ellipsis; 
+    overflow: hidden;
+    text-overflow: ellipsis;
     word-wrap: break-word;
 }
 
@@ -147,4 +144,3 @@ tr td:first-child {
     white-space: nowrap;
     border: 0;
 }
-    
