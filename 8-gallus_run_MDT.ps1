@@ -13,11 +13,11 @@ Rename-Item "DS001:\Operating Systems\Win11\Windows 11 Enterprise N in Win11x64_
 Write-Host -ForegroundColor Green "8.3 - Import de drivers dans l'environnement de fabrication (Optionnel)"
 $null = New-item -Path "DS001:\Out-of-Box Drivers" -Enable "True" -Name "Network" -Comments "" -ItemType "folder"
 # 5
-Import-MDTDriver -Path "DS001:\Out-of-Box Drivers\Network" -SourcePath "$PWD\drivers\Network"
+$null = Import-MDTDriver -Path "DS001:\Out-of-Box Drivers\Network" -SourcePath "$PWD\drivers\Network"
 # 6
 $null = New-item -Path "DS001:\Out-of-Box Drivers" -Enable "True" -Name "Storage" -Comments "" -ItemType "folder"
 # 7
-Import-MDTDriver -Path "DS001:\Out-of-Box Drivers\Storage" -SourcePath "$PWD\drivers\Storage"
+$null = Import-MDTDriver -Path "DS001:\Out-of-Box Drivers\Storage" -SourcePath "$PWD\drivers\Storage"
 # 8
 Copy-Item -Path $PWD\scripts\* -Destination $PWD\DSGallus\Scripts\
 Copy-Item -Path $PWD\hkdl\* -Destination $PWD\DSGallus\Scripts\
