@@ -16,10 +16,10 @@ DISM /Quiet /Unmount-Wim /MountDir:$PWD\windl\tmp /Discard
 Remove-Item -Recurse -Force -Path $PWD\windl\tmp
 Remove-Item -Recurse -Force -Path $PWD\windl\setup.wim
 # Extract WinPE image to boot.wim index 1
-Write-Host -ForegroundColor Green "4 - Extraction des fichiers Windows PE"
+Write-Host -ForegroundColor Green "4.2 - Extraction des fichiers Windows PE"
 DISM /Quiet /Export-Image /SourceImageFile:$PWD\windl\win.esd /SourceIndex:2 /DestinationImageFile:$PWD\Win11x64_EntN_en-US_22H2\sources\boot.wim /Compress:max /CheckIntegrity
 # Extract WinPE with Windows Setup to boot.wim index 2
 DISM /Quiet /Export-Image /SourceImageFile:$PWD\windl\win.esd /SourceIndex:3 /DestinationImageFile:$PWD\Win11x64_EntN_en-US_22H2\sources\boot.wim /Compress:max /CheckIntegrity
 # Extract Windows 11 Enterprise N WIM
-Write-Host -ForegroundColor Green "4 - Extraction de Windows 11 22H2 Enterprise N"
+Write-Host -ForegroundColor Green "4.3 - Extraction de Windows 11 22H2 Enterprise N"
 DISM /Quiet /Export-Image /SourceImageFile:$PWD\windl\win.esd /SourceIndex:7 /DestinationImageFile:$PWD\Win11x64_EntN_en-US_22H2\sources\install.wim /Compress:max /CheckIntegrity
