@@ -8,6 +8,6 @@ $null = New-Item -ItemType Directory -Path $PWD\drivers\Storage
 # Create directory
 $null = New-Item -ItemType Directory -Path $PWD\drivers\Network
 # Download Storage Drivers
-Copy-Item -Path $PWD\..\drivers\Storage\* -Destination $PWD\drivers\Storage\ -ErrorAction SilentlyContinue
+Copy-Item -Recurse -Path $PWD\..\drivers\Storage\* -Destination $PWD\drivers\Storage\ -ErrorAction SilentlyContinue
 # Download Network Drivers
-Copy-Item -Path $PWD\..\drivers\Network\* -Destination $PWD\drivers\Network\ -ErrorAction SilentlyContinue
+Copy-Item -Recurse -Path $PWD\..\drivers\Network\* -Destination $PWD\drivers\Network\ -ErrorAction SilentlyContinue
