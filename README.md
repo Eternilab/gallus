@@ -1,4 +1,4 @@
-# Contenu temporaire
+# Version Beta
 
 Sur une machine Windows servant à la construction du média d'installation, créez un nouveau répertoire (si possible à la racine d'un volume, il y a un risque que les chemins soient trop long lors de l'installation sinon) et executez dans un powershell possédant les droits admin (nécessaire pour l'installation des outils Microsoft entre autre) :
 
