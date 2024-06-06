@@ -69,3 +69,25 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 Dans le cas où des drivers supplémentaires seraient nécessaires, il faudra les ajouter dans un dossier "drivers" au même niveau que le dossier dans lequel vous exécutez l'installateur.  
 Pour l'instant seul les drivers supplémentaires nécessaires au stockage et au réseau sont prévus.  
 Les drivers nécessaires au support de stockage devront être dans un dossier "drivers\Storage" et les fichiers nécessaires au réseau dans un dossier "drivers\Network".  
+
+[contributors-shield]: https://img.shields.io/github/contributors/Eternilab/gallus.svg?style=for-the-badge
+[contributors-url]: https://github.com/Eternilab/gallus/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Eternilab/gallus.svg?style=for-the-badge
+[forks-url]: https://github.com/Eternilab/gallus/network/members
+[stars-shield]: https://img.shields.io/github/stars/Eternilab/gallus.svg?style=for-the-badge
+[stars-url]: https://github.com/Eternilab/gallus/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Eternilab/gallus.svg?style=for-the-badge
+[issues-url]: https://github.com/Eternilab/gallus/issues
+[license-shield]: https://img.shields.io/github/license/Eternilab/gallus.svg?style=for-the-badge
+[license-url]: https://github.com/Eternilab/gallus/blob/master/LICENSE.txt
+
+[Powershell-badge]: https://img.shields.io/badge/PowerShell-%235391FE.svg?style=for-the-badge&logo=powershell&logoColor=white
+[Powershell-url]: https://github.com/PowerShell/PowerShell
+[Windows11-badge]: https://img.shields.io/badge/Windows%2011-%230079d5.svg?style=for-the-badge&logo=Windows%2011&logoColor=white
+[Windows11-url]: https://www.microsoft.com/software-download/windows11
+[CSS3-badge]: https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white
+[CSS3-url]: https://developer.mozilla.org/en-US/docs/Web/CSS
+[JavaScript-badge]: https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E
+[JavaScript-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript
+[HTML5-badge]: https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white
+[HTML5-url]: https://developer.mozilla.org/en-US/docs/Web/HTML
