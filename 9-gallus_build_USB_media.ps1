@@ -13,7 +13,12 @@ if (-not (Get-Volume -ErrorAction SilentlyContinue $DestDrive)) {
 Write-Host -ForegroundColor Green "9.1 - Formattage du support de stockage"
 $disk=(Get-Partition -DriveLetter "$DestDrive").DiskId
 Clear-Disk -Confirm:$False -RemoveData -RemoveOEM -Path $disk
+if ((Get-Disk -Path $disk).Size -gt 34359738368) {
+$null = New-Partition -DiskPath $disk -Size 34359738368 -DriveLetter "$DestDrive"
+}
+else {
 $null = New-Partition -DiskPath $disk -UseMaximumSize -DriveLetter "$DestDrive"
+}
 $null = Format-Volume -DriveLetter $DestDrive -FileSystem FAT32
 Write-Host -ForegroundColor Green "9.2 - Generation du media amovible d'installation sur ${DestDrive}:"
 ROBOCOPY "GMedia\Content" "${DestDrive}:" /nfl /ndl /njh /njs /nc /ns /np /s /max:3800000000
@@ -24,3 +29,4 @@ DISM /Quiet /Split-Image /ImageFile:"GMedia\Content\Deploy\Operating Systems\Win
 Write-Host -ForegroundColor Green "Le media d'installation ${DestDrive}: est pret."
 write-host -foregroundcolor green "Il peut etre utilise pour installer Windows 11 Enterprise N 22h2 sur un machine x64 uefi sans besoin de connexion internet"
 write-host -foregroundcolor green "Le systeme d'exploitation sera durcis (securise) automatiquement au premier demarrage"
+
