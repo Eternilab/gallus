@@ -31,9 +31,9 @@
     <a href="https://github.com/Eternilab/gallus/wiki/Home-fr#"><strong>Documentation »</strong></a>
     <br>
     <br>
-    <a href="https://github.com/Eternilab/gallus/issues/new?labels=TODO(bug)&template=bug---.md">Signaler un bug</a>
+    <a href="https://github.com/Eternilab/gallus/issues/new?labels=bug&template=bug---.md">Signaler un bug</a>
     ·
-    <a href="https://github.com/Eternilab/gallus/issues/new?labels=TODO(amelioration)&template=feature-request---.md">Demander une fonctionnalité</a>
+    <a href="https://github.com/Eternilab/gallus/issues/new?labels=enhancement&template=feature-request---.md">Demander une fonctionnalité</a>
   </p>
 </div>
 
@@ -70,7 +70,7 @@
 
 # À propos du projet
 
-<!-- [![Capture d'écran de Gallus][gallus-screenshot]](https://example.com) TODO -->
+![Capture d'écran de Gallus.][gallus-screenshot]
 
 Ce projet (Gallus) a pour but de générer des médias d'installation (ISO, USB) du système d'exploitation Microsoft Windows 11.
 
@@ -93,6 +93,12 @@ Lors de l'étape finale de l'installation en phase 2, des rapports de conformit�
 Le projet OpenSource [HardeningKitty](https://github.com/scipag/HardeningKitty) est utilisé pour appliquer et vérifier la sécurisation du poste déployé grâce au média d'installation construit par Gallus.
 
 L'automatisation utilisée dans ce projet utilise la technologie [MDT](https://learn.microsoft.com/en-us/mem/configmgr/mdt/) de Microsoft instrumentée grâce à [Powershell](https://learn.microsoft.com/en-us/powershell/scripting/overview).
+
+### Clause de non-responsabilité
+
+Un rapport généré par Gallus n'est valable qu'au moment de sa génération et ne prédit en aucun cas l'évolution de la conformité de l'ordinateur déployé aux politiques de Gallus dans le temps, par exemple en raison de modifications de son registre ou ses stratégies de groupe, qu'elles soient appliquées manuellement ou suite à l'enregistrement dudit ordinateur dans un Active Directory.
+
+<p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
 ### Propulsé par
 [![Powershell][Powershell-badge]][Powershell-url]
@@ -117,6 +123,8 @@ Une connexion Internet active est nécessaire afin de récupérer les différent
 Dans un but de sécurisation des systèmes, il est à noter que seuls les flux sortants précédemment citées sont nécessaires.
 
 En terme d'espace disque, 25Go sont nécessaires à la construction du média d'installation.
+
+Le dossier de travail devra être à la racine d'un volume, car, dans le cas contraire, la taille maximale imposée pour les chemins de fichiers par le NTFS risque d'être dépassée lors de l'exécution de Gallus.
 
 Il est possible d'utiliser Gallus sur un système ayant été installé grâce à Gallus lui-même.
 
@@ -395,7 +403,7 @@ Accédez aux [tickets](https://github.com/Eternilab/gallus/issues) pour une list
 
 # Contribuer
 
-Si vous avez une suggestion qui améliorerait ce projet, veuillez s'il vous plaît dupliquer le dépôt et créer une demande de tirage. Vous pouvez aussi simplement [créer un ticket avec le tag "amélioration"](https://github.com/Eternilab/gallus/issues/new?labels=TODO(amelioration)&template=feature-request---.md).
+Si vous avez une suggestion qui améliorerait ce projet, Veuillez s'il vous plaît bifurquer le dépôt et créer une demande d'intégration. Vous pouvez aussi simplement [créer un ticket avec le tag "amélioration"](https://github.com/Eternilab/gallus/issues/new?labels=enhancement&template=feature-request---.md).
 
 Toute contribution sera **grandement appréciée**.
 
