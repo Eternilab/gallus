@@ -126,7 +126,7 @@ Dans le cas ou un système Windows n'est pas disponible nativement, des solution
 
 # Construction du média (Phase 1)
 
-Bien que la volonté première de Gallus soit de limiter l'interaction utilisateur nécessaire pour obtenir un installateur, il est possible d'avoir accès à des options avancées (cf: [Installation uniquement (Usage avancé)](#Installation uniquement (Usage avancé))).
+Bien que la volonté première de Gallus soit de limiter l'interaction utilisateur nécessaire pour obtenir un installateur, il est possible d'avoir accès à des options avancées (cf: [Installation uniquement (Usage avancé)](#installation-uniquement-usage-avance)).
 
 Ainsi les choix par défaut de la configuration de Gallus peuvent être modifiés, par exemple :
 
@@ -143,9 +143,9 @@ Deux modes d'installation/usage sont donc détaillés ci-après.
 ```powershell
 mkdir \Gallus; cd \Gallus; Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus_full.ps1')))
 ```
-Attendez la fin de son exécution, qui peut [prendre un moment](https://github.com/Eternilab/gallus/wiki/Home-fr#Installation-duree).
+Attendez la fin de son exécution, qui peut prendre un moment.
 
-Gallus à produit un media d'installation au format ISO et vous propose de crééer une clé USB d'installation.
+Gallus à produit un media d'installation au format ISO et vous propose de créer une clé USB d'installation.
 
 Passer ensuite à la section [Démarrage à partir du media d’installation](#Démarrage à partir du media d’installation)
 </br>
@@ -193,20 +193,32 @@ Passer ensuite à la section [Démarrage à partir du media d’installation](#D
 
 ### Usage & commandes
 
-Si vous avez installé Gallus avec [la méthode avancée](#Installation-uniquement), vous aurez besoin d'exécuter chaque étape de Gallus manuellement afin de personnaliser votre expérience.
+Si vous avez installé Gallus avec [la méthode avancée](#Installation-uniquement), vous aurez besoin d'exécuter manuellement chaque étape de Gallus à partir du répertoire où vous l'avez installé.
 
-*Pour plus de détails sur chaque commande, incluant des exemples, référez-vous à la [documentation](https://github.com/Eternilab/gallus/wiki/Home-fr#Commandes).*
+Les différentes étapes de Gallus correspondent à différents scripts PS1 qui sont tous récupérés et exécutés dans l'ordre par le script ```gallus_full.ps1```utilisé dans le cas de l'[Installation et exécution (Rapide, TLDR)](#installation-et-ex%C3%A9cution-rapide-tldr).
 
-TODO :
+Voici l'ensemble de ces scripts accompagnés d'une rapide description des actions qu'ils produisent :
 
-1 - Gallus Build ([docs](https://github.com/Eternilab/gallus/wiki/Home-fr#Commandes-build))
-```powershell
-gallus build
-```
-2 - Gallus Run ([docs](https://github.com/Eternilab/gallus/wiki/Home-fr#Commandes-run))
-```powershell
-gallus run
-```
+* ```1-gallus_download_tools.ps1``` : Télécharge les installateurs des outils depuis le site de Microsoft.
+
+* ```2-gallus_setup_tools.ps1``` : Installe les outils téléchargés à la phase précédente.
+
+* ```3-gallus_download_windows_image.ps1``` : Télécharge l'image (format ESD) de l'installateur officiel de Windows 11 depuis les serveur Microsoft.
+
+* ```4-gallus_extract_windows_image.ps1``` : Extrait les différentes parties de l'image nécessaires à Gallus.
+
+* ```5-gallus_download_drivers.ps1``` : Récupère les drivers supplémentaires (pour l'instant, copie du dossier ```drivers\Storage``` et ```drivers\Network``` dans le répertoire parent de Gallus). cf [Support de périphériques avec drivers supplémentaires](#support-de-p%C3%A9riph%C3%A9riques-avec-drivers-suppl%C3%A9mentaires)
+
+* ```6-gallus_download_HardeningKitty.ps1``` : Récupère l'outil HardeningKitty utilisé pour le durcissement du système.
+
+* ```7-gallus_cleanup_MDT.ps1``` : Nettoie les éléments de configuration de MDT déjà présent sur le système. Ceci permet à des restes d'une ancienne utilisation de MDT sur le système d'impacter la future construction de média.  
+
+* ```8-gallus_run_MDT.ps1``` : Exécution de MDT avec les paramètres et les ajouts de Gallus pour construire les fichiers d'installation. Production d'une ISO démarrable basée sur ces fichiers.
+
+* ```9-gallus_build_USB_media.ps1``` : Construction d'un média d'installation USB démarrable (sur UEFI uniquement, BIOS non supporté).
+
+Pour l'instant aucun de ces scripts ne prend de paramètres.
+Vous pouvez les modifier si vous avez des besoins spécifiques.
 
 <p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
@@ -216,24 +228,70 @@ Maintenant qu'un média d'installation a été produit, il est possible de déma
 
 L'installation de Microsoft Windows se fait de manière automatique dans le cas d'un déroulement nominal.
 
-Une fois le système installé, une session Administrator, mot de passe "local" ayant les droits d'administrateur local s'ouvre automatiquement.
+Attention, par défaut le primer disque détecté sera complètement formaté et si toutes les données dessus seront effacées !
 
-Le durcissement du système s'effectue également automatiquement, suivi des audits de conformité.
+Cette installation se déroule en plusieurs sous-étapes entre lesquelles il y aura des redémarrage de la machine, ce qui est parfaitement normal.
+
+Lors de la première sous-étape, le système WinPE (Windows Preinstallation Environment) va copier les fichiers sur le disque dur interne. Cette phase peut-être repérée par le font d'écran gris avec le texte suivant en haut à droite : ```Windows Deployement Toolkit```
+
+Lors des sous-étapes suivantes, le système Windows va démarrer à partir du disque interne et se configurer.
+
+Une fois le système installé, une session de l'utilisateur ```Administrator```, mot de passe ```local```, ayant les droits d'administrateur local s'ouvre automatiquement.
+
+Le durcissement du système s'effectue également automatiquement, suivi de la génération des rapports d'audits de conformité.
 
 Les rapport de conformité sont ensuite ouvert automatiquement dans Microsoft Edge dans plusieurs onglet.
 
 # Problèmes potentiels
+	
+### Problèmes d'accès au disque
 
-### Support de périphériques avec drivers supplémentaires
+Dans le cas où l'installation échoue lors de la première sous phase (font d'écran gris avec le texte suivant en haut à droite : ```Windows Deployement Toolkit```), avec une fenêtre d'erreur nommée ```Script Error``` contenant le message d'erreur ```An error has occured in the script on this page```, par dessus une fenêtre ```Deployment Summary``` avec le sous-titre ```Failure``` et le message ```Operating system deployment did not complete successfully```, il est fort probable qu'il manque des pilotes pour permettre au système WinPE d'accéder au disque.
+
+Pour s'assurer qu'il s'agit bien de ce problème, cliquez sur la croix rouge en haut à droite de la première fenêtre puis faites de même avec la deuxième.
+
+Une invite de commande ```cmd.exe``` devrait s'ouvrir.
+
+Executez la commande suivante :
+
+```notepad.exe ..\temp\SMSTSLog\smsts.log```
+
+L'éditeur de texte Notepad devrait s’ouvrir en vous montrant les journaux d'installation produits jusqu'ici.
+
+Utilisez la fonction de recherche avec le texte suivant : ```Failed to run```
+
+Si vous trouver le message ```Failed to run the action: Format and Partition Disk```, c'est qu'il y a eu en effet une impossibilité de formater le disque souvent due au manque de pilotes correspondants.
+Vous trouverez des information juste après, dans la section [Support de périphériques avec pilotes supplémentaires](#support-de-p%C3%A9riph%C3%A9riques-avec-pilotes-suppl%C3%A9mentaires), pour adresser ce problème.
+
+Dans le cas contraire, un autre problème est survenu, cherchez la réponse dans ce fichier de journaux.
+
+### Support de périphériques avec pilotes supplémentaires
 Vu la diversité du parc des équipements sur lesquels Microsoft Windows peut fonctionner, des pilotes logiciels supplémentaires doivent être ajoutés pour que l'installation du système d'exploitation puisse aboutir.
 
-Par exemple, lors de la phase 2 (cf. [A propos du projet](#a-propos-du-projet)), l'installateur à besoin d'accéder au disque; lorsque le système Microsoft Windows est installé, il est utile d'avoir au moins une interface réseau utilisable.
+Le périphérique dont le support de pilotes est indispensable lors de la phase 2 (cf. [A propos du projet](#a-propos-du-projet)) est le disque (SSD, HDD, etc.). L'installateur à besoin d'accéder au disque lors de l'installation du système Microsoft Windows pour le structurer, le formater et y déployer les fichiers du système d'exploitation, sinon l'installation sera interrompue.
 
-Il est donc nécessaire dans ce cas de fournir ces pilotes supplémentaires à Gallus lors de la phase 1 (cf. [A propos du projet](#a-propos-du-projet)). Référez-vous à la [documentation](https://github.com/Eternilab/gallus/wiki/Home-fr#Problemes-drivers).
+Un autre périphérique peut être nécessaire, non pas pendant la phase d'installation  proprement parler, mais lorsque le système démarre les premières fois, il s'agit de la carte réseau, que ce soit filaire (Eternet) ou sans-fil (Wifi). Avoir au moins une interface réseau utilisable une fois le système installé permet d'installer d'autres logiciels, de mettre le système à jour et plus généralement d'accéder à internet.
+
+Il est donc nécessaire dans ce cas de fournir ces pilotes supplémentaires à Gallus lors de la phase 1 (cf. [A propos du projet](#a-propos-du-projet)).
+
+Pour ce faire on devra identifier au préalable les pilotes nécessaires.
+
+FIXME.
 
 ### Analyse des journaux d'installation
 
-FIXME
+Comme spécifié dans la section [Problèmes d'accès au disque](#problèmes-d-accès-au-disque), il est facilement possible d’accéder aux journaux d'installation de la sous-étape 1 lors de l'installation en allant lire le fichier ```X:\Windows\temp\SMSTSLog\smsts.log```.
+Néanmoins cela n'est possible qu'en cas de problème entrainant l'interruption de l’exécution durant la première phase d’installation.
+
+Nous allons maintenant voir comment accéder aux journaux d'installation à la fin de celle-ci, lorsque le système est installé, ou directement sur le disque de la machine, dans le cas d'un problème lors des autres sous-étapes d'installation.
+
+FIXME.
+
+Maintenant que les pilotes ont été identifiés, il faut les déposer dans le dossier ...
+
+Si vous suiver les instruction de cette section suite à une interruption de l'installation dans la sous-étape 1, voici comment éviter d'avoir à relancer complètement Gallus pour produire le nouveau média d'installation contenant les bon pilotes supplémentaires.
+
+FIXME étape clean MDT puis reexec, pusi USB.
 
 # Fiche de route
 <!--
@@ -242,7 +300,7 @@ FIXME
 - [ ] TODO
     - [ ] TODO
 -->
-Accédez aux [tickets](https://github.com/Eternilab/gallus/issues) pour une liste exhaustive des fonctionnalités proposées et problèmes connus.
+Accédez aux [tickets](https://github.com/Eternilab/gallus/issues) pour une liste exhaustive des fonctionnalités demandées, en cours de développement ou des problèmes connus.
 
 <p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
