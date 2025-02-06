@@ -347,11 +347,11 @@ Toute contribution sera **grandement appréciée**.
 1. [Bifurquez (Fork) le dépôt](https://github.com/Eternilab/gallus/fork)
 2. Clonnez votre dépot bifurqué de l'original sur votre machine
 ```shell
-git clone git@github.com:UTILISATEUR/gallus.git
+git clone git@github.com:UTILISATEUR/gallus.git gallus.git
 ```
 3. Créez une branche dans votre shell:
 ```shell
-git checkout -b TODO (feature/AmazingFeature)
+git checkout -b MyAmazingFeature
 ```
 4. Ajoutez votre contribution
 5. Commitez (Commit) vos changements :
