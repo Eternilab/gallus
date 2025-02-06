@@ -321,7 +321,7 @@ Comme spécifié dans la section [Problèmes d'accès au disque](#probl%C3%A8mes
 
 Néanmoins l'accès à ce journal de cette manière n'est possible qu'en cas de problème entrainant l'interruption de l’exécution durant la première phase d’installation. Il sera accessible autrement une fois le système démarré, comme expliqué ci-après.
 
-Nous allons maintenant voir comment accéder aux journaux d'installation à la fin de celle-ci, lorsque le système est installé, ou directement sur le disque de la machine, dans le cas d'un problème lors des autres sous-étapes d'installation.
+Voici comment accéder aux journaux d'installation à la fin de celle-ci, lorsque le système est installé, ou directement sur le disque de la machine, dans le cas d'un problème lors des autres sous-étapes d'installation.
 
 FIXME.
 
