@@ -207,7 +207,7 @@ Voici l'ensemble de ces scripts accompagnés d'une rapide description des action
 
 * ```4-gallus_extract_windows_image.ps1``` : Extrait les différentes parties de l'image nécessaires à Gallus.
 
-* ```5-gallus_download_drivers.ps1``` : Récupère les drivers supplémentaires (copie du dossier ```drivers\Storage``` et ```drivers\Network``` dans le répertoire parent de Gallus). cf [Support de périphériques avec drivers supplémentaires](#support-de-p%C3%A9riph%C3%A9riques-avec-pilotes-suppl%C3%A9mentaires)
+* ```5-gallus_download_drivers.ps1``` : Récupère les pilotes supplémentaires (copie du dossier ```drivers\Storage``` et ```drivers\Network``` dans le répertoire parent de Gallus). cf [Support de périphériques avec drivers supplémentaires](#support-de-p%C3%A9riph%C3%A9riques-avec-pilotes-suppl%C3%A9mentaires)
 
 * ```6-gallus_download_HardeningKitty.ps1``` : Récupère l'outil HardeningKitty utilisé pour le durcissement du système.
 
