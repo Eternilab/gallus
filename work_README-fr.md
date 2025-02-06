@@ -251,7 +251,7 @@ Si votre problème n'est pas décrit dans les sous chapitres qui suivent, veuill
 	
 ### Problèmes d'accès au disque
 
-Dans le cas où l'installation échoue lors de la première sous-phase (font d'écran gris avec le texte suivant en haut à droite : ```Windows Deployement Toolkit```), avec une fenêtre d'erreur nommée ```Script Error``` contenant le message d'erreur ```An error has occured in the script on this page```, par dessus une fenêtre ```Deployment Summary``` avec le sous-titre ```Failure``` et le message ```Operating system deployment did not complete successfully```, il est fort probable qu'il manque des pilotes pour permettre au système WinPE d'accéder au disque.
+Dans le cas où l'installation échoue lors de la première sous-phase (font d'écran gris avec le texte suivant en haut à droite : ```Windows Deployement Toolkit```), avec une fenêtre d'erreur nommée ```Script Error``` contenant le message d'erreur ```An error has occured in the script on this page```, par dessus une fenêtre ```Deployment Summary``` avec le sous-titre ```Failure``` et le message ```Operating system deployment did not complete successfully```, il est fort probable qu'il manque des pilotes pour permettre au système WinPE (Windows Preinstallation Environment, système d'exploitation utilisé en phase 2 (cf. [A propos du projet](#%C3%A0-propos-du-projet)) d'accéder au disque.
 
 Pour s'assurer qu'il s'agit bien de ce problème, cliquez sur la croix rouge en haut à droite de la première fenêtre puis faites de même avec la deuxième.
 
@@ -278,7 +278,7 @@ Vu la diversité du parc des équipements sur lesquels Microsoft Windows peut fo
 
 Le périphérique dont le support de pilotes est indispensable lors de la phase 2 (cf. [A propos du projet](#%C3%A0-propos-du-projet)) est le disque (SSD, HDD, etc.). L'installateur à besoin d'accéder au disque lors de l'installation du système Microsoft Windows pour le structurer, le formater et y déployer les fichiers du système d'exploitation, sinon l'installation sera interrompue.
 
-Un autre périphérique peut être nécessaire, non pas pendant la phase d'installation à proprement parler, mais lorsque le système démarre les premières fois, il s'agit de la carte réseau, que ce soit filaire (Ethernet) ou sans-fil (Wifi). Avoir au moins une interface réseau utilisable une fois le système déployé permet d'installer d'autres logiciels, de mettre le système à jour et plus généralement d'accéder à internet.
+Un autre périphérique peut être nécessaire, non pas pendant la phase d'installation à proprement parler, mais lorsque le système démarre les premières fois, il s'agit de la carte réseau, que ce soit filaire (Ethernet) ou sans-fil (Wifi). Avoir au moins une interface réseau utilisable une fois le système déployé permet d'installer d'autres logiciels, de mettre le système à jour et plus généralement d'accéder à Internet.
 
 Il est donc nécessaire dans ces cas de fournir ces pilotes supplémentaires à Gallus lors de la phase 1 (cf. [A propos du projet](#%C3%A0-propos-du-projet)).
 
@@ -286,7 +286,7 @@ Pour ce faire on va récupérer un ensemble de driver pour WinPE (Windows Preins
 
 Dans le cas d'un PC portable DELL, par exemple on cherchera sur un moteur de recherche les mots clé suivants : ```dell WinPE 11 driver pack```
 
-Il s'agit de récupérer un ensemble de pilotes permettant l'accès au disque et au réseau pour plusieurs modèles de machines.
+Il s'agit de récupérer un ensemble de pilotes permettant l'accès au disque et au réseau pour plusieurs modèles de postes cible.
 Si l'ensemble de pilotes ne pèse pas trop lourd (quelques centaines de mégaoctets), il peut être intégralement ajouté à Gallus.
 Dans le cas ou l'ensemble est trop gros, il faudra isoler les bons pilotes, pour éviter de trop alourdir la taille de l'installateur.
 
