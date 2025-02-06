@@ -307,6 +307,10 @@ Gallus
 
 Que ce soit le premier ou deuxième cas (ensemble de fichiers ou .cab), si possible il est mieux de séparer les pilotes réseau et stockage dans les dossiers correspondants, sinon on pourra mettre l'ensemble dans le dossier ```Storage```.
 
+Si vous suivez les instruction de cette section suite à une interruption de l'installation dans la sous-étape 1, voici comment éviter d'avoir à relancer complètement Gallus pour produire le nouveau média d'installation contenant les bon pilotes supplémentaires.
+
+FIXME étape clean MDT puis reexec, puis USB.
+
 FIXME.
 
 ### Analyse des journaux d'installation
@@ -317,12 +321,6 @@ Néanmoins cela n'est possible qu'en cas de problème entrainant l'interruption 
 Nous allons maintenant voir comment accéder aux journaux d'installation à la fin de celle-ci, lorsque le système est installé, ou directement sur le disque de la machine, dans le cas d'un problème lors des autres sous-étapes d'installation.
 
 FIXME.
-
-Maintenant que les pilotes ont été identifiés, il faut les déposer dans le dossier ...
-
-Si vous suivez les instruction de cette section suite à une interruption de l'installation dans la sous-étape 1, voici comment éviter d'avoir à relancer complètement Gallus pour produire le nouveau média d'installation contenant les bon pilotes supplémentaires.
-
-FIXME étape clean MDT puis reexec, puis USB.
 
 # Fiche de route
 <!--
