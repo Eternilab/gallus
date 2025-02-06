@@ -241,9 +241,9 @@ Les rapports de conformité sont ensuite ouverts automatiquement dans Microsoft 
 
 Le poste est maintenant déployé.
 
-Le système Windows est installé sans licence, à vous de fournir la votre.
+Le système Windows est installé sans licence, à vous de fournir la vôtre.
 
-Cette [Phase 2](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2) est répétable sur autant de poste que désiré.
+Cette [Phase 2](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2) est répétable sur autant de postes que désiré.
 
 # Problèmes potentiels
 	
