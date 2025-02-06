@@ -213,7 +213,7 @@ Voici l'ensemble de ces scripts accompagnés d'une rapide description des action
 
 * ```7-gallus_cleanup_MDT.ps1``` : Supprime les potentielles anciennes configurations de MDT.
 
-* ```8-gallus_run_MDT.ps1``` : Exécution de MDT avec les paramètres et les ajouts de Gallus pour construire les fichiers d'installation. Production d'une ISO démarrable basée sur ces fichiers.
+* ```8-gallus_run_MDT.ps1``` : Exécution de MDT avec les paramètres et les ajouts de Gallus pour construire les fichiers d'installation. Production d'une ISO démarrable.
 
 * ```9-gallus_build_USB_media.ps1``` : Construction d'un média d'installation USB démarrable (sur UEFI uniquement, BIOS non supporté).
 
