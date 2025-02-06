@@ -75,7 +75,7 @@ Ce projet (Gallus) a pour but de générer des médias d'installation (ISO, USB)
 La mise en œuvre de Gallus s'effectue en deux phases :
 
 * Phase 1 : Construction d'un média d'installation sur un premier poste  Microsoft Windows (poste de construction).
-* Phase 2 : Démarrage à partir du media d'installation sur un second poste (poste cible), pour installer un système d'exploitation Microsoft Windows sécurisé.
+* Phase 2 : Démarrage sur un second poste (poste cible) à partir du media d'installation créé lors de la phase précédente, pour installer un système d'exploitation Microsoft Windows sécurisé.
 
 Les phase 1 et 2 se produisent de manière quasi-automatique.
 
@@ -275,15 +275,36 @@ Un autre périphérique peut être nécessaire, non pas pendant la phase d'insta
 
 Il est donc nécessaire dans ce cas de fournir ces pilotes supplémentaires à Gallus lors de la phase 1 (cf. [A propos du projet](#%C3%A0-propos-du-projet)).
 
-Pour ce faire on va récupérer un ensemble de driver pour WinPE (Windows Preinstallation Environment, système d'exploitation utilisé en phase 2 lors de la première sous-étape).
+Pour ce faire on va récupérer un ensemble de driver pour WinPE (Windows Preinstallation Environment, système d'exploitation utilisé en phase 2 (cf. [A propos du projet](#%C3%A0-propos-du-projet)) lors de la première sous-étape).
 
 Dans le cas d'un PC portable DELL, par exemple on cherchera sur un moteur de recherche les mots clé suivants : ```dell WinPE 11 driver pack```
+
+Il s'agit de récupérer un ensemble de pilotes permettant l'accès au disque et au réseau pour plusieurs modèles de machines.
+Si l'ensemble de pilotes ne pèse pas trop lourd (quelques centaines de mégaoctets), il peut être intégralement ajouté à Gallus.
+Dans le cas ou l'ensemble est trop gros, il faudra isoler les bons pilotes, pour éviter de trop alourdir la taille de l'installateur.
+
+Le risque est de dépasser les 32Go pour le fichier ISO, ce qui empêcherait de fabriquer une clé USB d’installation, car on utilise une partition FAT32 pour respecter le standard UEFI, ce qui limite la taille de la partition à 32Go.
+
+Une fois l'ensemble de pilotes récupérés (ou uniquement les pilotes nécessaires), il faut s'assurer que l'on a un ensemble de pilotes sous un des deux formats suivants :
+
+* Un ensemble de fichiers avec extension .sys et .inf avec éventuellement des .cat (éventuellement des .dll et exe)
+* Un ou plusieurs fichiers .cab, contenant l'équivalent du premier point
+
+Le but est de mettre ces fichiers dans l’arborescence suivante :
+```
+Drivers
+├── Network
+└── Storage
+Gallus
+```
+
+Que ce soit le premier ou deuxième cas (ensemble de fichiers ou .cab), si possible il est mieux de séparer les pilotes réseau et stockage dans les dossiers correspondants, sinon on pourra mettre l'ensemble dans le dossier ```Storage```.
 
 FIXME.
 
 ### Analyse des journaux d'installation
 
-Comme spécifié dans la section [Problèmes d'accès au disque](#probl%C3%A8mes-dacc%C3%A8s-au-disque), il est facilement possible d’accéder aux journaux d'installation de la sous-étape 1 lors de l'installation en allant lire le fichier ```X:\Windows\temp\SMSTSLog\smsts.log```.
+Comme spécifié dans la section [Problèmes d'accès au disque](#probl%C3%A8mes-dacc%C3%A8s-au-disque), il est facilement possible d’accéder aux journaux d'installation de la sous-étape 1 de la phase 2 (cf. [Démarrage à partir du media d’installation](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2)) lors de l'installation en allant lire le fichier ```X:\Windows\temp\SMSTSLog\smsts.log```.
 Néanmoins cela n'est possible qu'en cas de problème entrainant l'interruption de l’exécution durant la première phase d’installation.
 
 Nous allons maintenant voir comment accéder aux journaux d'installation à la fin de celle-ci, lorsque le système est installé, ou directement sur le disque de la machine, dans le cas d'un problème lors des autres sous-étapes d'installation.
@@ -292,7 +313,7 @@ FIXME.
 
 Maintenant que les pilotes ont été identifiés, il faut les déposer dans le dossier ...
 
-Si vous suiver les instruction de cette section suite à une interruption de l'installation dans la sous-étape 1, voici comment éviter d'avoir à relancer complètement Gallus pour produire le nouveau média d'installation contenant les bon pilotes supplémentaires.
+Si vous suivez les instruction de cette section suite à une interruption de l'installation dans la sous-étape 1, voici comment éviter d'avoir à relancer complètement Gallus pour produire le nouveau média d'installation contenant les bon pilotes supplémentaires.
 
 FIXME étape clean MDT puis reexec, puis USB.
 
