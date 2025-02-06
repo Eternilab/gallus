@@ -237,7 +237,7 @@ Une fois le système installé, une session de l'utilisateur ```Administrator```
 
 Le durcissement du système s'effectue également automatiquement, suivi de la génération des rapports d'audits de conformité.
 
-Les rapport de conformité sont ensuite ouvert automatiquement dans Microsoft Edge dans plusieurs onglet.
+Les rapports de conformité sont ensuite ouverts automatiquement dans Microsoft Edge dans plusieurs onglets.
 
 # Problèmes potentiels
 	
