@@ -323,7 +323,7 @@ Néanmoins l'accès à ce journal de cette manière n'est possible qu'en cas de 
 
 Voici comment accéder aux journaux d'installation lorsque le système est installé, ou directement sur le disque de la machine, dans le cas d'un problème lors des autres sous-étapes d'installation.
 
-FIXME.
+FIXME
 
 # Fiche de route
 <!--
