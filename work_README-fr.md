@@ -225,9 +225,9 @@ Maintenant qu'un média d'installation a été produit, il est possible de déma
 
 L'installation de Microsoft Windows se fait de manière automatique dans le cas d'un déroulement nominal.
 
-Attention, par défaut le premier disque détecté sera complètement formaté et toutes les données qui pourraient y être seront effacées !
+Attention, par défaut le premier disque détecté sera complètement formaté et toutes les données qui pourraient y être stockées seront effacées !
 
-Cette installation se déroule en plusieurs sous-étapes entre lesquelles il y aura des redémarrage de la machine, ce qui est parfaitement normal.
+Cette installation se déroule en plusieurs sous-étapes entre lesquelles il y aura des redémarrages du poste cible, ce qui est parfaitement normal.
 
 Lors de la première sous-étape, le système WinPE (Windows Preinstallation Environment) va copier les fichiers sur le disque dur interne. Cette phase peut-être repérée par le font d'écran gris avec le texte suivant en haut à droite : ```Windows Deployement Toolkit```
 
