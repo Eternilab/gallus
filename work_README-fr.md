@@ -345,7 +345,7 @@ Si vous avez une suggestion qui améliorerait ce projet, veuillez s'il vous pla�
 Toute contribution sera **grandement appréciée**.
 
 1. [Bifurquez (Fork) le dépôt](https://github.com/Eternilab/gallus/fork) dans votre profil GitHub
-2. Clonnez votre dépot bifurqué de l'original sur votre machine
+2. Clonnez votre dépot bifurqué de l'original
 ```shell
 git clone git@github.com:UTILISATEUR/gallus.git gallus.git
 ```
