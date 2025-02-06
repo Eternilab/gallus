@@ -46,7 +46,7 @@
   <summary>Table des matières</summary>
   <ol>
     <li>
-      <a href="#a-propos-du-projet">À propos du projet</a>
+      <a href="#%C3%A0-propos-du-projet">À propos du projet</a>
     </li>
     <li>
       <a href="#bien-demarrer">Bien démarrer</a>
@@ -269,11 +269,11 @@ Dans le cas contraire, un autre problème est survenu, cherchez la réponse dans
 
 Vu la diversité du parc des équipements sur lesquels Microsoft Windows peut fonctionner, des pilotes logiciels supplémentaires doivent être ajoutés pour que l'installation du système d'exploitation puisse aboutir.
 
-Le périphérique dont le support de pilotes est indispensable lors de la phase 2 (cf. [A propos du projet](#a-propos-du-projet)) est le disque (SSD, HDD, etc.). L'installateur à besoin d'accéder au disque lors de l'installation du système Microsoft Windows pour le structurer, le formater et y déployer les fichiers du système d'exploitation, sinon l'installation sera interrompue.
+Le périphérique dont le support de pilotes est indispensable lors de la phase 2 (cf. [A propos du projet](#%C3%A0-propos-du-projet)) est le disque (SSD, HDD, etc.). L'installateur à besoin d'accéder au disque lors de l'installation du système Microsoft Windows pour le structurer, le formater et y déployer les fichiers du système d'exploitation, sinon l'installation sera interrompue.
 
 Un autre périphérique peut être nécessaire, non pas pendant la phase d'installation à proprement parler, mais lorsque le système démarre les premières fois, il s'agit de la carte réseau, que ce soit filaire (Eternet) ou sans-fil (Wifi). Avoir au moins une interface réseau utilisable une fois le système installé permet d'installer d'autres logiciels, de mettre le système à jour et plus généralement d'accéder à internet.
 
-Il est donc nécessaire dans ce cas de fournir ces pilotes supplémentaires à Gallus lors de la phase 1 (cf. [A propos du projet](#a-propos-du-projet)).
+Il est donc nécessaire dans ce cas de fournir ces pilotes supplémentaires à Gallus lors de la phase 1 (cf. [A propos du projet](#%C3%A0-propos-du-projet)).
 
 Pour ce faire on va récupérer un ensemble de driver pour WinPE (Windows Preinstallation Environment, système d'exploitation utilisé en phase 2 lors de la première sous-étape).
 
@@ -283,7 +283,7 @@ FIXME.
 
 ### Analyse des journaux d'installation
 
-Comme spécifié dans la section [Problèmes d'accès au disque](#problèmes-d-accès-au-disque), il est facilement possible d’accéder aux journaux d'installation de la sous-étape 1 lors de l'installation en allant lire le fichier ```X:\Windows\temp\SMSTSLog\smsts.log```.
+Comme spécifié dans la section [Problèmes d'accès au disque](#probl%C3%A8mes-dacc%C3%A8s-au-disque), il est facilement possible d’accéder aux journaux d'installation de la sous-étape 1 lors de l'installation en allant lire le fichier ```X:\Windows\temp\SMSTSLog\smsts.log```.
 Néanmoins cela n'est possible qu'en cas de problème entrainant l'interruption de l’exécution durant la première phase d’installation.
 
 Nous allons maintenant voir comment accéder aux journaux d'installation à la fin de celle-ci, lorsque le système est installé, ou directement sur le disque de la machine, dans le cas d'un problème lors des autres sous-étapes d'installation.
