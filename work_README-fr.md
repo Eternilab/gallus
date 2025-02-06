@@ -249,7 +249,7 @@ Cette [Phase 2](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-
 	
 ### Problèmes d'accès au disque
 
-Dans le cas où l'installation échoue lors de la première sous phase (font d'écran gris avec le texte suivant en haut à droite : ```Windows Deployement Toolkit```), avec une fenêtre d'erreur nommée ```Script Error``` contenant le message d'erreur ```An error has occured in the script on this page```, par dessus une fenêtre ```Deployment Summary``` avec le sous-titre ```Failure``` et le message ```Operating system deployment did not complete successfully```, il est fort probable qu'il manque des pilotes pour permettre au système WinPE d'accéder au disque.
+Dans le cas où l'installation échoue lors de la première sous-phase (font d'écran gris avec le texte suivant en haut à droite : ```Windows Deployement Toolkit```), avec une fenêtre d'erreur nommée ```Script Error``` contenant le message d'erreur ```An error has occured in the script on this page```, par dessus une fenêtre ```Deployment Summary``` avec le sous-titre ```Failure``` et le message ```Operating system deployment did not complete successfully```, il est fort probable qu'il manque des pilotes pour permettre au système WinPE d'accéder au disque.
 
 Pour s'assurer qu'il s'agit bien de ce problème, cliquez sur la croix rouge en haut à droite de la première fenêtre puis faites de même avec la deuxième.
 
