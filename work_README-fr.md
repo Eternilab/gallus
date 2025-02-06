@@ -290,7 +290,7 @@ Il s'agit de récupérer un ensemble de pilotes permettant l'accès au disque et
 Si l'ensemble des pilotes ne représente pas une taille trop importante (quelques centaines de mégaoctets), il peut être intégralement ajouté à Gallus.
 Dans le cas ou l'ensemble est trop gros, il faudra isoler les bons pilotes, pour éviter de trop alourdir la taille de l'installateur.
 
-Le risque est de dépasser les 32Go pour le fichier ISO, ce qui empêcherait de fabriquer une clé USB d’installation, car on utilise une partition FAT32 pour respecter le standard UEFI, ce qui limite la taille de la partition à 32Go.
+Le risque est de dépasser les 32Go, ce qui empêcherait de fabriquer une clé USB d’installation, car on utilise une partition FAT32 pour respecter le standard UEFI, ce qui limite la taille de la partition à 32Go.
 
 Une fois l'ensemble de pilotes récupérés (ou uniquement les pilotes nécessaires), il faut s'assurer que l'on a un ensemble de pilotes sous un des deux formats suivants :
 
