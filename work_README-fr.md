@@ -201,7 +201,7 @@ Voici l'ensemble de ces scripts accompagnés d'une rapide description des action
 
 * ```1-gallus_download_tools.ps1``` : Télécharge les installateurs des outils depuis le site de Microsoft.
 
-* ```2-gallus_setup_tools.ps1``` : Installe les outils téléchargés à la phase précédente.
+* ```2-gallus_setup_tools.ps1``` : Installe les outils téléchargés précédement.
 
 * ```3-gallus_download_windows_image.ps1``` : Télécharge l'image (format ESD) de l'installateur officiel de Windows 11 depuis les serveur Microsoft.
 
