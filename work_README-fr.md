@@ -246,6 +246,8 @@ Le système Windows est installé sans licence, à vous de fournir la vôtre pou
 Cette [Phase 2](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2) est répétable sur autant de postes que désiré.
 
 # Problèmes potentiels
+
+Si votre problème n'est pas décrit dans les sous chapitres qui suivent, veuillez [contacter Eternilab](mailto:contact@eternilab.com).
 	
 ### Problèmes d'accès au disque
 
