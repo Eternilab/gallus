@@ -356,11 +356,11 @@ git checkout -b MyAmazingFeature
 4. Ajoutez votre contribution
 5. Commitez (Commit) vos changements :
 ```shell
-git commit -m "Ajouté une fonctionnalité"
+git commit -m "Added an amazing feature"
 ```
 6. Poussez (Push) vers la branche :
 ```shell
-git push origin feature/AmazingFeature
+git push origin MyAmazingFeature
 ```
 7. [Ouvrez une demande d'intégration (Pull Request)](https://github.com/Eternilab/gallus/compare)
 
