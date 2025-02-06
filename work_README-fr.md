@@ -272,7 +272,7 @@ Dans le cas contraire, un autre problème est survenu, cherchez la réponse dans
 
 ```X:\Windows\temp\SMSTSLog\smsts.log```
 
-### Support de périphériques avec pilotes supplémentaires
+# Support de périphériques avec pilotes supplémentaires
 
 Vu la diversité du parc des équipements sur lesquels Microsoft Windows peut fonctionner, des pilotes logiciels supplémentaires doivent être ajoutés pour que l'installation du système d'exploitation puisse aboutir.
 
@@ -297,7 +297,7 @@ Une fois l'ensemble de pilotes récupérés (ou uniquement les pilotes nécessai
 * Un ensemble de fichiers avec extension .sys et .inf avec éventuellement des .cat (éventuellement des .dll et exe)
 * Un ou plusieurs fichiers .cab, contenant l'équivalent du premier point
 
-Le but est de mettre ces fichiers dans l’arborescence suivante :
+Le but est de mettre ces fichiers dans l’arborescence suivante à la racine du système de fichier du disque C: :
 ```
 Drivers
 ├── Network
@@ -307,13 +307,13 @@ Gallus
 
 Que ce soit le premier ou deuxième cas (ensemble de fichiers ou .cab), si possible il est mieux de séparer les pilotes réseau et stockage dans les dossiers correspondants, sinon on pourra mettre l'ensemble dans le dossier ```Storage```.
 
-Si vous suivez les instruction de cette section suite à une interruption de l'installation dans la sous-étape 1, voici comment éviter d'avoir à relancer complètement Gallus pour produire le nouveau média d'installation contenant les bon pilotes supplémentaires.
+Vous pouvez maintenant lancer Gallus, les drivers seront importés dans le média d'installation.
+
+Si vous suivez les instructions de cette section suite à une interruption de l'installation dans la sous-étape 1, voici comment éviter d'avoir à relancer complètement Gallus pour produire le nouveau média d'installation contenant les bon pilotes supplémentaires.
 
 FIXME étape clean MDT puis reexec, puis USB.
 
-FIXME.
-
-### Analyse des journaux d'installation
+# Analyse des journaux d'installation
 
 Comme spécifié dans la section [Problèmes d'accès au disque](#probl%C3%A8mes-dacc%C3%A8s-au-disque), il est facilement possible d’accéder aux journaux d'installation de la sous-étape 1 de la phase 2 (cf. [Démarrage à partir du media d’installation](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2)) lors de l'installation en allant lire le fichier ```X:\Windows\temp\SMSTSLog\smsts.log```.
 Néanmoins cela n'est possible qu'en cas de problème entrainant l'interruption de l’exécution durant la première phase d’installation.
