@@ -126,7 +126,7 @@ Dans le cas ou un système Windows n'est pas disponible nativement, des solution
 
 # Construction du média (Phase 1)
 
-Bien que la volonté première de Gallus soit de limiter l'interaction utilisateur nécessaire pour obtenir un installateur, il est possible d'avoir accès à des options avancées (cf: [Installation uniquement (Usage avancé)](#installation-uniquement-usage-avance)).
+Bien que la volonté première de Gallus soit de limiter l'interaction utilisateur nécessaire pour obtenir un installateur, il est possible d'avoir accès à des options avancées (cf: [Installation uniquement (Usage avancé)](#installation-uniquement-usage-avanc%C3%A9)).
 
 Ainsi les choix par défaut de la configuration de Gallus peuvent être modifiés, par exemple :
 
@@ -147,11 +147,11 @@ Attendez la fin de son exécution, qui peut prendre un moment.
 
 Gallus à produit un media d'installation au format ISO et vous propose de créer une clé USB d'installation.
 
-Passer ensuite à la section [Démarrage à partir du media d’installation](#Démarrage à partir du media d’installation)
+Passer ensuite à la section [Démarrage à partir du media d’installation](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2)
 </br>
 
 ### Installation uniquement (Usage avancé)
-*Installe Gallus à l'emplacement désiré et vous permet d'exécuter [chaque commande](#Usage-et-commandes) pour adapter votre utilisation de Gallus à vos besoins.*
+*Installe Gallus à l'emplacement désiré et vous permet d'exécuter [chaque commande](#usage--commandes) pour adapter votre utilisation de Gallus à vos besoins.*
 
 <table>
 <tr>
@@ -193,7 +193,7 @@ Passer ensuite à la section [Démarrage à partir du media d’installation](#D
 
 ### Usage & commandes
 
-Si vous avez installé Gallus avec [la méthode avancée](#Installation-uniquement), vous aurez besoin d'exécuter manuellement chaque étape de Gallus à partir du répertoire où vous l'avez installé.
+Si vous avez installé Gallus avec [la méthode avancée](#installation-uniquement-usage-avanc%C3%A9), vous aurez besoin d'exécuter manuellement chaque étape de Gallus à partir du répertoire où vous l'avez installé.
 
 Les différentes étapes de Gallus correspondent à différents scripts PS1 qui sont tous récupérés et exécutés dans l'ordre par le script ```gallus_full.ps1```utilisé dans le cas de l'[Installation et exécution (Rapide, TLDR)](#installation-et-ex%C3%A9cution-rapide-tldr).
 
@@ -207,7 +207,7 @@ Voici l'ensemble de ces scripts accompagnés d'une rapide description des action
 
 * ```4-gallus_extract_windows_image.ps1``` : Extrait les différentes parties de l'image nécessaires à Gallus.
 
-* ```5-gallus_download_drivers.ps1``` : Récupère les drivers supplémentaires (pour l'instant, copie du dossier ```drivers\Storage``` et ```drivers\Network``` dans le répertoire parent de Gallus). cf [Support de périphériques avec drivers supplémentaires](#support-de-p%C3%A9riph%C3%A9riques-avec-drivers-suppl%C3%A9mentaires)
+* ```5-gallus_download_drivers.ps1``` : Récupère les drivers supplémentaires (pour l'instant, copie du dossier ```drivers\Storage``` et ```drivers\Network``` dans le répertoire parent de Gallus). cf [Support de périphériques avec drivers supplémentaires](#support-de-p%C3%A9riph%C3%A9riques-avec-pilotes-suppl%C3%A9mentaires)
 
 * ```6-gallus_download_HardeningKitty.ps1``` : Récupère l'outil HardeningKitty utilisé pour le durcissement du système.
 
@@ -266,15 +266,18 @@ Vous trouverez des information juste après, dans la section [Support de périph
 Dans le cas contraire, un autre problème est survenu, cherchez la réponse dans ce fichier de journaux.
 
 ### Support de périphériques avec pilotes supplémentaires
+
 Vu la diversité du parc des équipements sur lesquels Microsoft Windows peut fonctionner, des pilotes logiciels supplémentaires doivent être ajoutés pour que l'installation du système d'exploitation puisse aboutir.
 
 Le périphérique dont le support de pilotes est indispensable lors de la phase 2 (cf. [A propos du projet](#a-propos-du-projet)) est le disque (SSD, HDD, etc.). L'installateur à besoin d'accéder au disque lors de l'installation du système Microsoft Windows pour le structurer, le formater et y déployer les fichiers du système d'exploitation, sinon l'installation sera interrompue.
 
-Un autre périphérique peut être nécessaire, non pas pendant la phase d'installation  proprement parler, mais lorsque le système démarre les premières fois, il s'agit de la carte réseau, que ce soit filaire (Eternet) ou sans-fil (Wifi). Avoir au moins une interface réseau utilisable une fois le système installé permet d'installer d'autres logiciels, de mettre le système à jour et plus généralement d'accéder à internet.
+Un autre périphérique peut être nécessaire, non pas pendant la phase d'installation à proprement parler, mais lorsque le système démarre les premières fois, il s'agit de la carte réseau, que ce soit filaire (Eternet) ou sans-fil (Wifi). Avoir au moins une interface réseau utilisable une fois le système installé permet d'installer d'autres logiciels, de mettre le système à jour et plus généralement d'accéder à internet.
 
 Il est donc nécessaire dans ce cas de fournir ces pilotes supplémentaires à Gallus lors de la phase 1 (cf. [A propos du projet](#a-propos-du-projet)).
 
-Pour ce faire on devra identifier au préalable les pilotes nécessaires.
+Pour ce faire on va récupérer un ensemble de driver pour WinPE (Windows Preinstallation Environment, système d'exploitation utilisé en phase 2 lors de la première sous-étape).
+
+Dans le cas d'un PC portable DELL, par exemple on cherchera sur un moteur de recherche les mots clé suivants : ```dell WinPE 11 driver pack```
 
 FIXME.
 
@@ -291,7 +294,7 @@ Maintenant que les pilotes ont été identifiés, il faut les déposer dans le d
 
 Si vous suiver les instruction de cette section suite à une interruption de l'installation dans la sous-étape 1, voici comment éviter d'avoir à relancer complètement Gallus pour produire le nouveau média d'installation contenant les bon pilotes supplémentaires.
 
-FIXME étape clean MDT puis reexec, pusi USB.
+FIXME étape clean MDT puis reexec, puis USB.
 
 # Fiche de route
 <!--
