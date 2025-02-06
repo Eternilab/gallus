@@ -77,7 +77,7 @@ La mise en œuvre de Gallus s'effectue en deux phases :
 * Phase 1 : Construction d'un média d'installation sur un premier poste  Microsoft Windows (poste de construction).
 * Phase 2 : Démarrage sur un second poste (poste cible) à partir du media d'installation créé lors de la phase précédente, pour installer un système d'exploitation Microsoft Windows sécurisé.
 
-Les phase 1 et 2 se produisent de manière quasi-automatique.
+Les phases 1 et 2 se produisent de manière quasi-automatique, voir les sections [Construction du media (Phase 1)](#construction-du-m%C3%A9dia-phase-1) et [Démarrage à partir du media d’installation (Phase 2)](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2).
 
 La phase 2 déploie un poste conforme à :
 
