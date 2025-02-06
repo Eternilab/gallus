@@ -266,9 +266,9 @@ L'éditeur de texte Notepad devrait s’ouvrir en vous montrant les journaux d'i
 Utilisez la fonction de recherche avec le texte suivant : ```Failed to run```
 
 Si vous trouver le message ```Failed to run the action: Format and Partition Disk```, c'est qu'il y a eu en effet une impossibilité de formater le disque souvent due au manque de pilotes correspondants.
-Vous trouverez des information juste après, dans la section [Support de périphériques avec pilotes supplémentaires](#support-de-p%C3%A9riph%C3%A9riques-avec-pilotes-suppl%C3%A9mentaires), pour adresser ce problème.
+Vous trouverez des informations ci-dessous, dans la section [Support de périphériques avec pilotes supplémentaires](#support-de-p%C3%A9riph%C3%A9riques-avec-pilotes-suppl%C3%A9mentaires), pour adresser ce problème.
 
-Dans le cas contraire, un autre problème est survenu, cherchez la réponse dans ce fichier de journaux.
+Dans le cas contraire, un autre problème est survenu, cherchez la réponse dans ce fichier de journaux ```X:\Windows\temp\SMSTSLog\smsts.log```.
 
 ### Support de périphériques avec pilotes supplémentaires
 
