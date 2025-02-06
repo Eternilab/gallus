@@ -225,7 +225,7 @@ Maintenant qu'un média d'installation a été produit, il est possible de déma
 
 L'installation de Microsoft Windows se fait de manière automatique dans le cas d'un déroulement nominal.
 
-Attention, par défaut le primer disque détecté sera complètement formaté et si toutes les données dessus seront effacées !
+Attention, par défaut le premier disque détecté sera complètement formaté et toutes les données qui pourraient y être seront effacées !
 
 Cette installation se déroule en plusieurs sous-étapes entre lesquelles il y aura des redémarrage de la machine, ce qui est parfaitement normal.
 
