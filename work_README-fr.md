@@ -345,19 +345,24 @@ Si vous avez une suggestion qui améliorerait ce projet, Veuillez s'il vous pla�
 Toute contribution sera **grandement appréciée**.
 
 1. [Bifurquez (Fork) le dépôt](https://github.com/Eternilab/gallus/fork)
-2. Créez une branche dans votre shell:
+2. Clonnez votre dépot bifurqué de l'original sur votre machine
+```shell
+git clone git@github.com:UTILISATEUR/gallus.git
+```
+3. Créez une branche dans votre shell:
 ```shell
 git checkout -b TODO (feature/AmazingFeature)
 ```
-3. Commitez (Commit) vos changements :
+4. Ajoutez votre contribution
+5. Commitez (Commit) vos changements :
 ```shell
 git commit -m "Ajouté une fonctionnalité"
 ```
-4. Poussez (Push) vers la branche :
+6. Poussez (Push) vers la branche :
 ```shell
 git push origin feature/AmazingFeature
 ```
-5. [Ouvrez une demande d'intégration (Pull Request)](https://github.com/Eternilab/gallus/compare)
+7. [Ouvrez une demande d'intégration (Pull Request)](https://github.com/Eternilab/gallus/compare)
 
 <p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
