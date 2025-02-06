@@ -211,7 +211,7 @@ Voici l'ensemble de ces scripts accompagnés d'une rapide description des action
 
 * ```6-gallus_download_HardeningKitty.ps1``` : Récupère l'outil HardeningKitty utilisé pour le durcissement du système.
 
-* ```7-gallus_cleanup_MDT.ps1``` : Nettoie les éléments de configuration de MDT déjà présent sur le système. Ceci permet à des restes d'une ancienne utilisation de MDT sur le système d'impacter la future construction de média.  
+* ```7-gallus_cleanup_MDT.ps1``` : Supprime les potentielles anciennes configurations de MDT.
 
 * ```8-gallus_run_MDT.ps1``` : Exécution de MDT avec les paramètres et les ajouts de Gallus pour construire les fichiers d'installation. Production d'une ISO démarrable basée sur ces fichiers.
 
