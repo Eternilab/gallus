@@ -315,7 +315,10 @@ FIXME étape clean MDT puis reexec, puis USB.
 
 # Analyse des journaux d'installation
 
-Comme spécifié dans la section [Problèmes d'accès au disque](#probl%C3%A8mes-dacc%C3%A8s-au-disque), il est facilement possible d’accéder aux journaux d'installation de la sous-étape 1 de la phase 2 (cf. [Démarrage à partir du media d’installation](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2)) lors de l'installation en allant lire le fichier ```X:\Windows\temp\SMSTSLog\smsts.log```.
+Comme spécifié dans la section [Problèmes d'accès au disque](#probl%C3%A8mes-dacc%C3%A8s-au-disque), il est facilement possible d’accéder aux journaux d'installation de la sous-étape 1 de la phase 2 (cf. [Démarrage à partir du media d’installation](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2)) lors de l'installation en allant lire le fichier suivant :
+
+```X:\Windows\temp\SMSTSLog\smsts.log```.
+
 Néanmoins l'accès à ce journal de cette manière n'est possible qu'en cas de problème entrainant l'interruption de l’exécution durant la première phase d’installation. Il sera accessible autremement une fois le système démarré, comme expliqué ci-dessous.
 
 Nous allons maintenant voir comment accéder aux journaux d'installation à la fin de celle-ci, lorsque le système est installé, ou directement sur le disque de la machine, dans le cas d'un problème lors des autres sous-étapes d'installation.
