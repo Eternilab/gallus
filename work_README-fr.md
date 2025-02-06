@@ -287,7 +287,7 @@ Pour ce faire on va récupérer un ensemble de driver pour WinPE (Windows Preins
 Dans le cas d'un PC portable DELL, par exemple on cherchera sur un moteur de recherche les mots clé suivants : ```dell WinPE 11 driver pack```
 
 Il s'agit de récupérer un ensemble de pilotes permettant l'accès au disque et au réseau pour plusieurs modèles de postes cible.
-Si l'ensemble de pilotes ne pèse pas trop lourd (quelques centaines de mégaoctets), il peut être intégralement ajouté à Gallus.
+Si l'ensemble des pilotes ne représente pas une taille trop importante (quelques centaines de mégaoctets), il peut être intégralement ajouté à Gallus.
 Dans le cas ou l'ensemble est trop gros, il faudra isoler les bons pilotes, pour éviter de trop alourdir la taille de l'installateur.
 
 Le risque est de dépasser les 32Go pour le fichier ISO, ce qui empêcherait de fabriquer une clé USB d’installation, car on utilise une partition FAT32 pour respecter le standard UEFI, ce qui limite la taille de la partition à 32Go.
