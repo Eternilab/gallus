@@ -239,6 +239,12 @@ Le durcissement du système s'effectue également automatiquement, suivi de la g
 
 Les rapports de conformité sont ensuite ouverts automatiquement dans Microsoft Edge dans plusieurs onglets.
 
+Le poste est maintenant déployé.
+
+Le système Windows est installé sans licence, à vous de fournir la votre.
+
+Cette [Phase 2](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2) est répétable sur autant de poste que désiré.
+
 # Problèmes potentiels
 	
 ### Problèmes d'accès au disque
