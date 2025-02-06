@@ -282,17 +282,17 @@ Un autre périphérique peut être nécessaire, non pas pendant la phase d'insta
 
 Il est donc nécessaire dans ces cas de fournir ces pilotes supplémentaires à Gallus lors de la phase 1 (cf. [A propos du projet](#%C3%A0-propos-du-projet)).
 
-Pour ce faire on va récupérer un ensemble de driver pour WinPE (Windows Preinstallation Environment, système d'exploitation utilisé en phase 2 (cf. [A propos du projet](#%C3%A0-propos-du-projet)) lors de la première sous-étape).
+Pour ce faire on va récupérer un ensemble de pilotes pour WinPE (Windows Preinstallation Environment, système d'exploitation utilisé en phase 2 (cf. [A propos du projet](#%C3%A0-propos-du-projet)) lors de la première sous-étape).
 
 Dans le cas d'un PC portable DELL, par exemple on cherchera sur un moteur de recherche les mots clé suivants : ```dell WinPE 11 driver pack```
 
 Il s'agit de récupérer un ensemble de pilotes permettant l'accès au disque et au réseau pour plusieurs modèles de postes cible.
-Si l'ensemble des pilotes ne représente pas une taille trop importante (quelques centaines de mégaoctets), il peut être intégralement ajouté à Gallus.
+Si l'ensemble de pilotes ne représente pas une taille trop importante (quelques centaines de mégaoctets), il peut être intégralement ajouté à Gallus.
 Dans le cas ou l'ensemble est trop gros, il faudra isoler les bons pilotes, pour éviter de trop alourdir la taille de l'installateur.
 
 Le risque est de dépasser les 32Go, ce qui empêcherait de fabriquer une clé USB d’installation, car on utilise une partition FAT32 pour respecter le standard UEFI, ce qui limite la taille de la partition à 32Go.
 
-Une fois l'ensemble de pilotes récupérés (ou uniquement les pilotes nécessaires), il faut s'assurer que l'on a un ensemble de pilotes sous un des deux formats suivants :
+Une fois l'ensemble de pilotes récupérés (ou uniquement les pilotes nécessaires), il faut s'assurer que l'on a un des deux formats suivants :
 
 * Un ensemble de fichiers avec extension .sys et .inf avec éventuellement des .cat (éventuellement des .dll et exe)
 * Un ou plusieurs fichiers .cab, contenant l'équivalent du premier point
