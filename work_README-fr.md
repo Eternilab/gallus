@@ -217,9 +217,6 @@ Voici l'ensemble de ces scripts accompagnés d'une rapide description des action
 
 * ```9-gallus_build_USB_media.ps1``` : Construction d'un média d'installation USB démarrable (sur UEFI uniquement, BIOS non supporté).
 
-Pour l'instant aucun de ces scripts ne prend de paramètres.
-Vous pouvez les modifier si vous avez des besoins spécifiques.
-
 <p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
 # Démarrage à partir du média d’installation (Phase 2)
