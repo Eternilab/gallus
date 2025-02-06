@@ -116,7 +116,7 @@ Une connexion Internet active est nécessaire afin de récupérer les différent
 * https://go.microsoft.com/*
 * https://download.microsoft.com/download/*
 
-Dans un but de sécurisation des systèmes, il est à noter que seuls les flux sortants précédemment citées sont nécessaire.
+Dans un but de sécurisation des systèmes, il est à noter que seuls les flux sortants précédemment citées sont nécessaires.
 
 En terme d'espace disque, 25Go sont nécessaires à la construction du média d'installation.
 
