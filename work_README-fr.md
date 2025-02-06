@@ -340,12 +340,12 @@ Accédez aux [tickets](https://github.com/Eternilab/gallus/issues) pour une list
 
 # Contribuer
 
-Si vous avez une suggestion qui améliorerait ce projet, veuillez s'il vous plaît bifurquer le dépôt et créer une demande d'intégration. Vous pouvez aussi simplement [créer un ticket avec le tag "amélioration"](https://github.com/Eternilab/gallus/issues/new?labels=TODO(amelioration)&template=feature-request---.md).
+Si vous avez une suggestion qui améliorerait ce projet, veuillez s'il vous plaît dupliquer le dépôt et créer une demande d'intégration. Vous pouvez aussi simplement [créer un ticket avec le tag "amélioration"](https://github.com/Eternilab/gallus/issues/new?labels=TODO(amelioration)&template=feature-request---.md).
 
 Toute contribution sera **grandement appréciée**.
 
-1. [Bifurquez (Fork) le dépôt](https://github.com/Eternilab/gallus/fork) dans votre profil GitHub
-2. Clonnez votre dépot bifurqué de l'original
+1. [Dupliquer (Fork) le dépôt](https://github.com/Eternilab/gallus/fork) dans votre profil GitHub
+2. Clonnez votre dépot dupliqué de l'original
 ```shell
 git clone git@github.com:UTILISATEUR/gallus.git gallus.git
 ```
