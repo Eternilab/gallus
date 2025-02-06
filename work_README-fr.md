@@ -309,7 +309,7 @@ Que ce soit le premier ou deuxième cas (ensemble de fichiers ou .cab), si possi
 
 Vous pouvez maintenant lancer Gallus, les drivers seront importés dans le média d'installation.
 
-Si vous suivez les instructions de cette section suite à une interruption de l'installation dans la sous-étape 1, voici comment éviter d'avoir à relancer complètement Gallus pour produire le nouveau média d'installation contenant les bon pilotes supplémentaires.
+Si vous suivez les instructions de cette section suite à une interruption de l'installation dans la sous-étape 1, voici comment éviter d'avoir à relancer complètement Gallus pour produire le nouveau média d'installation contenant les bons pilotes supplémentaires.
 
 FIXME étape clean MDT puis reexec, puis USB.
 
@@ -340,7 +340,7 @@ Accédez aux [tickets](https://github.com/Eternilab/gallus/issues) pour une list
 
 # Contribuer
 
-Si vous avez une suggestion qui améliorerait ce projet, veuillez s'il vous plaît dupliquer le dépôt et créer une demande d'intégration. Vous pouvez aussi simplement [créer un ticket avec le tag "amélioration"](https://github.com/Eternilab/gallus/issues/new?labels=TODO(amelioration)&template=feature-request---.md).
+Si vous avez une suggestion qui améliorerait ce projet, veuillez s'il vous plaît dupliquer le dépôt et créer une demande de tirage. Vous pouvez aussi simplement [créer un ticket avec le tag "amélioration"](https://github.com/Eternilab/gallus/issues/new?labels=TODO(amelioration)&template=feature-request---.md).
 
 Toute contribution sera **grandement appréciée**.
 
