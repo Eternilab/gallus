@@ -90,7 +90,7 @@ Lors de l'étape finale de l'installation en phase 2, des rapports de conformit�
 
 Le projet OpenSource [HardeningKitty](https://github.com/scipag/HardeningKitty) est utilisé pour appliquer et vérifier la sécurisation du poste déployé grâce au média d'installation construit par Gallus.
 
-L'automatisation utilisée dans ce projet utilise la technologie [MDT](https://learn.microsoft.com/en-us/mem/configmgr/mdt/) instrumentée grâce à [Powershell](https://learn.microsoft.com/en-us/powershell/scripting/overview).
+L'automatisation utilisée dans ce projet utilise la technologie [MDT](https://learn.microsoft.com/en-us/mem/configmgr/mdt/) de Microsoft instrumentée grâce à [Powershell](https://learn.microsoft.com/en-us/powershell/scripting/overview).
 
 
 ### Propulsé par
