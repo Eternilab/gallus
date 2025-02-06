@@ -195,7 +195,7 @@ Passer ensuite à la section [Démarrage à partir du media d’installation](#d
 
 Si vous avez installé Gallus avec [la méthode avancée](#installation-uniquement-usage-avanc%C3%A9), vous aurez besoin d'exécuter manuellement chaque étape de Gallus à partir du répertoire où vous l'avez installé.
 
-Les différentes étapes de Gallus correspondent à différents scripts PS1 qui sont tous récupérés et exécutés dans l'ordre par le script ```gallus_full.ps1```utilisé dans le cas de l'[Installation et exécution (Rapide, TLDR)](#installation-et-ex%C3%A9cution-rapide-tldr).
+Les différentes étapes de Gallus correspondent à différents scripts PS1 qui sont tous récupérés et exécutés par le script ```gallus_full.ps1```utilisé dans le cas de l'[Installation et exécution (Rapide, TLDR)](#installation-et-ex%C3%A9cution-rapide-tldr).
 
 Voici l'ensemble de ces scripts accompagnés d'une rapide description des actions qu'ils produisent :
 
