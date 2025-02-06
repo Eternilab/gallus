@@ -241,7 +241,7 @@ Les rapports de conformité sont ensuite ouverts automatiquement dans Microsoft 
 
 Le poste est maintenant déployé.
 
-Le système Windows est installé sans licence, à vous de fournir la vôtre.
+Le système Windows est installé sans licence, à vous de fournir la vôtre pour être conforme au [contrat d'utilisateur final de Microsoft](https://www.microsoft.com/content/dam/microsoft/usetm/documents/windows/11/oem-(pre-installed)/UseTerms_OEM_Windows_11_English.pdf).
 
 Cette [Phase 2](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2) est répétable sur autant de postes que désiré.
 
