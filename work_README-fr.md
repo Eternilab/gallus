@@ -362,7 +362,7 @@ git commit -m "Added an amazing feature"
 ```shell
 git push origin MyAmazingFeature
 ```
-7. [Ouvrez une demande d'intégration (Pull Request)](https://github.com/Eternilab/gallus/compare)
+7. [Ouvrez une demande de tirage (Pull Request)](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request)
 
 <p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
