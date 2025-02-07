@@ -74,7 +74,7 @@ Ce projet (Gallus) a pour but de générer des médias d'installation (ISO, USB)
 
 La mise en œuvre de Gallus s'effectue en deux phases :
 
-* Phase 1 : Construction d'un média d'installation sur un premier poste  Microsoft Windows (poste de construction).
+* Phase 1 : Construction d'un média d'installation sur un premier poste Microsoft Windows (poste de construction).
 * Phase 2 : Démarrage sur un second poste (poste cible) à partir du media d'installation créé lors de la phase précédente, pour installer un système d'exploitation Microsoft Windows sécurisé.
 
 Les phases 1 et 2 se produisent de manière quasi-automatique, voir les sections [Construction du media (Phase 1)](#construction-du-m%C3%A9dia-phase-1) et [Démarrage à partir du media d’installation (Phase 2)](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2).
@@ -312,6 +312,17 @@ Vous pouvez maintenant lancer Gallus, les drivers seront importés dans le médi
 Si vous suivez les instructions de cette section suite à une interruption de l'installation dans la sous-étape 1, voici comment éviter d'avoir à relancer complètement Gallus pour produire le nouveau média d'installation contenant les bons pilotes supplémentaires.
 
 FIXME étape clean MDT puis reexec, puis USB.
+
+1. On crée, si elle n'existe pas encore, la structure de dossiers documentée ci-dessus à la racine du système de fichier sur le poste de construction.
+2. On met dans les dossiers ```Storage``` et ```Network``` les drivers obtenus.
+3. On lance l'étape 5 de Gallus en éxecutant le script ```5-gallus_download_drivers.ps1``` pour importer les drivers dans Gallus.
+4. On lance l'étape 7 de Gallus en éxecutant le script ```7-gallus_cleanup_MDT.ps1``` pour nettoyer les anciens fichiers d'installation.
+5. On lance l'étape 8 de Gallus en éxecutant le script ```8-gallus_run_MDT.ps1``` pour éxecuter MDT de nouveau avec les drivers.
+6. (Optionnel) On lance l'étape 9 de Gallus en éxecutant le script ```9-gallus_build_USB_media.ps1``` pour constructruire un média d'installation USB démarrable.
+
+Les nouveaux médias d'installation construits contiennent maintenant les drivers.
+
+On peut maintenant relancer [l'installation (Phase2)](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2).
 
 # Analyse des journaux d'installation
 
