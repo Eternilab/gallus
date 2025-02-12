@@ -289,7 +289,7 @@ Il est donc nécessaire dans ces cas de fournir ces pilotes supplémentaires à 
 
 Pour ce faire on va récupérer un ensemble de pilotes pour WinPE (Windows Preinstallation Environment, système d'exploitation utilisé en phase 2 (cf. [A propos du projet](#%C3%A0-propos-du-projet)) lors de la première sous-étape).
 
-Dans le cas d'un PC portable DELL, par exemple on cherchera sur un moteur de recherche les mots clé suivants : ```dell WinPE 11 driver pack```
+Par exemple, dans le cas d'un PC portable DELL, on cherchera sur un moteur de recherche les mots clé suivants : ```dell WinPE 11 driver pack```
 
 Il s'agit de récupérer un ensemble de pilotes permettant l'accès au disque et au réseau pour plusieurs modèles de postes cible.
 Si l'ensemble de pilotes ne représente pas une taille trop importante (quelques centaines de mégaoctets), il peut être intégralement ajouté à Gallus.
