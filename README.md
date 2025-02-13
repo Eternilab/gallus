@@ -131,7 +131,7 @@ Bien que la volonté première de Gallus soit de limiter l'interaction utilisate
 Ainsi les choix par défaut de la configuration de Gallus peuvent être modifiés, par exemple :
 
 * Création de multiples médias d'installation
-* Réutilisation d'une poste de construction ayant déjà servi pour construire un média d'installation, suite à une mise à jour des images d'installation de Microsoft Windows.
+* Réutilisation d'un poste de construction ayant déjà servi pour construire un média d'installation, suite à une mise à jour des images d'installation de Microsoft Windows.
 
 Deux modes d'installation/usage sont donc détaillés ci-après. 
 
@@ -144,7 +144,7 @@ Deux modes d'installation/usage sont donc détaillés ci-après.
 ```powershell
 mkdir \Gallus; cd \Gallus; Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus_full.ps1')))
 ```
-Attendez la fin de son exécution, qui peut prendre un moment.
+Attendez la fin de son exécution, qui peut prendre 20 à 30 minutes.
 
 Gallus à produit un media d'installation au format ISO et vous propose de créer une clé USB d'installation.
 
@@ -224,11 +224,13 @@ Voici l'ensemble de ces scripts accompagnés d'une rapide description des action
 
 Maintenant qu'un média d'installation a été produit, il est possible de démarrer le poste cible à partir de ce média.
 
+Clé bootable : Insérer une clé bootable dans le poste cible et booter le poste avec la clé (l'accès au paramètres de boot de fait le plus souvent en appyant du F10 ou F12 au démarrage)
+
 L'installation de Microsoft Windows se fait de manière automatique dans le cas d'un déroulement nominal.
 
 Attention, par défaut le premier disque détecté sera complètement formaté et toutes les données qui pourraient y être stockées seront effacées !
 
-Cette installation se déroule en plusieurs sous-étapes entre lesquelles il y aura des redémarrages du poste cible, ce qui est parfaitement normal.
+Cette installation dure environ 10 minutes et se déroule en plusieurs sous-étapes entre lesquelles il y aura des redémarrages du poste cible, ce qui est parfaitement normal.
 
 Lors de la première sous-étape, le système WinPE (Windows Preinstallation Environment) va copier les fichiers sur le disque dur interne. Cette phase peut-être repérée par le font d'écran gris avec le texte suivant en haut à droite : ```Windows Deployement Toolkit```
 
