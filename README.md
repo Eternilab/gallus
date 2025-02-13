@@ -224,7 +224,7 @@ Voici l'ensemble de ces scripts accompagnés d'une rapide description des action
 
 Maintenant qu'un média d'installation a été produit, il est possible de démarrer le poste cible à partir de ce média.
 
-Clé bootable : Insérer une clé bootable dans le poste cible et booter le poste avec la clé (l'accès au paramètres de boot de fait le plus souvent en appyant du F10 ou F12 au démarrage)
+Insérer le média d'installation dans le poste cible et booter le poste via ce média (l'accès au paramètres de boot se fait le plus souvent en appuyant du F10 ou F12 au démarrage)
 
 L'installation de Microsoft Windows se fait de manière automatique dans le cas d'un déroulement nominal.
 
@@ -285,7 +285,7 @@ Vu la diversité du parc des équipements sur lesquels Microsoft Windows peut fo
 
 Le périphérique dont le support de pilotes est indispensable lors de la phase 2 (cf. [A propos du projet](#%C3%A0-propos-du-projet)) est le disque (SSD, HDD, etc.). L'installateur à besoin d'accéder au disque lors de l'installation du système Microsoft Windows pour le structurer, le formater et y déployer les fichiers du système d'exploitation, sinon l'installation sera interrompue.
 
-Un autre périphérique peut être nécessaire, non pas pendant la phase d'installation à proprement parler, mais lorsque le système démarre les premières fois, il s'agit de la carte réseau, que ce soit filaire (Ethernet) ou sans-fil (Wifi). Avoir au moins une interface réseau utilisable une fois le système déployé permet d'installer d'autres logiciels, de mettre le système à jour et plus généralement d'accéder à Internet.
+Un autre périphérique peut être nécessaire, non pas pendant la phase d'installation à proprement parler, mais lorsque le système démarre les premières fois, il s'agit de la carte réseau, que ce soit filaire (Ethernet) ou sans-fil (Wifi). Avoir au moins une interface réseau utilisable une fois le système déployé permet d'installer d'autres drivers et logiciels, de mettre le système à jour et plus généralement d'accéder à Internet.
 
 Il est donc nécessaire dans ces cas de fournir ces pilotes supplémentaires à Gallus lors de la phase 1 (cf. [A propos du projet](#%C3%A0-propos-du-projet)).
 
