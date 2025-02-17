@@ -12,7 +12,7 @@ param(
 
     [Parameter()]
     [string]$Repo="main"
-	
+
     )
 
 if ($fetchtools)	{ &gallus_download_tools; &gallus_download_HardeningKitty  }
@@ -181,7 +181,7 @@ Set-ItemProperty -Path "GALLUSMEDIA:\" -Name SupportX86 -Value False
 # 15
 Set-ItemProperty -Path "DS001:\" -Name Boot.x64.SelectionProfile -Value "gallus_winPE"
 Set-ItemProperty -Path "GALLUSMEDIA:\" -Name Boot.x64.SelectionProfile -Value "gallus_winPE"
-# 16          
+# 16
 Copy-Item -Path $PWD\conf\Bootstrap.ini -Destination $PWD\DSGallus\Control\Bootstrap.ini
 Copy-Item -Path $PWD\conf\Bootstrap.ini -Destination $PWD\GMedia\Content\Deploy\Control\Bootstrap.ini
 Copy-Item -Path $PWD\conf\CustomSettings.ini -Destination $PWD\DSGallus\Control\CustomSettings.ini
