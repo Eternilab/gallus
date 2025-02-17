@@ -1,9 +1,9 @@
 param(
      [Parameter()]
-     [string]$Repo="main"
+     [string]$Ref="refs/tags/v0.2"
  )
 # List of Gallus parts
-$baseURL="https://raw.githubusercontent.com/Eternilab/gallus/$Repo/"
+$baseURL="https://raw.githubusercontent.com/Eternilab/gallus/$Ref/"
 $parts=@(
 "conf/Bootstrap.ini",
 "conf/CustomSettings.ini",
