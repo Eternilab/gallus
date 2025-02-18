@@ -1,25 +1,28 @@
 param(
-	[switch]$oneliner,
-	[switch]$fetchtools,
-	[switch]$setuptools,
+	[switch]$bootstrap,
+	[switch]$init,
+	[switch]$AdvancedDownloadTools,
+	[switch]$AdvancedSetupTools,
+	[switch]$AdvancedDownloadWinImage,
+	[switch]$AdvancedExtractWinImage,
+	[switch]$AdvancedImportDriver,
+	[switch]$AdvancedDownloadHardeningKitty,
+	[switch]$AdvancedCleanupMDT,
+	[switch]$AdvancedRunMDT,
 	[switch]$flash,
-	[switch]$fetch,
 	[switch]$build,
-	# [switch]$clean,
 	# [switch]$clean,
 	# [switch]$update,
 	# [switch]$buildupdated,
-	[switch]$full,
+	[switch]$full
 
-    [Parameter()]
-    [string]$Repo="main"
-	
+  
     )
 	
 
 #Definition des Fonctions--------------------------------------------------------------------------------------------------------------------------------------------------------
 
-function oneliner{
+function bootstrap{
 	# List of Gallus parts------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	$baseURL="https://raw.githubusercontent.com/Eternilab/gallus/$Repo/"
 	$parts=@(
@@ -36,6 +39,7 @@ function oneliner{
 	"scripts/ReportScript.js",
 	"scripts/ReportStyle.css",
 	"scripts/Variables.ps1",
+	"gallus.ps1",
 	"README.md"
 	)
 
@@ -50,8 +54,6 @@ function oneliner{
 	foreach ($part in $parts) {
 	 Invoke-WebRequest -Uri $baseURL$part -OutFile $PWD\$part
 	}
-
-
 }
 # 1----------------------------------------------------------------------------------------------------------------------------------------------------------------
 function gallus_download_tools{
@@ -127,7 +129,7 @@ Write-Host -ForegroundColor Green "4.3 - Extraction de Windows 11 22H2 Enterpris
 DISM /Quiet /Export-Image /SourceImageFile:$PWD\windl\win.esd /SourceIndex:7 /DestinationImageFile:$PWD\Win11x64_EntN_en-US_22H2\sources\install.wim /Compress:max /CheckIntegrity
 }
 # 5---------------------------------------------------------------------------------------------------------------------------------------------------------------
-function gallus_download_drivers {
+function gallus_import_drivers {
 	Write-Host -ForegroundColor Green "5 - Recuperation des drivers supplementaires"
 # Cleanup potential old files
 Remove-Item -Recurse -Force -Path $PWD\drivers -ErrorAction SilentlyContinue
@@ -277,15 +279,25 @@ function aide {
 #Limitation du nombre de paramètres à 1
 if ($PSBoundParameters.Count -gt 1) {Write-Host -ForegroundColor red "Vous ne pouvez utiliser qu'un seul parametre a la fois " ; &aide ; exit 1}
 
-if ($oneliner)		{ &oneliner }
-
-if ($fetchtools)	{ &gallus_download_tools; &gallus_download_HardeningKitty  }
-if ($setuptools) 	{ &gallus_setup_tools }
-if ($flash) 	 	{ &gallus_build_USB_media }
-if ($fetch)			{ &gallus_download_windows_image }
-if ($build)			{ &gallus_run_MDT }
-
-if ($full)			{ &gallus_download_tools; &gallus_setup_tools ; &gallus_download_windows_image ; &gallus_extract_windows_image; &gallus_download_drivers ; &gallus_download_HardeningKitty ; &gallus_cleanup_MDT ; &gallus_run_MDT ; &gallus_build_USB_media }
+elseif ($bootstrap)		{ &oneliner }
 
 
+
+#Commandes de bases
+elseif ($init)	{ &gallus_download_tools; &gallus_setup_tools; &gallus_download_windows_image ; &gallus_import_drivers; &gallus_download_HardeningKitty }
+elseif ($flash) 	 	{ &gallus_build_USB_media }
+elseif ($build)			{ &gallus_cleanup_MDT; &gallus_run_MDT }
+
+#Equivaux à l'appel successif des commandes : init ; flash ; build 
+elseif ($full)			{ &gallus_download_tools; &gallus_setup_tools ; &gallus_download_windows_image ; &gallus_extract_windows_image; &gallus_import_drivers ; &gallus_download_HardeningKitty ; &gallus_cleanup_MDT ; &gallus_run_MDT ; &gallus_build_USB_media }
+
+elseif ($AdvancedDownloadTools) 	{ &gallus_download_tools }
+elseif ($AdvancedSetupTools) 	{ &gallus_setup_tools }
+elseif ($AdvancedDownloadWinImage) 	{ &gallus_download_windows_image }
+elseif ($AdvancedExtractWinImage) 	{ &gallus_extract_windows_image }
+elseif ($AdvancedImportDriver) 	{ &gallus_import_drivers }
+elseif ($AdvancedDownloadHardeningKitty) 	{ &gallus_download_HardeningKitty }
+elseif ($AdvancedCleanupMDT) 	{ &gallus_cleanup_MDT }
+elseif ($AdvancedRunMDT) 	{ &gallus_build_USB_media }
+elseif ($AdvancedDownloadAll) 	{ &gallus_download_tools ; &gallus_download_windows_image ; &gallus_import_drivers ; &gallus_download_HardeningKitty }
 else 				{ &aide }
