@@ -1,4 +1,5 @@
 param(
+	[switch]$oneliner,
 	[switch]$fetchtools,
 	[switch]$setuptools,
 	[switch]$flash,
@@ -12,19 +13,46 @@ param(
 
     [Parameter()]
     [string]$Repo="main"
-
+	
     )
+	
 
-if ($fetchtools)	{ &gallus_download_tools; &gallus_download_HardeningKitty  }
-if ($setuptools) 	{ &gallus_setup_tools }
-if ($flash) 	 	{ &gallus_build_USB_media }
-if ($fetch)			{ &gallus_download_windows_image }
-if ($build)			{ &gallus_run_MDT }
+#Definition des Fonctions--------------------------------------------------------------------------------------------------------------------------------------------------------
 
-if ($full)			{ &gallus_download_tools; &gallus_setup_tools ; &gallus_download_windows_image ; &gallus_extract_windows_image; &gallus_download_drivers ; &gallus_download_HardeningKitty ; &gallus_cleanup_MDT ; &gallus_run_MDT ; &gallus_build_USB_media }
+function oneliner{
+	# List of Gallus parts------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	$baseURL="https://raw.githubusercontent.com/Eternilab/gallus/$Repo/"
+	$parts=@(
+	"conf/Bootstrap.ini",
+	"conf/CustomSettings.ini",
+	"conf/Gallus_ts.xml",
+	"scripts/AuditingScript.ps1",
+	"scripts/CopyAuditingFiles.ps1",
+	"scripts/CopyGallusFiles.wsf",
+	"scripts/Eternilab.png",
+	"scripts/GenerateGHITable.ps1",
+	"scripts/GHI.csv",
+	"scripts/HardeningScript.ps1",
+	"scripts/ReportScript.js",
+	"scripts/ReportStyle.css",
+	"scripts/Variables.ps1",
+	"README.md"
+	)
 
-#Definition des Fonctions
+	# Cleanup potential old files-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Remove-Item -Recurse -Force -Path $PWD\conf -ErrorAction SilentlyContinue
+	Remove-Item -Recurse -Force -Path $PWD\scripts -ErrorAction SilentlyContinue
+	# Create directories
+	$null = New-Item -ItemType Directory -Path $PWD\conf
+	$null = New-Item -ItemType Directory -Path $PWD\scripts
+	# Download parts
+	Write-Host -ForegroundColor Green "0 - Telechargement des elements de Gallus"
+	foreach ($part in $parts) {
+	 Invoke-WebRequest -Uri $baseURL$part -OutFile $PWD\$part
+	}
 
+
+}
 # 1----------------------------------------------------------------------------------------------------------------------------------------------------------------
 function gallus_download_tools{
 	Write-Host -ForegroundColor Green "1 - Telechargement des outils Microsoft necessaires (ADK et MDT)"
@@ -181,7 +209,7 @@ Set-ItemProperty -Path "GALLUSMEDIA:\" -Name SupportX86 -Value False
 # 15
 Set-ItemProperty -Path "DS001:\" -Name Boot.x64.SelectionProfile -Value "gallus_winPE"
 Set-ItemProperty -Path "GALLUSMEDIA:\" -Name Boot.x64.SelectionProfile -Value "gallus_winPE"
-# 16
+# 16          
 Copy-Item -Path $PWD\conf\Bootstrap.ini -Destination $PWD\DSGallus\Control\Bootstrap.ini
 Copy-Item -Path $PWD\conf\Bootstrap.ini -Destination $PWD\GMedia\Content\Deploy\Control\Bootstrap.ini
 Copy-Item -Path $PWD\conf\CustomSettings.ini -Destination $PWD\DSGallus\Control\CustomSettings.ini
@@ -234,34 +262,30 @@ write-host -foregroundcolor green "Le systeme d'exploitation sera durcis (securi
 }
 
 
-# List of Gallus parts
-$baseURL="https://raw.githubusercontent.com/Eternilab/gallus/$Repo/"
-$parts=@(
-"conf/Bootstrap.ini",
-"conf/CustomSettings.ini",
-"conf/Gallus_ts.xml",
-"scripts/AuditingScript.ps1",
-"scripts/CopyAuditingFiles.ps1",
-"scripts/CopyGallusFiles.wsf",
-"scripts/Eternilab.png",
-"scripts/GenerateGHITable.ps1",
-"scripts/GHI.csv",
-"scripts/HardeningScript.ps1",
-"scripts/ReportScript.js",
-"scripts/ReportStyle.css",
-"scripts/Variables.ps1",
-"gallus.ps1"
-"README.md"
-)
+function aide {
+	write-host "	-setuptools 		= Installe des outils Microsoft
+	-fetchtools 		= Rzcuperation des outils Microsoft
+	-flash 			= Flash le fichier d'installation sur l'USB 
+	-build 			= Produit le ficher d'installation (stable et durci)
+	-full			= Flash la cle USB avec en faisant toute les étapes  d'un coup
+					
+	-oneliner		= Commande utilise lors de l'installation de Gallus 
+	"
+}
 
-# Cleanup potential old files
-Remove-Item -Recurse -Force -Path $PWD\conf -ErrorAction SilentlyContinue
-Remove-Item -Recurse -Force -Path $PWD\scripts -ErrorAction SilentlyContinue
-# Create directories
-$null = New-Item -ItemType Directory -Path $PWD\conf
-$null = New-Item -ItemType Directory -Path $PWD\scripts
-# Download parts
-Write-Host -ForegroundColor Green "0 - Telechargement des elements de Gallus"
-#foreach ($part in $parts) {
-#  Invoke-WebRequest -Uri $baseURL$part -OutFile $PWD\$part
-#}
+
+#Limitation du nombre de paramètres à 1
+if ($PSBoundParameters.Count -gt 1) {Write-Host -ForegroundColor red "Vous ne pouvez utiliser qu'un seul parametre a la fois " ; &aide ; exit 1}
+
+if ($oneliner)		{ &oneliner }
+
+if ($fetchtools)	{ &gallus_download_tools; &gallus_download_HardeningKitty  }
+if ($setuptools) 	{ &gallus_setup_tools }
+if ($flash) 	 	{ &gallus_build_USB_media }
+if ($fetch)			{ &gallus_download_windows_image }
+if ($build)			{ &gallus_run_MDT }
+
+if ($full)			{ &gallus_download_tools; &gallus_setup_tools ; &gallus_download_windows_image ; &gallus_extract_windows_image; &gallus_download_drivers ; &gallus_download_HardeningKitty ; &gallus_cleanup_MDT ; &gallus_run_MDT ; &gallus_build_USB_media }
+
+
+else 				{ &aide }
