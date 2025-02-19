@@ -1,5 +1,4 @@
 param(
-	[switch]$bootstrap,
 	[switch]$init,
 	[switch]$AdvancedDownloadTools,
 	[switch]$AdvancedSetupTools,
@@ -14,49 +13,37 @@ param(
 	# [switch]$clean,
 	# [switch]$update,
 	# [switch]$buildupdated,
-	[switch]$full
-
-  
-    )
+	[switch]$full  
+	)
 	
 
 #Definition des Fonctions--------------------------------------------------------------------------------------------------------------------------------------------------------
 
-function bootstrap{
-	# List of Gallus parts------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	$baseURL="https://raw.githubusercontent.com/Eternilab/gallus/$Repo/"
-	$parts=@(
-	"conf/Bootstrap.ini",
-	"conf/CustomSettings.ini",
-	"conf/Gallus_ts.xml",
-	"scripts/AuditingScript.ps1",
-	"scripts/CopyAuditingFiles.ps1",
-	"scripts/CopyGallusFiles.wsf",
-	"scripts/Eternilab.png",
-	"scripts/GenerateGHITable.ps1",
-	"scripts/GHI.csv",
-	"scripts/HardeningScript.ps1",
-	"scripts/ReportScript.js",
-	"scripts/ReportStyle.css",
-	"scripts/Variables.ps1",
-	"gallus.ps1",
-	"README.md"
-	)
-
-	# Cleanup potential old files-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	Remove-Item -Recurse -Force -Path $PWD\conf -ErrorAction SilentlyContinue
-	Remove-Item -Recurse -Force -Path $PWD\scripts -ErrorAction SilentlyContinue
-	# Create directories
-	$null = New-Item -ItemType Directory -Path $PWD\conf
-	$null = New-Item -ItemType Directory -Path $PWD\scripts
-	# Download parts
-	Write-Host -ForegroundColor Green "0 - Telechargement des elements de Gallus"
-	foreach ($part in $parts) {
-	 Invoke-WebRequest -Uri $baseURL$part -OutFile $PWD\$part
-	}
+#Affichage des commandes
+function aide {
+	write-host "	
+Commandes de base :
+	
+-init				= Recupere les ressources necessaires a la creation d'un fichier d'installation
+-build 				= Produit le ficher d'installation
+-flash 				= Flash le fichier d'installation sur l'USB 	
+-full				= Equivaux a l'appel successif des commandes : init ; flash ; build 
+		
+Commandes avancees :
+		
+-AdvancedDownloadTools		= Installe les outils Microsoft
+-AdvancedSetupTools		= Setup les outils Microsoft
+-AdvancedDownloadWinImage	= Installe l'image Windows
+-AdvancedExtractWinImage	= Extrait l'image Windows
+-AdvancedImportDriver		= Recupere les drivers prsent dans le dossier C:\Drivers
+-AdvancedDownloadHardeningKitty	= Installe HardeningKitty
+-AdvancedCleanupMDT		= Nettoyage des parametres MDT
+-AdvancedRunMDT			= Integration des parametres MDT
+-AdvancedDownloadAll		= Equivaux a l'appel sucessif des commandes : AdvancedDownloadTools ; AdvancedDownloadWinImage ; AdvancedImportDriver ; gallus_download_HardeningKitty
+	"
 }
 # 1----------------------------------------------------------------------------------------------------------------------------------------------------------------
-function gallus_download_tools{
+function download_tools{
 	Write-Host -ForegroundColor Green "1 - Telechargement des outils Microsoft necessaires (ADK et MDT)"
 # Cleanup potential old files
 Remove-Item -Recurse -Force -Path $PWD\toolsdl -ErrorAction SilentlyContinue
@@ -74,7 +61,7 @@ Invoke-WebRequest -Uri https://download.microsoft.com/download/3/3/9/339BE62D-B4
 $ProgressPreference = 'Continue'
 }
 # 2---------------------------------------------------------------------------------------------------------------------------------------------------------------
-function gallus_setup_tools {
+function setup_tools {
 	Write-Host -ForegroundColor Green "2 - Installation des outils Microsoft (ADK et MDT)"
 # Install ADK
 Start-Process -Wait -FilePath $PWD\toolsdl\adksetup.exe -ArgumentList "/features OptionId.DeploymentTools OptionId.ICDConfigurationDesigner /quiet /ceip off"
@@ -87,7 +74,7 @@ Start-Process -Wait -FilePath $PWD\toolsdl\mdt.msi -ArgumentList "/quiet"
 Write-Host -ForegroundColor Green "2.3 - MDT a ete installe"
 }
 # 3---------------------------------------------------------------------------------------------------------------------------------------------------------------
-function gallus_download_windows_image {
+function download_windows_image {
 	Write-Host -ForegroundColor Green "3 - Telechargement de l'image Windows 11 x64 22H2 officielle"
 # Cleanup potential old files
 Remove-Item -Recurse -Force -Path $PWD\windl -ErrorAction SilentlyContinue
@@ -101,7 +88,7 @@ Invoke-WebRequest -Uri http://dl.delivery.mp.microsoft.com/filestreamingservice/
 $ProgressPreference = 'Continue'
 }
 # 4---------------------------------------------------------------------------------------------------------------------------------------------------------------
-function gallus_extract_windows_image {
+function extract_windows_image {
 	Write-Host -ForegroundColor Green "4 - Extraction des elements necessaires depuis l'image officielle de Windows 11 x64 22H2"
 # Cleanup potential old files
 Remove-Item -Recurse -Force -Path $PWD\Win11x64_EntN_en-US_22H2 -ErrorAction SilentlyContinue
@@ -129,7 +116,7 @@ Write-Host -ForegroundColor Green "4.3 - Extraction de Windows 11 22H2 Enterpris
 DISM /Quiet /Export-Image /SourceImageFile:$PWD\windl\win.esd /SourceIndex:7 /DestinationImageFile:$PWD\Win11x64_EntN_en-US_22H2\sources\install.wim /Compress:max /CheckIntegrity
 }
 # 5---------------------------------------------------------------------------------------------------------------------------------------------------------------
-function gallus_import_drivers {
+function import_drivers {
 	Write-Host -ForegroundColor Green "5 - Recuperation des drivers supplementaires"
 # Cleanup potential old files
 Remove-Item -Recurse -Force -Path $PWD\drivers -ErrorAction SilentlyContinue
@@ -145,7 +132,7 @@ Copy-Item -Recurse -Path $PWD\..\drivers\Storage\* -Destination $PWD\drivers\Sto
 Copy-Item -Recurse -Path $PWD\..\drivers\Network\* -Destination $PWD\drivers\Network\ -ErrorAction SilentlyContinue
 }
 # 6---------------------------------------------------------------------------------------------------------------------------------------------------------------
-function gallus_download_HardeningKitty {
+function download_HardeningKitty {
 	Write-Host -ForegroundColor Green "6 - Telechargement de l'outil HardeningKitty et de la liste de durcissement CIS Windows 11 Enterprise 22H2"
 # Cleanup potential old files
 Remove-Item -Recurse -Force -Path $PWD\hkdl -ErrorAction SilentlyContinue
@@ -157,7 +144,7 @@ Invoke-WebRequest -Uri https://raw.githubusercontent.com/scipag/HardeningKitty/m
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/scipag/HardeningKitty/master/lists/finding_list_cis_microsoft_windows_11_enterprise_22h2_machine.csv -OutFile $PWD\hkdl\finding_list_cis_microsoft_windows_11_enterprise_22h2_machine.csv
 }
 # 7---------------------------------------------------------------------------------------------------------------------------------------------------------------
-function gallus_cleanup_MDT {
+function cleanup_MDT {
 	Write-Host -ForegroundColor Green "7 - Nettoyage d'eventuels anciens projets MDT"
 # Remove PSDrives
 Remove-PSDrive -Name "GALLUSMEDIA" -ErrorAction SilentlyContinue
@@ -167,7 +154,7 @@ Remove-Item -Recurse -Force -Path "$PWD/GMedia" -ErrorAction SilentlyContinue
 Remove-Item -Recurse -Force -Path "$PWD/DSGallus" -ErrorAction SilentlyContinue
 }
 # 8---------------------------------------------------------------------------------------------------------------------------------------------------------------
-function gallus_run_MDT {
+function run_MDT {
 	Write-Host -ForegroundColor Green "8 - Fabrication de l'installateur grace a MDT"
 Write-Host -ForegroundColor Green "8.1 - Configuration de l'environnement de fabrication de l'installateur"
 # 1
@@ -229,7 +216,7 @@ write-host -foregroundcolor green "Le systeme d'exploitation sera durcis (securi
 write-host ""
 }
 # 9---------------------------------------------------------------------------------------------------------------------------------------------------------------
-function gallus_build_USB_media {
+function build_USB_media {
 	Write-Host -ForegroundColor Green "9 - Creation du media d'installation sur support de stockage amovible"
 Write-Host ""
 Write-Host -ForegroundColor Green "!!! Attention les fichiers presents sur le support vont etre supprimes !!!"
@@ -264,40 +251,29 @@ write-host -foregroundcolor green "Le systeme d'exploitation sera durcis (securi
 }
 
 
-function aide {
-	write-host "	-setuptools 		= Installe des outils Microsoft
-	-fetchtools 		= Rzcuperation des outils Microsoft
-	-flash 			= Flash le fichier d'installation sur l'USB 
-	-build 			= Produit le ficher d'installation (stable et durci)
-	-full			= Flash la cle USB avec en faisant toute les étapes  d'un coup
-					
-	-oneliner		= Commande utilise lors de l'installation de Gallus 
-	"
-}
-
+#Execution des fonction-----------------------------------------------------------------------------------------------------------------------
 
 #Limitation du nombre de paramètres à 1
 if ($PSBoundParameters.Count -gt 1) {Write-Host -ForegroundColor red "Vous ne pouvez utiliser qu'un seul parametre a la fois " ; &aide ; exit 1}
 
-elseif ($bootstrap)		{ &oneliner }
-
-
-
 #Commandes de bases
-elseif ($init)	{ &gallus_download_tools; &gallus_setup_tools; &gallus_download_windows_image ; &gallus_import_drivers; &gallus_download_HardeningKitty }
-elseif ($flash) 	 	{ &gallus_build_USB_media }
-elseif ($build)			{ &gallus_cleanup_MDT; &gallus_run_MDT }
+elseif ($init)								{ &download_tools; &setup_tools; &download_windows_image ; &extract_windows_image ; &import_drivers; &download_HardeningKitty }
+elseif ($flash)								{ &build_USB_media }
+elseif ($build)								{ &cleanup_MDT; &run_MDT }
 
 #Equivaux à l'appel successif des commandes : init ; flash ; build 
-elseif ($full)			{ &gallus_download_tools; &gallus_setup_tools ; &gallus_download_windows_image ; &gallus_extract_windows_image; &gallus_import_drivers ; &gallus_download_HardeningKitty ; &gallus_cleanup_MDT ; &gallus_run_MDT ; &gallus_build_USB_media }
+elseif ($full)								{ &download_tools; &setup_tools ; &download_windows_image ; &extract_windows_image; &import_drivers ; &download_HardeningKitty ; &cleanup_MDT ; &run_MDT ; &build_USB_media }
 
-elseif ($AdvancedDownloadTools) 	{ &gallus_download_tools }
-elseif ($AdvancedSetupTools) 	{ &gallus_setup_tools }
-elseif ($AdvancedDownloadWinImage) 	{ &gallus_download_windows_image }
-elseif ($AdvancedExtractWinImage) 	{ &gallus_extract_windows_image }
-elseif ($AdvancedImportDriver) 	{ &gallus_import_drivers }
-elseif ($AdvancedDownloadHardeningKitty) 	{ &gallus_download_HardeningKitty }
-elseif ($AdvancedCleanupMDT) 	{ &gallus_cleanup_MDT }
-elseif ($AdvancedRunMDT) 	{ &gallus_build_USB_media }
-elseif ($AdvancedDownloadAll) 	{ &gallus_download_tools ; &gallus_download_windows_image ; &gallus_import_drivers ; &gallus_download_HardeningKitty }
-else 				{ &aide }
+#Commandes avancées
+elseif ($AdvancedDownloadTools) 			{ &download_tools }
+elseif ($AdvancedSetupTools) 				{ &setup_tools }
+elseif ($AdvancedDownloadWinImage) 			{ &download_windows_image }
+elseif ($AdvancedExtractWinImage) 			{ &extract_windows_image }
+elseif ($AdvancedImportDriver) 				{ &import_drivers }
+elseif ($AdvancedDownloadHardeningKitty)	{ &download_HardeningKitty }
+elseif ($AdvancedCleanupMDT) 				{ &cleanup_MDT }
+elseif ($AdvancedRunMDT) 					{ &build_USB_media }
+elseif ($AdvancedDownloadAll) 				{ &download_tools ; &download_windows_image ; &import_drivers ; &download_HardeningKitty }
+
+#Afffichage des commandes si aucune commandes n'est mises
+else 										{ &aide }
