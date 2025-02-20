@@ -1,0 +1,12 @@
+----
+stages:
+  - build
+
+bootstrap:
+  stage: build
+  tags:
+    - windows
+    - amd64
+  script:
+    - mkdir \Gallus; cd \Gallus; Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -oneliner
+
