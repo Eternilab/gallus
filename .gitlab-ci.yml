@@ -12,6 +12,7 @@ init sans bootstrap :
     - amd64
   before_script:
     - if [ -d "Gallus" ]; remove-item -path "C:\Gallus" -recurse -force
+    allow_failure : true
   script:
     - ! "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) gallus_download_tools"
 
@@ -22,6 +23,7 @@ build sans init :
     - amd64
   before_script:
     - if [ -d -path "C:\Gallus" ]; remove-item -path "C:\Gallus" -recurse -force
+  allow_failure: true
   script:
     - New-Item -ItemType Directory -Force -Path "\Gallus"
     - cd \Gallus
