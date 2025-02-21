@@ -5,7 +5,22 @@ stages:
 variables:
   GIT_STRATEGY: empty
 
-init dans gallus :
+init sans bootstrap :
+  stage: build
+  tags:
+    - windows
+    - amd64
+  before_script:
+    - remove-item -path "C:\Gallus" -recurse -force
+  script:
+    - New-Item -ItemType Directory -Force -Path "\Gallus"
+    - cd \Gallus
+    - Set-ExecutionPolicy Bypass -Scope Process -Force
+    - "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072"
+    - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) gallus_download_tools"
+  allow_failure: true
+
+build sans init :
   stage: build
   tags:
     - windows
@@ -18,10 +33,8 @@ init dans gallus :
     - Set-ExecutionPolicy Bypass -Scope Process -Force
     - "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072"
     - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -oneliner"
-    - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) gallus_download_tools"
-
-
-
+    - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -build"
+  allow_failure: true
 
 
 bootstrap:
