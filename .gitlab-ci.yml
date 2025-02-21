@@ -57,4 +57,5 @@ bootstrap:
               Write-Output 'Not a valid iso 9660 file';
               exit 1;
               }
+            }
             }"
