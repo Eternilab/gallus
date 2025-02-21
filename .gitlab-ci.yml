@@ -11,9 +11,7 @@ bootstrap:
     - windows
     - amd64
   before_script:
-    - cd ..
-    - cd ..
-    - rm Gallus
+    - remove-item -path "C:\Gallus" -recurse -force
   script:
     - New-Item -ItemType Directory -Force -Path "\Gallus"
     - cd \Gallus
