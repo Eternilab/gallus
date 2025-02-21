@@ -46,4 +46,15 @@ bootstrap:
     - "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072"
     - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -oneliner"
     - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -full"
-    
+    - powershell -Command "& {
+        $isoPath = 'C:\Gallus\GMedia\LiteTouchMedia.iso';
+        if (Test-Path $isoPath) {
+          $diskImage = Get-DiskImage -ImagePath $isoPath -ErrorAction SlientlyContinue;
+          if ($diskImage -and $diskImage.FileSystem -eq 'ISO 9660') {
+            Write-Output 'Valid iso 9660 file';
+            exit 0;
+            } else {
+              Write-Output 'Not a valid iso 9660 file';
+              exit 1;
+              }
+            }"
