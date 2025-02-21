@@ -39,21 +39,20 @@ test iso:
     - windows
     - amd64
   script:
-    - powershell -Command "& {
-        $isoPath = 'C:\Gallus\GMedia\LiteTouchMedia.iso';
-        if (Test-Path $isoPath) {
-          $diskImage = Get-DiskImage -ImagePath $isoPath -ErrorAction SlientlyContinue;
-          if ($diskImage -and $diskImage.FileSystem -eq 'ISO 9660') {
-            Write-Output 'Valid iso 9660 file';
-            exit 0;
-            } else {
-              Write-Output 'Not a valid iso 9660 file';
-              exit 1;
-              } else {
-                Write-output 'file not found';
-              }
+    - |
+      $isofile = "LiteTouchMedia.iso";
+      if (C:\Gallus\GMedia\ $isoFile) {
+        write-output "le fichier est introuvable"
+        exit 1
+      }
+
+      $bytes = get-content -path $isofile -encoding byte -totalcount 32769
+      if (&byte[32769-5] -eq 0x43 -and $bytes[32769-4] -eq 0x44 -and $bytes[32769-3] -eq 0x30 -and $bytes[32769-2] -eq 0x30 -and $bytes[32769-1] -eq 0x31) {
+          write-output "bon fichier"
+          }else {
+            write-output "pas bon fichier"
+            exit 1
             }
-            }"
 
 
 
