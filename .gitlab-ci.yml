@@ -11,7 +11,7 @@ init sans bootstrap :
     - windows
     - amd64
   before_script:
-    - if [ -d -path "C:\Gallus" ]; remove-item -path "C:\Gallus" -recurse -force
+    - if [ -d "Gallus" ]; remove-item -path "C:\Gallus" -recurse -force
   script:
     - ! "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) gallus_download_tools"
 
