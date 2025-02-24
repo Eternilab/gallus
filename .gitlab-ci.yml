@@ -44,10 +44,10 @@ bootstrap:
     - Set-ExecutionPolicy Bypass -Scope Process -Force
     - "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072"
     - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -oneliner"
-    - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -full"
+    - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -full -o C:\\Gallus\\GMedia\\LiteTouchMedia.iso"
   artifacts:
     paths:
-      - Gallus\GMedia\LiteTouchMedia.iso
+      - C:/Gallus/GMedia/LiteTouchMedia.iso
     expire_in: 3 days
     
    
@@ -56,6 +56,8 @@ test iso:
   tags:
     - windows
     - amd64
+  dependencies:
+    - bootstrap
   script: 
     - if file C:\Gallus\GMedia\LiteTouchMedia.iso | grep "ISO 9660"  > /dev/null exit 0
     - else exit 1
