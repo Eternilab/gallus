@@ -47,7 +47,7 @@ bootstrap:
     - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -full"
   artifacts:
     paths:
-      - \Gallus\GMedia\LiteTouchMedia.iso
+      - Gallus\GMedia\LiteTouchMedia.iso
     expire_in: 3 days
     
    
