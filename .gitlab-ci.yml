@@ -1,4 +1,41 @@
 ---
+
+
+
+
+bootstrap:
+  stage: build
+  tags:
+    - windows
+    - amd64
+  before_script:
+    - if [ -d -path "C:\Gallus" ]; remove-item -path "C:\Gallus" -recurse -force
+  script:
+    - New-Item -ItemType Directory -Force -Path "\Gallus"
+    - cd \Gallus
+    - Set-ExecutionPolicy Bypass -Scope Process -Force
+    - "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072"
+    - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -oneliner"
+    - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -full"
+    - cp C:\Gallus\GMedia\LiteTouchMedia.iso C:\Gitlab-Runner\builds\t1_81duzo\0\gallus\core-empty\giso.iso
+  artifacts:
+    paths:
+      - C:/Gitlab-Runner/builds/t1_81duzo/0/gallus/core-empty/giso.iso
+    expire_in: 3 days
+    
+   
+test iso:
+  stage: build
+  tags:
+    - windows
+    - amd64
+  dependencies:
+    - bootstrap
+  script: 
+    - if ( Gitlab-Runner\builds\t1_81duzo\0\gallus\core-empty\giso.iso | grep "ISO 9660"  > /dev/null) {exit 0}
+    - else {exit 1}
+
+
 stages:
   - build
 
@@ -30,35 +67,3 @@ build sans init :
 
 
 
-
-bootstrap:
-  stage: build
-  tags:
-    - windows
-    - amd64
-  before_script:
-    - if [ -d -path "C:\Gallus" ]; remove-item -path "C:\Gallus" -recurse -force
-  script:
-    - New-Item -ItemType Directory -Force -Path "\Gallus"
-    - cd \Gallus
-    - Set-ExecutionPolicy Bypass -Scope Process -Force
-    - "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072"
-    - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -oneliner"
-    - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -full"
-    - cp C:\Gallus\GMedia\LiteTouchMedia.iso C:\Gitlab-Runner\builds\t1_81duzo\0\gallus\core-empty\giso.iso
-  artifacts:
-    paths:
-      - Gitlab-Runner/builds/t1_81duzo/0/gallus/core-empty/giso.iso
-    expire_in: 3 days
-    
-   
-test iso:
-  stage: build
-  tags:
-    - windows
-    - amd64
-  dependencies:
-    - bootstrap
-  script: 
-    - if (file Gitlab-Runner\builds\t1_81duzo\0\gallus\core-empty\giso.iso | grep "ISO 9660"  > /dev/null) {exit 0}
-    - else {exit 1}
