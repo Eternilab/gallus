@@ -46,10 +46,10 @@ bootstrap:
     - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -oneliner"
     - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -full"
     - mkdir iso
-    - cp C:\Gallus\GMedia\LiteTouchMedia.iso iso\giso.iso
+    - cp C:\Gallus\GMedia\LiteTouchMedia.iso C:\Gitlab-Runner\builds\t1_81duzo\0\gallus\core-empty\giso.iso
   artifacts:
     paths:
-      - iso/giso.iso
+      - Gitlab-Runner/builds/t1_81duzo/0/gallus/core-empty/giso.iso
     expire_in: 3 days
     
    
@@ -61,5 +61,5 @@ test iso:
   dependencies:
     - bootstrap
   script: 
-    - if file iso\giso.iso | grep "ISO 9660"  > /dev/null exit 0
+    - if file Gitlab-Runner\builds\t1_81duzo\0\gallus\core-empty\giso.iso | grep "ISO 9660"  > /dev/null exit 0
     - else exit 1
