@@ -47,7 +47,7 @@ bootstrap:
     - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -full"
   artifacts:
     paths:
-      - C:\Gallus\GMedia\LiteTouchMedia.iso
+      - \Gallus\GMedia\LiteTouchMedia.iso
     expire_in: 3 days
     
    
@@ -57,6 +57,5 @@ test iso:
     - windows
     - amd64
   script: 
-    - if file C:\Gallus\GMedia\LiteTouchMedia.iso | grep "ISO 9660"  > /dev/null
-    - then exit 0 
+    - if file C:\Gallus\GMedia\LiteTouchMedia.iso | grep "ISO 9660"  > /dev/null exit 0
     - else exit 1
