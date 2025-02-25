@@ -17,7 +17,7 @@ bootstrap:
     - "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072"
     - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -oneliner"
     - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -full"
-    - cd \GMedia\
+    - cd \Gallus\GMedia\
     - if ( LiteTouchMedia.iso | grep "ISO 9660"  > /dev/null) {exit 0}
     - else {exit 1}
   
