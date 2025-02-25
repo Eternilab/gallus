@@ -18,8 +18,17 @@ bootstrap:
     - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -oneliner"
     - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -full"
     - cd \Gallus\GMedia\
-    - if ( 'LiteTouchMedia.iso' | grep "ISO 9660"  > /dev/null) {exit 0}
-    - else {exit 1}
+    - |
+      if [-f  LiteTouchMedia.iso]; then
+        if file "" | grep "ISO 9660"; then
+          exit 0
+        else
+          exit 1
+        fi
+      else
+        exit 0
+      fi
+
   
   
   
