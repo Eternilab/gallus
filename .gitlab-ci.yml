@@ -18,16 +18,24 @@ bootstrap:
     - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -oneliner"
     - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -full"
     - cd \Gallus\GMedia\
-    - |
-      if [-f  LiteTouchMedia.iso]; then
-        if file "" | grep "ISO 9660"; then
-          exit 0
-        else
+    - if (Test-Path "LiteTouchMedia.iso") {
+        $iso = Get-Item "LiteTouchMedia.iso"
+        if ($iso.PSIsContainer) {
+          echo "c pas bon"
           exit 1
-        fi
-      else
+        } else {
+          if ((Get-Item "$($iso.FullName)").Attributes.HasFlag([IO.FileAttributes]::ReadOnly)) {
+            echo "c bon"
+            exit 0
+          } else {
+            echo "c pas bon"
+            exit 1
+          }
+        }
+      } else {
+        echo "fichier introuvable"
         exit 0
-      fi
+      }
 
   
   
