@@ -25,18 +25,18 @@ bootstrap:
             if ($iso.Attributes.HasFlag([IO.FileAttributes]::ReadOnly)) {
               try {
                 [System.IO.Compression.ZipFile]::OpenRead("$($iso.FullName)")
-                echo "c bon"
+                Write-Host "c bon"
                 exit 0
               } catch {
                 echo "erreur lors du vérification de l'ISO 9660"
                 exit 1
               }
             } else {
-              echo "attribut ReadOnly non présent"
+              Write-Host "attribut ReadOnly non présent"
               exit 1
             }
           } else {
-            echo "fichier introuvable"
+            Write-Host "fichier introuvable"
             exit 0
           }
         } catch {
@@ -44,7 +44,7 @@ bootstrap:
           exit 1
         }
       } else {
-        echo "fichier introuvable"
+        Write-Host "fichier introuvable"
         exit 0
       }
 
