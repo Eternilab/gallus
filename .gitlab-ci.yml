@@ -17,8 +17,8 @@ bootstrap:
     - "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072"
     - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -oneliner"
     - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -full"
-    - cp C:\Gallus\GMedia\LiteTouchMedia.iso C:\Gitlab-Runner\builds\t1_81duzo\0\gallus\core-empty\giso.iso
-    - if ( Gitlab-Runner\builds\t1_81duzo\0\gallus\core-empty\giso.iso | grep "ISO 9660"  > /dev/null) {exit 0}
+    - cd \GMedia\LiteTouchMedia.iso 
+    - if ( LiteTouchMedia.iso | grep "ISO 9660"  > /dev/null) {exit 0}
     - else {exit 1}
   
   
