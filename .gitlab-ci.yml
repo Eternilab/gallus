@@ -19,29 +19,33 @@ bootstrap:
     - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -full"
     - cd \Gallus\GMedia\
     - if (Test-Path "LiteTouchMedia.iso") {
-      try {
-      $iso = Get-Item "LiteTouchMedia.iso"
-      if ($iso.Attributes.HasFlag([IO.FileAttributes]::ReadOnly)) {
-        $iso = [System.IO.Compression.ZipFile]::OpenRead("$($iso.FullName)")
-        if ($iso) {
-          echo "c bon"
-          exit 0
-        } else {
-          echo "erreur lors du vérification de l'ISO 9660"
+        try {
+          $iso = Get-Item "LiteTouchMedia.iso"
+          if ($iso.Exists) {
+            if ($iso.Attributes.HasFlag([IO.FileAttributes]::ReadOnly)) {
+              try {
+                [System.IO.Compression.ZipFile]::OpenRead("$($iso.FullName)")
+                echo "c bon"
+                exit 0
+              } catch {
+                echo "erreur lors du vérification de l'ISO 9660"
+                exit 1
+              }
+            } else {
+              echo "attribut ReadOnly non présent"
+              exit 1
+            }
+          } else {
+            echo "fichier introuvable"
+            exit 0
+          }
+        } catch {
+          echo "erreur lors du chargement du fichier"
           exit 1
         }
       } else {
-        echo "attribut ReadOnly non présent"
-        exit 1
-      }
-       catch {
-      $iso = Get-Item "LiteTouchMedia.iso"
-      echo "fichier introuvable"
-      exit 0
-      }
-      } else {
         echo "fichier introuvable"
-      exit 0
+        exit 0
       }
 
   
