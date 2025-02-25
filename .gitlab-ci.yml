@@ -25,7 +25,7 @@ bootstrap:
             if ($iso.Attributes.HasFlag([IO.FileAttributes]::ReadOnly)) {
               try {
                 [System.IO.Compression.ZipFile]::OpenRead("$($iso.FullName)")
-                Write-Host "c bon"
+                'Write-Host "c bon"'
                 exit 0
               } catch {
                 echo "erreur lors du vérification de l'ISO 9660"
