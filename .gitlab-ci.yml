@@ -18,35 +18,7 @@ bootstrap:
     - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -oneliner"
     - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -full"
     - cd \Gallus\GMedia\
-    - if (Test-Path "LiteTouchMedia.iso") {
-        try {
-          $iso = Get-Item "LiteTouchMedia.iso"
-          if ($iso.Exists) {
-            if ($iso.Attributes.HasFlag([IO.FileAttributes]::ReadOnly)) {
-              try {
-                [System.IO.Compression.ZipFile]::OpenRead("$($iso.FullName)")
-                'Write-Host "c bon"'
-                exit 0
-              } catch {
-                echo "erreur lors du vérification de l'ISO 9660"
-                exit 1
-              }
-            } else {
-              Write-Host "attribut ReadOnly non présent"
-              exit 1
-            }
-          } else {
-            Write-Host "fichier introuvable"
-            exit 0
-          }
-        } catch {
-          echo "erreur lors du chargement du fichier"
-          exit 1
-        }
-      } else {
-        Write-Host "fichier introuvable"
-        exit 0
-      }
+    - $isoPath = "C:\Gallus\GMedia\LiteTouchMedia.iso"; if (-not (test-path $isoPath)) {write-output "fichier n'existe pas" exit 2 } ; $fs=[System.IO.File]::OpenRead($isoPath); $fs.Seek(32769, [System.IO.SeekOrigin]::Begin) | Out-Null; $buffer=New-Object byte[] 5; $fs.Read($buffer, 0, 5) | Out-Null; $fs.Close(); $signature = [System.Text.Encoding]::ASCII.GetString($buffer); $fs.Close(); if ($signature -eq "CD001") { write-output "exit 0"} else {wirte-output "exit 1"}
 
   
   
