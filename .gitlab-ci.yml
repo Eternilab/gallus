@@ -25,7 +25,7 @@ bootstrap:
     - if ($signature -eq "CD001") { write-output "L'iso est un 9660" ; exit 0} else {wirte-output "Le fichier n'est pas un iso 9660" ; exit 1}
 
   
-Montage de l'iso:
+MontageIso:
   stage: build
   tags:
     - windows
@@ -37,6 +37,7 @@ Montage de l'iso:
     - cd -join($isom, ":")
     - exit 0
   after_script:
+    - $isom =Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
     - $driveEject.NameSpace(17).ParseName(-join ($isom, ":")).InvokeVerb("Eject")
   
 
@@ -66,7 +67,7 @@ stages:
 variables:
   GIT_STRATEGY: empty
 
-init sans bootstrap :
+initSansBootstrap :
   stage: build
   tags:
     - windows
@@ -75,7 +76,7 @@ init sans bootstrap :
   script:
     - ! "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) gallus_download_tools"
 
-build sans init :
+buildSansInit :
   stage: build
   tags:
     - windows
