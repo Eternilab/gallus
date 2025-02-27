@@ -31,13 +31,13 @@ MontageIso:
     - windows
     - amd64
   script:
-    - cd .\Gallus\GMedia\
+    - cd C:\Gallus\GMedia\
     - .\LiteTouchMedia.iso
     - $isom =Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
     - cd -join($isom, ":")
     - exit 0
   after_script:
-    - $isom =Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
+    - $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
     - $driveEject.NameSpace(17).ParseName(-join ($isom, ":")).InvokeVerb("Eject")
   
 
