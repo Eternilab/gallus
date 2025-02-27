@@ -24,9 +24,9 @@ function aide {
 	write-host "	
 Commandes de base :
 	
--init				= Recupere les ressources necessaires a la creation d'un fichier d'installation
--build 				= Produit le ficher d'installation
--flash 				= Flash le fichier d'installation sur l'USB 	
+-init				= Recupere les ressources necessaires a la construction des fichiers d'installation
+-build 				= Produit l'ensemble des fichers d'installation
+-flash 				= Flash les fichiers d'installation sur l'USB
 -full				= Equivaux a l'appel successif des commandes : init ; flash ; build 
 		
 Commandes avancees :
