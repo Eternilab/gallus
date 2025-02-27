@@ -46,9 +46,44 @@ VérifPrésence:
     - $verif11 = "D:\Deploy\Scripts\ReportScript.js"
     - if (-not (test-path $verif11)) {write-host "$verif11 n'est pas présent"; exit 1} else { write-host "$verif11 est présent"}
     - $verif12 = "D:\Deploy\Scripts\ReportStyle.css"
-    - if (-not (test-path $verif12)) {write-host "$verif12 n'est pas présent"; exit 1} else { write-host "$verif12 est présent";}
+    - if (-not (test-path $verif12)) {write-host "$verif12 n'est pas présent"; exit 1} else { write-host "$verif12 est présent"}
     - $verif13 = "D:\Deploy\Scripts\Variables.ps1"
-    - if (-not (test-path $verif13)) {write-host "$verif13 n'est pas présent"; exit 1} else { write-host "$verif13 est présent";}
+    - if (-not (test-path $verif13)) {write-host "$verif13 n'est pas présent"; exit 1} else { write-host "$verif13 est présent"}
+    - $verif14 = "D:\Deploy\Operating Systems\Win11x64_EntN_en-US_22H2\sources\boot.wim"
+    - if (-not (test-path $verif14)) {write-host "$verif14 n'est pas présent"; exit 1} else { write-host "$verif14 est présent"}
+    - $verif15 = "D:\Deploy\Operating Systems\Win11x64_EntN_en-US_22H2\sources\install.wim"
+    - if (-not (test-path $verif15)) {write-host "$verif15 n'est pas présent"; exit 1} else { write-host "$verif15 est présent"}
+    - $verif = "D:\Deploy\Control\ApplicationGroups.xml"
+    - if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    - $verif = "D:\Deploy\Control\Applications.xml"
+    - if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    - $verif = "D:\Deploy\Control\Bootstrap.ini"
+    - if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    - $verif = "D:\Deploy\Control\CustomSettings.ini"
+    - if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    - $verif = "D:\Deploy\Control\DriverGroups.xml"
+    - if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    - $verif = "D:\Deploy\Control\Drivers.xml"
+    - if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    - $verif = "D:\Deploy\Control\OperatingSystemGroups.xml"
+    - if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    - $verif = "D:\Deploy\Control\OperatingSystems.xml"
+    - if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    - $verif = "D:\Deploy\Control\PackageGroups.xml"
+    - if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    - $verif = "D:\Deploy\Control\Packages.xml"
+    - if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    - $verif = "D:\Deploy\Control\SelectionProfileGroups.xml"
+    - if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    - $verif = "D:\Deploy\Control\SelectionProfiles.xml"
+    - if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    - $verif = "D:\Deploy\Control\Settings.xml"
+    - if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    - $verif = "D:\Deploy\Control\TaskSequenceGroups.xml"
+    - if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    - $verif = "D:\Deploy\Control\Version.xml"
+    - if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+
 
 
   #artifacts:
@@ -66,7 +101,7 @@ VérifTaille:
     - amd64
   script:
     - $tailleFichier = (Get-ChildItem "C:\Gallus\GMedia\LiteTouchMedia.iso").Length
-    - if ($tailleFichier -ge 4GB) {if ($tailleFichier -le 32GB) { Write-Host "Le fichier est compris entre 4 Go et 32 Go"; exit 0 } else { Write-Host "Le fichier dépasse 32 Go" } } else { Write-Host "Le fichier est inférieur à 4 Go"; exit 1 }
+    - if ($tailleFichier -ge 4GB) {if ($tailleFichier -le 32GB) { Write-Host "Le fichier est compris entre 4 Go et 32 Go"; exit 0 } else { Write-Host "Le fichier dépasse 32 Go" ; exit 1} } else { Write-Host "Le fichier est inférieur à 4 Go"; exit 1 }
 
 
 #test iso:
