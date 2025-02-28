@@ -1,6 +1,21 @@
 ---
 
-  
+Linter:
+  stage: linter
+  tags:
+    - windows
+    - amd64
+  before_script:
+    -Install-Module -Name PSScriptAnalyzer -Force
+    - git clone https://github.com/Eternilab/gallus C:\
+  script:
+    - git clone https://github.com/Eternilab/gallus C:\
+    - Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-ScriptAlanyzer -path C:\gallus-main\gallus-main
+  after_script:
+    - rm C:\gallus-main
+
+
+
 MontageIso:
   stage: build
   tags:
