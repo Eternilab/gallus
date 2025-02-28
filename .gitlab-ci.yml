@@ -5,8 +5,8 @@ stages:
 
 default:
   tags:
-    - linter
-    - build
+    - amd64
+    - windows
   before_script:
     - winget install --id Git.Git -e --source winget
 
