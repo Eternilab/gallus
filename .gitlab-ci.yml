@@ -1,11 +1,11 @@
 ---
 stages:
-  - build
   - linter
+  - build
 
 
 
-Linter:
+CorrectionCode:
   stage: linter
   tags:
     - windows
