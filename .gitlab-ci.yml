@@ -1,5 +1,7 @@
 ---
-
+stages:
+  - linter
+  - build
 
 JinstallJusteGit:
   stage: build
@@ -188,7 +190,7 @@ bootstrap:
     - cd \Gallus ; Set-ExecutionPolicy Bypass -Scope Process -Force
     - "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072"
     - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/bootsrap.ps1'))) main"
-    - ".\gallus.ps1 -full"
+    - .\gallus.ps1 -full
     - cd \Gallus\GMedia\
     - $isoPath = "C:\Gallus\GMedia\LiteTouchMedia.iso"
     - if (-not (test-path $isoPath)) {write-output "fichier n'existe pas" ; exit 2 } 
