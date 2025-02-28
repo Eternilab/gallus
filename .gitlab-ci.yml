@@ -6,7 +6,7 @@ stages:
 
 
 CorrectionCode:
-  stage: linter
+  stage: build
   tags:
     - windows
     - amd64
