@@ -3,6 +3,9 @@ stages:
   - linter
   - build
 
+variables:
+  GIT_STRATEGY: empty
+
 default:
   tags:
     - amd64
