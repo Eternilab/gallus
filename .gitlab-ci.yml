@@ -11,7 +11,7 @@ CorrectionCode:
     - windows
     - amd64
   before_script:
-    - Install-Module -Name PSScriptAnalyzer -Force
+    #- Install-Module -Name PSScriptAnalyzer -Force
     - git clone https://github.com/Eternilab/gallus C:\
   script:
     - git clone https://github.com/Eternilab/gallus C:\
