@@ -3,17 +3,16 @@ stages:
   - linter
   - build
 
-JinstallJusteGit:
-  stage: build
-  script:
-    - winget install --id Git.Git -e --source winget
-  
-
-CorrectionCode:
-  stage: build
+default:
   tags:
-    - windows
-    - amd64
+    - linter
+    - build
+  before_script:
+    - winget install --id Git.Git -e --source winget
+
+
+correctionCode:
+  stage: build
   before_script:
     #- Install-Module -Name PSScriptAnalyzer -Force
     - git clone https://github.com/Eternilab/gallus C:\
@@ -23,13 +22,8 @@ CorrectionCode:
     - rm C:\gallus-main
 
 
-
-MontageIso:
+montageIso:
   stage: build
-  tags:
-    - windows
-    - amd64
-
   script:
     - cd C:\Gallus\GMedia\
     - .\LiteTouchMedia.iso
@@ -44,11 +38,8 @@ MontageIso:
     - $driveEject.NameSpace(17).ParseName($a).InvokeVerb("Eject")
   
 
-VérifPrésence:
+verifPrésence:
   stage: build
-  tags:
-    - windows
-    - amd64
   before_script:
     - cd C:\Gallus\GMedia\
     - .\LiteTouchMedia.iso
@@ -120,56 +111,20 @@ VérifPrésence:
     - $driveEject.NameSpace(17).ParseName($a).InvokeVerb("Eject")
 
 
-  #artifacts:
-   # paths
-    #  - C:/Gitlab-Runner/builds/t1_81duzo/0/gallus/core-empty/giso.iso
-    #expire_in: 3 days
-    
-
-
-
-VérifTaille:
+verifTaille:
   stage: build
-  tags:
-    - windows
-    - amd64
   script:
     - $tailleFichier = (Get-ChildItem "C:\Gallus\GMedia\LiteTouchMedia.iso").Length
     - if ($tailleFichier -ge 4GB) {if ($tailleFichier -le 32GB) { Write-Host "Le fichier est compris entre 4 Go et 32 Go"; exit 0 } else { Write-Host "Le fichier dépasse 32 Go" ; exit 1} } else { Write-Host "Le fichier est inférieur à 4 Go"; exit 1 }
 
 
-#test iso:
-#  stage: build
-#  tags:
-#    - windows
-#    - amd64
-#  dependencies:
-#    - bootstrap
-#  script: 
-
-
-
-stages:
-  - build
-
-variables:
-  GIT_STRATEGY: empty
-
 initSansBootstrap :
   stage: build
-  tags:
-    - windows
-    - amd64
-  
   script:
     - ! "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) gallus_download_tools"
 
 buildSansInit :
   stage: build
-  tags:
-    - windows
-    - amd64
-  
   script:
     - New-Item -ItemType Directory -Force -Path "\Gallus"
     - cd \Gallus
@@ -180,9 +135,6 @@ buildSansInit :
 
 bootstrap:
   stage: build
-  tags:
-    - windows
-    - amd64
   before_script:
     - if [ -d -path "C:\Gallus" ]; remove-item -path "C:\Gallus" -recurse -force
   script:
@@ -201,5 +153,3 @@ bootstrap:
     - $signature = [System.Text.Encoding]::ASCII.GetString($buffer)
     - $fs.Close()
     - if ($signature -eq "CD001") { write-output "L'iso est un 9660" ; exit 0} else {wirte-output "Le fichier n'est pas un iso 9660" ; exit 1}
-
-
