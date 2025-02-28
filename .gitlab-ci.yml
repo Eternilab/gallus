@@ -10,11 +10,13 @@ MontageIso:
     - cd C:\Gallus\GMedia\
     - .\LiteTouchMedia.iso
     - $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
-    - cd (-join($isom, ":"))
+    - $a = -join($isom, ":")
+    - cd $a
     - exit 0
   after_script:
     - $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
-    - $driveEject.NameSpace(17).ParseName((-join($isom, ":"))).InvokeVerb("Eject")
+    - $a = -join($isom, ":")
+    - $driveEject.NameSpace(17).ParseName($a).InvokeVerb("Eject")
   
 
 VérifPrésence:
