@@ -1,7 +1,10 @@
 ---
 
+
+
 Linter:
-  stage: linter
+  stage: 
+    - linter
   tags:
     - windows
     - amd64
