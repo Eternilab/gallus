@@ -10,7 +10,11 @@ default:
   tags:
     - amd64
     - windows
-  before_script:
+
+
+installgit:
+  stage: build
+  script:
     - winget install --id Git.Git -e --source winget
 
 
