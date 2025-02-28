@@ -16,6 +16,7 @@ MontageIso:
   after_script:
     - $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
     - $a = -join($isom, ":")
+    - $driveEject = New-Object -comObject Shell.Application
     - $driveEject.NameSpace(17).ParseName($a).InvokeVerb("Eject")
   
 
