@@ -4,7 +4,7 @@ param(
  )
 
 # List of Gallus parts------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-$baseURL="https://raw.githubusercontent.com/Eternilab/gallus/$Repo/"
+$baseURL="https://raw.githubusercontent.com/Eternilab/gallus/$Ref/"
 $parts=@(
 "conf/Bootstrap.ini",
 "conf/CustomSettings.ini",
