@@ -25,6 +25,9 @@ VérifPrésence:
   tags:
     - windows
     - amd64
+  before_script:
+    - cd C:\Gallus\GMedia\
+    - .\LiteTouchMedia.iso
   script:
     - $verif1 = "D:\Deploy\Scripts\HardeningKitty.psd1"
     - if (-not (test-path $verif1)) {write-host "$verif1 n'est pas présent"; exit 1} else { write-host "$verif1 est présent"}
@@ -86,7 +89,11 @@ VérifPrésence:
     - if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
     - $verif = "D:\Deploy\Control\Version.xml"
     - if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-
+  after_script:
+    - $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
+    - $a = -join($isom, ":")
+    - $driveEject = New-Object -comObject Shell.Application
+    - $driveEject.NameSpace(17).ParseName($a).InvokeVerb("Eject")
 
 
   #artifacts:
