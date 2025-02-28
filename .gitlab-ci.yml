@@ -1,9 +1,11 @@
 ---
-stages:
-  - linter
-  - build
 
 
+JinstallJusteGit:
+  stage: build
+  script:
+    - winget install --id Git.Git -e --source winget
+  
 
 CorrectionCode:
   stage: build
@@ -14,7 +16,6 @@ CorrectionCode:
     #- Install-Module -Name PSScriptAnalyzer -Force
     - git clone https://github.com/Eternilab/gallus C:\
   script:
-    - git clone https://github.com/Eternilab/gallus C:\
     - Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-ScriptAlanyzer -path C:\gallus-main\gallus-main
   after_script:
     - rm C:\gallus-main
@@ -26,6 +27,7 @@ MontageIso:
   tags:
     - windows
     - amd64
+
   script:
     - cd C:\Gallus\GMedia\
     - .\LiteTouchMedia.iso
@@ -183,11 +185,10 @@ bootstrap:
     - if [ -d -path "C:\Gallus" ]; remove-item -path "C:\Gallus" -recurse -force
   script:
     - New-Item -ItemType Directory -Force -Path "\Gallus"
-    - cd \Gallus
-    - Set-ExecutionPolicy Bypass -Scope Process -Force
+    - cd \Gallus ; Set-ExecutionPolicy Bypass -Scope Process -Force
     - "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072"
-    - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -oneliner"
-    - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -full"
+    - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/bootsrap.ps1'))) main"
+    - ".\gallus.ps1 -full"
     - cd \Gallus\GMedia\
     - $isoPath = "C:\Gallus\GMedia\LiteTouchMedia.iso"
     - if (-not (test-path $isoPath)) {write-output "fichier n'existe pas" ; exit 2 } 
