@@ -1,45 +1,46 @@
 param(
 	[switch]$init,
-	[switch]$AdvancedDownloadTools,
-	[switch]$AdvancedSetupTools,
-	[switch]$AdvancedDownloadWinImage,
-	[switch]$AdvancedExtractWinImage,
-	[switch]$AdvancedImportDriver,
-	[switch]$AdvancedDownloadHardeningKitty,
-	[switch]$AdvancedCleanupMDT,
-	[switch]$AdvancedRunMDT,
+	[switch]$advancedDownloadAll,
+	[switch]$advancedDownloadTools,
+	[switch]$advancedDownloadWinImage,
+	[switch]$advancedDownloadHK,
+	[switch]$advancedSetupTools,
+	[switch]$advancedExtractWinImage,
+	[switch]$advancedImportDriver,
+	[switch]$make,
+	[switch]$advancedCleanupMDT,
+	[switch]$advancedRunMDT,
 	[switch]$flash,
-	[switch]$build,
 	# [switch]$clean,
 	# [switch]$update,
-	# [switch]$buildupdated,
+	# [switch]$makeupdated,
 	[switch]$full  
 	)
 	
 
 #Definition des Fonctions--------------------------------------------------------------------------------------------------------------------------------------------------------
 
-#Affichage des commandes
+#Affichage de l'aide
 function aide {
 	write-host "	
-Commandes de base :
+Parametres de base :
 	
--init				= Recupere les ressources necessaires a la construction des fichiers d'installation
--build 				= Produit l'ensemble des fichers d'installation
--flash 				= Flash les fichiers d'installation sur l'USB
--full				= Equivaux a l'appel successif des commandes : init ; flash ; build 
+-init				= Mise en place des dependances necessaires au fonctionnement de Gallus
+-make 				= Construit les fichiers d'installation et produit une ISO demarrable
+-flash 				= Produit un media d'installation USB demarrable (UEFI uniquement) a partir des fichiers d'installation
+-full				= Execute l'ensemble des etapes de Gallus de maniere nominale avec les options par defaut. Equivaut a appeler successivement gallus.ps1 trois fois avec, dans l’ordre, les parametres -init, -make et -flash
 		
-Commandes avancees :
+Parametres avancees :
 		
--AdvancedDownloadTools		= Installe les outils Microsoft
--AdvancedSetupTools		= Setup les outils Microsoft
--AdvancedDownloadWinImage	= Installe l'image Windows
--AdvancedExtractWinImage	= Extrait l'image Windows
--AdvancedImportDriver		= Recupere les drivers prsent dans le dossier C:\Drivers
--AdvancedDownloadHardeningKitty	= Installe HardeningKitty
--AdvancedCleanupMDT		= Nettoyage des parametres MDT
--AdvancedRunMDT			= Integration des parametres MDT
--AdvancedDownloadAll		= Equivaux a l'appel sucessif des commandes : AdvancedDownloadTools ; AdvancedDownloadWinImage ; AdvancedImportDriver ; gallus_download_HardeningKitty
+-advancedDownloadTools		= Telecharge les installateurs des outils ADK et MDT sur le site de Microsoft
+-advancedSetupTools		= Installe les outils Microsoft ADK et MDT en mode silencieux
+-advancedDownloadWinImage	= Telecharge l’image (format ESD) de l’installateur officiel de Windows 11 depuis les serveurs Microsoft
+-advancedExtractWinImage	= Extrait du format ESD l’image Windows et WinPE au format WIM
+-advancedImportDriver		= Récupère les pilotes supplémentaires depuis les dossiers ..\drivers\Storage et ..\drivers\Network
+-advancedDownloadHK		= Telecharge l’outil de durcissement HardeningKitty et le fichier de durcissement machine CIS correspondant a la version de l’image Windows
+-advancedCleanupMDT		= Supprime les fichiers residuels d'une potentielle execution precedente de MDT 
+-advancedRunMDT			= Execution de MDT avec les parametres et les composants de Gallus pour construire les fichiers d’installation. Produit egalement une ISO demarrable
+-advancedDownloadAll		= Telecharge l’ensemble des composants necessaires à l’execution de Gallus. Equivaut a appeler successivement gallus.ps1 trois fois avec, dans l’ordre, les parametres -advancedDownloadTools, -advancedDownloadWinImage, -advancedDownloadHK
 	"
 }
 # 1----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -251,29 +252,29 @@ write-host -foregroundcolor green "Le systeme d'exploitation sera durcis (securi
 }
 
 
-#Execution des fonction-----------------------------------------------------------------------------------------------------------------------
+#Appels des fonctions-----------------------------------------------------------------------------------------------------------------------
 
 #Limitation du nombre de paramètres à 1
 if ($PSBoundParameters.Count -gt 1) {Write-Host -ForegroundColor red "Vous ne pouvez utiliser qu'un seul parametre a la fois " ; &aide ; exit 1}
 
-#Commandes de bases
-elseif ($init)								{ &download_tools; &setup_tools; &download_windows_image ; &extract_windows_image ; &import_drivers; &download_HardeningKitty }
-elseif ($flash)								{ &build_USB_media }
-elseif ($build)								{ &cleanup_MDT; &run_MDT }
+#Paramètres de bases
+elseif ($init)					{ &download_tools; &setup_tools; &download_windows_image ; &extract_windows_image ; &import_drivers; &download_HardeningKitty }
+elseif ($make)					{ &cleanup_MDT; &run_MDT }
+elseif ($flash)					{ &build_USB_media }
 
-#Equivaux à l'appel successif des commandes : init ; flash ; build 
-elseif ($full)								{ &download_tools; &setup_tools ; &download_windows_image ; &extract_windows_image; &import_drivers ; &download_HardeningKitty ; &cleanup_MDT ; &run_MDT ; &build_USB_media }
+#Equivaut à l'appel successif avec les paramètres : -init ; -flash ; -build 
+elseif ($full)					{ &download_tools; &setup_tools ; &download_windows_image ; &extract_windows_image; &import_drivers ; &download_HardeningKitty ; &cleanup_MDT ; &run_MDT ; &build_USB_media }
 
-#Commandes avancées
-elseif ($AdvancedDownloadTools) 			{ &download_tools }
-elseif ($AdvancedSetupTools) 				{ &setup_tools }
-elseif ($AdvancedDownloadWinImage) 			{ &download_windows_image }
-elseif ($AdvancedExtractWinImage) 			{ &extract_windows_image }
-elseif ($AdvancedImportDriver) 				{ &import_drivers }
-elseif ($AdvancedDownloadHardeningKitty)	{ &download_HardeningKitty }
-elseif ($AdvancedCleanupMDT) 				{ &cleanup_MDT }
-elseif ($AdvancedRunMDT) 					{ &build_USB_media }
-elseif ($AdvancedDownloadAll) 				{ &download_tools ; &download_windows_image ; &import_drivers ; &download_HardeningKitty }
+#Paramètres avancés
+elseif ($advancedDownloadTools) 		{ &download_tools }
+elseif ($advancedDownloadWinImage) 		{ &download_windows_image }
+elseif ($advancedDownloadHK)			{ &download_HardeningKitty }
+elseif ($advancedDownloadAll) 			{ &download_tools ; &download_windows_image ; &download_HardeningKitty }
+elseif ($advancedImportDriver) 			{ &import_drivers }
+elseif ($advancedSetupTools) 			{ &setup_tools }
+elseif ($advancedExtractWinImage) 		{ &extract_windows_image }
+elseif ($advancedCleanupMDT) 			{ &cleanup_MDT }
+elseif ($advancedRunMDT) 			{ &build_USB_media }
 
-#Afffichage des commandes si aucune commandes n'est mises
+#Affichage des paramètres disponibles si aucun n'est spécifié
 else 										{ &aide }

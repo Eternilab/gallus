@@ -39,23 +39,29 @@
   </p>
 </div>
 
-
-
 <!-- Table des matières -->
 <details>
   <summary>Table des matières</summary>
   <ol>
-    <li>
-      <a href="#%C3%A0-propos-du-projet">À propos du projet</a>
-    </li>
-    <li>
-      <a href="#bien-demarrer">Bien démarrer</a>
-      <ul>
-        <li><a href="#prerequis">Prérequis</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#Usage-et-commandes">Usage & commandes</a></li>
+    <li><a href="#%C3%A0-propos-du-projet">À propos du projet</a></li>
+    <ul>
+      <li><a href="#propuls%C3%A9-par">Propulsé par</a></li>
+    </ul>
+    <li><a href="#pr%C3%A9requis">Prérequis</a></li>
+<li><a href="#construction-du-m%C3%A9dia-phase-1-build">Construction du média - Phase 1 : "Build"</a></li>
+    <ul>
+      <li><a href="#installation-et-ex%C3%A9cution-rapide-tldr">Installation et exécution (Rapide, TLDR)</a></li>
+      <li><a href="#installation-uniquement-usage-avanc%C3%A9">Installation uniquement (Usage avancé)</a></li>
+      <li><a href="#usage--param%C3%A8tres">Usage & paramètres</a></li>
+      <li><a href="#mode-hors-ligne">Mode hors-ligne</a></li>
+    </ul>
+<li><a href="#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2-install">Démarrage à partir du média d’installation - Phase 2 : “Install”</a></li>
+<li><a href="#probl%C3%A8mes-potentiels">Problèmes potentiels</a></li>
+    <ul>
+      <li><a href="#probl%C3%A8mes-dacc%C3%A8s-au-disque">Problèmes d'accès au disque</a></li>
+    </ul>
+      <li><a href="#support-de-p%C3%A9riph%C3%A9riques-avec-pilotes-suppl%C3%A9mentaires">Support de périphériques avec pilotes supplémentaires</a></li>
+      <li><a href="#analyse-des-journaux-dinstallation">Analyse des journaux d'installation</a></li>
     <li><a href="#fiche-de-route">Fiche de route</a></li>
     <li><a href="#contribuer">Contribuer</a></li>
     <li><a href="#licence">Licence</a></li>
@@ -63,8 +69,6 @@
     <!-- <li><a href="#remerciements">Remerciements</a></li> -->
   </ol>
 </details>
-
-
 
 # À propos du projet
 
@@ -74,10 +78,10 @@ Ce projet (Gallus) a pour but de générer des médias d'installation (ISO, USB)
 
 La mise en œuvre de Gallus s'effectue en deux phases :
 
-* Phase 1 : Construction d'un média d'installation sur un premier poste Microsoft Windows (poste de construction).
-* Phase 2 : Démarrage sur un second poste (poste cible) à partir du media d'installation créé lors de la phase précédente, pour installer un système d'exploitation Microsoft Windows sécurisé.
+* Phase 1 : "Build" : Construction d'un média d'installation sur un premier poste Microsoft Windows (poste de construction).
+* Phase 2 : "Install" : Démarrage sur un second poste (poste cible) à partir du media d'installation créé lors de la phase précédente, pour installer un système d'exploitation Microsoft Windows sécurisé.
 
-Les phases 1 et 2 se produisent de manière quasi-automatique, voir les sections [Construction du media (Phase 1)](#construction-du-m%C3%A9dia-phase-1) et [Démarrage à partir du media d’installation (Phase 2)](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2).
+Les phases 1 et 2 se produisent de manière quasi-automatique, voir les sections [Construction du média - Phase 1 : "Build"](#construction-du-m%C3%A9dia-phase-1) et [Démarrage à partir du média d’installation - Phase 2 : "Install"](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2).
 
 La phase 2 déploie un poste conforme à :
 
@@ -94,12 +98,11 @@ L'automatisation utilisée dans ce projet utilise la technologie [MDT](https://l
 
 
 ### Propulsé par
-
-* [![Powershell][Powershell-badge]][Powershell-url]
-* [![Windows 11][Windows11-badge]][Windows11-url]
-* [![HTML5][HTML5-badge]][HTML5-url]
-* [![CSS3][CSS3-badge]][CSS3-url]
-* [![JavaScript][JavaScript-badge]][JavaScript-url]
+[![Powershell][Powershell-badge]][Powershell-url]
+[![Windows 11][Windows11-badge]][Windows11-url]
+[![HTML5][HTML5-badge]][HTML5-url]
+[![CSS3][CSS3-badge]][CSS3-url]
+[![JavaScript][JavaScript-badge]][JavaScript-url]
 
 <p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
@@ -124,7 +127,7 @@ Il est possible d'utiliser Gallus sur un système ayant été installé grâce �
 
 Dans le cas ou un système Windows n'est pas disponible nativement, des solutions de virtualisations (VirtualBox, etc.) peuvent être utilisées pour héberger un système Microsoft Windows.
 
-# Construction du média (Phase 1)
+# Construction du média - Phase 1 : "Build"
 
 Bien que la volonté première de Gallus soit de limiter l'interaction utilisateur nécessaire pour obtenir un installateur, il est possible d'avoir accès à des options avancées (cf: [Installation uniquement (Usage avancé)](#installation-uniquement-usage-avanc%C3%A9)).
 
@@ -136,7 +139,7 @@ Ainsi les choix par défaut de la configuration de Gallus peuvent être modifié
 Deux modes d'installation/usage sont donc détaillés ci-après. 
 
 ### Installation et exécution (Rapide, TLDR)
-*Installe Gallus à la racine du système et l'exécute avec ses options par défaut.*
+*Installe Gallus à la racine du système et l'exécute de manière nominale avec les options par défaut.*
 
 1. Sur une machine Windows, ouvrez une instance de Powershell avec des droits d'administration.
 2. (Optionnel) [Ajouter des drivers supplémentaires nécessaires à l'installation](#support-de-p%C3%A9riph%C3%A9riques-avec-pilotes-suppl%C3%A9mentaires)
@@ -159,9 +162,14 @@ Passer ensuite à la section [Démarrage à partir du media d’installation](#d
 	<td>
 		<details>
 			<summary>Avec Git</summary>
+			<br/>
+```git clone https://github.com/Eternilab/gallus.git; cd gallus```
 
-#TODO
+ou
 
+```git clone git@github.com:Eternilab/gallus.git; cd gallus```
+			<br/>
+			<br/>
 		</details>
 	</td>
 </tr>
@@ -169,8 +177,8 @@ Passer ensuite à la section [Démarrage à partir du media d’installation](#d
 	<td>
 		<details>
 			<summary>Avec Powershell</summary>
-
-#TODO
+			<br/>
+```Invoke-WebRequest -URI https://github.com/Eternilab/gallus/archive/refs/heads/main.zip -OutFile gallus.zip ; Expand-Archive -Path .\gallus.zip -DestinationPath . ; cd gallus-main```
 
 		</details>
 	</td>
@@ -179,14 +187,17 @@ Passer ensuite à la section [Démarrage à partir du media d’installation](#d
 	<td>
 		<details>
 			<summary>Avec Autre chose</summary>
-
-#TODO
+			<br/>
+Téléchargez l'ensemble des fichiers du dépôt dans le répertoire de travail.<br/><br/>
+ou<br/><br/>
+Télécharger l'archive zip et l'extraire dans le répertoire de travail.
 
 		</details>
 	</td>
 </tr>
 </table>
 
+Gallus étant installé manuellement, le script ```bootstrap.ps1```, utilisé par l'[Installation et exécution (Rapide, TLDR)](#installation-et-ex%C3%A9cution-rapide-tldr), n'est pas nécessaire.
 
 <p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
@@ -194,33 +205,50 @@ Passer ensuite à la section [Démarrage à partir du media d’installation](#d
 
 ### Usage & commandes
 
-Si vous avez installé Gallus avec [la méthode avancée](#installation-uniquement-usage-avanc%C3%A9), vous aurez besoin d'exécuter manuellement chaque étape de Gallus à partir du répertoire où vous l'avez installé.
+Si vous avez installé Gallus avec [la méthode avancée](#installation-uniquement-usage-avanc%C3%A9), vous pouvez exécuter manuellement le script gallus.ps1 avec différents paramètres.
 
-Les différentes étapes de Gallus correspondent à différents scripts PS1 qui sont tous récupérés et exécutés par le script ```gallus_full.ps1```utilisé dans le cas de l'[Installation et exécution (Rapide, TLDR)](#installation-et-ex%C3%A9cution-rapide-tldr).
+Les différentes étapes de Gallus sont découpées en fonctions, et paramètres correspondants, dans le script ```gallus.ps1```. Ce script est récupéré par le script ```bootstrap.ps1``` et exécuté avec le paramètre -full, déroulant les différentes fonctions dans l'ordre, dans le cas de l'[Installation et exécution (Rapide, TLDR)](#installation-et-ex%C3%A9cution-rapide-tldr).
 
-Voici l'ensemble de ces scripts accompagnés d'une rapide description des actions qu'ils produisent :
+Ci-dessous l'ensemble des paramètres de gallus.ps1 accompagnés d'une rapide description des actions qu'ils produisent.
 
-* ```1-gallus_download_tools.ps1``` : Télécharge les installateurs des outils depuis le site de Microsoft.
+Voici la liste de l'ensemble des actions et sous-actions effectuées par ```.\gallus.ps1 -full``` en détaillant les paramètres correspondants :
 
-* ```2-gallus_setup_tools.ps1``` : Installe les outils téléchargés précédement.
+* ```-init``` : Mise en place des dépendances nécessaires au fonctionnement de Gallus.
+  * ```-advancedDownloadTools``` : Télécharge les installateurs des outils ADK et MDT sur le site de Microsoft.
+  * ```-advancedSetupTools``` : Installe les outils Microsoft ADK et MDT en mode silencieux.
+  * ```-advancedDownloadWinImage``` : Télécharge l'image (format ESD) de l'installateur officiel de Windows 11 depuis les serveurs Microsoft.
+  * ```-advancedExtractWinImage``` : Extrait du format ESD l'image Windows et WinPE au format WIM.
+  * ```-advancedImportDriver``` : Récupère les pilotes supplémentaires depuis les dossiers ```..\drivers\Storage``` et ```..\drivers\Network```. cf [Support de périphériques avec pilotes supplémentaires](#support-de-p%C3%A9riph%C3%A9riques-avec-pilotes-suppl%C3%A9mentaires)
+  * ```-advancedDownloadHardeningKitty``` : Télécharge l'outil de durcissement HardeningKitty et le fichier de durcissement machine CIS correspondant à la version de l'image Windows.
 
-* ```3-gallus_download_windows_image.ps1``` : Télécharge l'image (format ESD) de l'installateur officiel de Windows 11 depuis les serveurs Microsoft.
+* ```-make``` : Construit les fichiers d'installation et produit une ISO démarrable.
+  * ```-advancedCleanupMDT``` : Supprime les fichiers résiduels d'une potentielle exécution précédente de MDT.
+  * ```-advancedRunMDT``` : Exécution de MDT avec les paramètres et les composants de Gallus pour construire les fichiers d’installation. Produit également une ISO démarrable.
 
-* ```4-gallus_extract_windows_image.ps1``` : Extrait les différentes parties de l'image nécessaires à Gallus.
+* ```-flash``` : Produit d'un média d'installation USB démarrable à partir des fichiers d'installation (sur UEFI uniquement, BIOS non supporté).
 
-* ```5-gallus_download_drivers.ps1``` : Récupère les pilotes supplémentaires (copie du dossier ```drivers\Storage``` et ```drivers\Network``` dans le répertoire parent de Gallus). cf [Support de périphériques avec pilotes supplémentaires](#support-de-p%C3%A9riph%C3%A9riques-avec-pilotes-suppl%C3%A9mentaires)
+La commande ```.\gallus.ps1 -full``` équivaut donc, par exemple, à appeler gallus.ps1 trois fois successivement avec, dans l'ordre, les paramètres ```-init```, ```-make``` et ```-flash```:<br/>
+```.\gallus.ps1 -init```<br/>
+```.\gallus.ps1 -make```<br/>
+```.\gallus.ps1 -flash```
 
-* ```6-gallus_download_HardeningKitty.ps1``` : Récupère l'outil HardeningKitty utilisé pour le durcissement du système.
+Il existe également le paramètre supplémentaire suivant :
 
-* ```7-gallus_cleanup_MDT.ps1``` : Supprime les potentielles anciennes configurations de MDT.
+* ```-advancedDownloadAll``` : Télécharge l'ensemble des composants nécessaires à l’exécution de Gallus. Équivaut a appeler successivement gallus.ps1 trois fois avec, dans l’ordre, les paramètres ```-advancedDownloadTools```, ```-advancedDownloadWinImage```, ```-advancedDownloadHK```
 
-* ```8-gallus_run_MDT.ps1``` : Exécution de MDT avec les paramètres et les ajouts de Gallus pour construire les fichiers d'installation. Production d'une ISO démarrable.
+### Mode hors-ligne
 
-* ```9-gallus_build_USB_media.ps1``` : Construction d'un média d'installation USB démarrable (sur UEFI uniquement, BIOS non supporté).
+Le paramètre unique ```-advancedDownloadAll``` permet de ne plus nécessiter d'accès à Internet une fois exécuté. On peut donc ensuite travailler hors-ligne en enchainant les commandes suivantes :<br/>
+```.\gallus.ps1 -advancedImportDriver```<br/>
+```.\gallus.ps1 -advancedSetupTools```<br/>
+```.\gallus.ps1 -advancedExtractWinImage```<br/>
+```.\gallus.ps1 -make```<br/>
+```.\gallus.ps1 -flash```
+
 
 <p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
-# Démarrage à partir du média d’installation (Phase 2)
+# Démarrage à partir du média d’installation - Phase 2 : "Install"
 
 Maintenant qu'un média d'installation a été produit, il est possible de démarrer le poste cible à partir de ce média.
 
