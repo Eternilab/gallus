@@ -281,7 +281,7 @@ Par défaut le PIN est ```13371337```.
 
 Le système Windows est installé sans licence, à vous de fournir la vôtre pour être conforme au [contrat d'utilisateur final de Microsoft](https://www.microsoft.com/content/dam/microsoft/usetm/documents/windows/11/oem-(pre-installed)/UseTerms_OEM_Windows_11_English.pdf).
 
-Cette [Phase 2](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2) est répétable sur autant de postes que désiré.
+Cette [Phase 2](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation---phase-2--install) est répétable sur autant de postes que désiré.
 
 <p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
@@ -351,26 +351,24 @@ Que ce soit le premier ou deuxième cas (ensemble de fichiers ou .cab), si possi
 
 Vous pouvez maintenant lancer Gallus, les drivers seront importés dans le média d'installation.
 
-Si vous suivez les instructions de cette section suite à une interruption de l'installation dans la sous-étape 1, voici comment éviter d'avoir à relancer complètement Gallus pour produire le nouveau média d'installation contenant les bons pilotes supplémentaires.
-
-FIXME étape clean MDT puis reexec, puis USB.
+Si vous suivez les instructions de cette section suite à une interruption de l'installation dans la sous-étape 1, voici comment éviter d'avoir à relancer complètement Gallus pour produire le nouveau média d'installation contenant les bons pilotes supplémentaires :
 
 1. On crée, si elle n'existe pas encore, la structure de dossiers documentée ci-dessus à la racine du système de fichier sur le poste de construction.
 2. On met dans les dossiers ```Storage``` et ```Network``` les drivers obtenus.
-3. On lance l'étape 5 de Gallus en éxecutant le script ```5-gallus_download_drivers.ps1``` pour importer les drivers dans Gallus.
-4. On lance l'étape 7 de Gallus en éxecutant le script ```7-gallus_cleanup_MDT.ps1``` pour nettoyer les anciens fichiers d'installation.
-5. On lance l'étape 8 de Gallus en éxecutant le script ```8-gallus_run_MDT.ps1``` pour éxecuter MDT de nouveau avec les drivers.
-6. (Optionnel) On lance l'étape 9 de Gallus en éxecutant le script ```9-gallus_build_USB_media.ps1``` pour constructruire un média d'installation USB démarrable.
+3. On exécute la commande ```gallus.ps1 -advancedImportDriver``` pour importer les drivers dans Gallus.
+4. On exécute la commande ```gallus.ps1 -advancedCleanupMDT``` pour nettoyer les anciens fichiers d'installation.
+5. On exécute la commande ```gallus.ps1 -advancedRunMDT``` pour éxecuter MDT de nouveau avec les drivers.
+6. (Optionnel) On exécute la commande ```gallus.ps1 -flash``` pour produire un média d'installation USB démarrable.
 
 Les nouveaux médias d'installation construits contiennent maintenant les drivers.
 
-On peut maintenant relancer [l'installation (Phase2)](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2).
+On peut maintenant relancer [l'installation (Phase2)](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation---phase-2-install).
 
 <p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
 # Analyse des journaux d'installation
 
-Comme spécifié dans la section [Problèmes d'accès au disque](#probl%C3%A8mes-dacc%C3%A8s-au-disque), il est facilement possible d’accéder aux journaux d'installation de la sous-étape 1 de la phase 2 (cf. [Démarrage à partir du media d’installation](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2)) lors de l'installation en allant lire le fichier suivant :
+Comme spécifié dans la section [Problèmes d'accès au disque](#probl%C3%A8mes-dacc%C3%A8s-au-disque), il est facilement possible d’accéder aux journaux d'installation de la sous-étape 1 de la phase 2 (cf. [Démarrage à partir du media d’installation](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation---phase-2--install)) lors de l'installation en allant lire le fichier suivant :
 
 ```X:\Windows\temp\SMSTSLog\smsts.log```.
 
@@ -379,6 +377,8 @@ Néanmoins l'accès à ce journal de cette manière n'est possible qu'en cas de 
 Voici comment accéder aux journaux d'installation lorsque le système est installé, ou directement sur le disque de la machine, dans le cas d'un problème lors des autres sous-étapes d'installation.
 
 FIXME
+
+<p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
 # Fiche de route
 <!--
