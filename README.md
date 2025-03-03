@@ -48,14 +48,14 @@
       <li><a href="#propuls%C3%A9-par">Propulsé par</a></li>
     </ul>
     <li><a href="#pr%C3%A9requis">Prérequis</a></li>
-<li><a href="#construction-du-m%C3%A9dia-phase-1-build">Construction du média - Phase 1 : "Build"</a></li>
+<li><a href="#construction-du-m%C3%A9dia---phase-1--build">Construction du média - Phase 1 : "Build"</a></li>
     <ul>
       <li><a href="#installation-et-ex%C3%A9cution-rapide-tldr">Installation et exécution (Rapide, TLDR)</a></li>
       <li><a href="#installation-uniquement-usage-avanc%C3%A9">Installation uniquement (Usage avancé)</a></li>
       <li><a href="#usage--param%C3%A8tres">Usage & paramètres</a></li>
       <li><a href="#mode-hors-ligne">Mode hors-ligne</a></li>
     </ul>
-<li><a href="#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2-install">Démarrage à partir du média d’installation - Phase 2 : “Install”</a></li>
+<li><a href="#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation---phase-2--install">Démarrage à partir du média d’installation - Phase 2 : “Install”</a></li>
 <li><a href="#probl%C3%A8mes-potentiels">Problèmes potentiels</a></li>
     <ul>
       <li><a href="#probl%C3%A8mes-dacc%C3%A8s-au-disque">Problèmes d'accès au disque</a></li>
