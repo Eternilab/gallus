@@ -17,7 +17,7 @@
 
 <!-- LOGO DU PROJET -->
 <!--
-<br />
+<br>
 <div align="center">
   <a href="https://github.com/Eternilab/gallus">
     <img src="TODO" alt=Logo Gallus" width="80" height="80">
@@ -29,10 +29,10 @@
 
   <p align="center">
     Constructeur de média d'installation de postes sécurisés sous Microsoft Windows
-    <br />
+    <br>
     <a href="https://github.com/Eternilab/gallus/wiki/Home-fr#"><strong>Documentation »</strong></a>
-    <br />
-    <br />
+    <br>
+    <br>
     <a href="https://github.com/Eternilab/gallus/issues/new?labels=TODO(bug)&template=bug---.md">Signaler un bug</a>
     ·
     <a href="https://github.com/Eternilab/gallus/issues/new?labels=TODO(amelioration)&template=feature-request---.md">Demander une fonctionnalité</a>
@@ -154,7 +154,7 @@ Attendez la fin de son exécution, qui peut prendre 20 à 30 minutes.
 Gallus à produit un media d'installation au format ISO et vous propose de créer une clé USB d'installation.
 
 Passer ensuite à la section [Démarrage à partir du media d’installation](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2)
-</br>
+<br>
 
 <p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
@@ -166,14 +166,15 @@ Passer ensuite à la section [Démarrage à partir du media d’installation](#d
 	<td>
 		<details>
 			<summary>Avec Git</summary>
-			<br/>
+			<br>
+
 ```git clone https://github.com/Eternilab/gallus.git; cd gallus```
 
 ou
 
 ```git clone git@github.com:Eternilab/gallus.git; cd gallus```
-			<br/>
-			<br/>
+			<br>
+			<br>
 		</details>
 	</td>
 </tr>
@@ -181,7 +182,7 @@ ou
 	<td>
 		<details>
 			<summary>Avec Powershell</summary>
-			<br/>
+			<br>
 ```Invoke-WebRequest -URI https://github.com/Eternilab/gallus/archive/refs/heads/main.zip -OutFile gallus.zip ; Expand-Archive -Path .\gallus.zip -DestinationPath . ; cd gallus-main```
 
 		</details>
@@ -191,9 +192,9 @@ ou
 	<td>
 		<details>
 			<summary>Avec Autre chose</summary>
-			<br/>
-Téléchargez l'ensemble des fichiers du dépôt dans le répertoire de travail.<br/><br/>
-ou<br/><br/>
+			<br>
+Téléchargez l'ensemble des fichiers du dépôt dans le répertoire de travail.<br><br>
+ou<br><br>
 Télécharger l'archive zip et l'extraire dans le répertoire de travail.
 
 		</details>
@@ -229,9 +230,9 @@ Voici la liste de l'ensemble des actions et sous-actions effectuées par ```.\ga
 
 * ```-flash``` : Produit d'un média d'installation USB démarrable à partir des fichiers d'installation (sur UEFI uniquement, BIOS non supporté).
 
-La commande ```.\gallus.ps1 -full``` équivaut donc, par exemple, à appeler gallus.ps1 trois fois successivement avec, dans l'ordre, les paramètres ```-init```, ```-make``` et ```-flash```:<br/>
-```.\gallus.ps1 -init```<br/>
-```.\gallus.ps1 -make```<br/>
+La commande ```.\gallus.ps1 -full``` équivaut donc, par exemple, à appeler gallus.ps1 trois fois successivement avec, dans l'ordre, les paramètres ```-init```, ```-make``` et ```-flash```:<br>
+```.\gallus.ps1 -init```<br>
+```.\gallus.ps1 -make```<br>
 ```.\gallus.ps1 -flash```
 
 Il existe également le paramètre supplémentaire suivant :
@@ -242,11 +243,11 @@ Il existe également le paramètre supplémentaire suivant :
 
 ### Mode hors-ligne
 
-Le paramètre unique ```-advancedDownloadAll``` permet de ne plus nécessiter d'accès à Internet une fois exécuté. On peut donc ensuite travailler hors-ligne en enchainant les commandes suivantes :<br/>
-```.\gallus.ps1 -advancedImportDriver```<br/>
-```.\gallus.ps1 -advancedSetupTools```<br/>
-```.\gallus.ps1 -advancedExtractWinImage```<br/>
-```.\gallus.ps1 -make```<br/>
+Le paramètre unique ```-advancedDownloadAll``` permet de ne plus nécessiter d'accès à Internet une fois exécuté. On peut donc ensuite travailler hors-ligne en enchainant les commandes suivantes :<br>
+```.\gallus.ps1 -advancedImportDriver```<br>
+```.\gallus.ps1 -advancedSetupTools```<br>
+```.\gallus.ps1 -advancedExtractWinImage```<br>
+```.\gallus.ps1 -make```<br>
 ```.\gallus.ps1 -flash```
 
 <p align="right">(<a href="#haut-readme">retour au début</a>)</p>
