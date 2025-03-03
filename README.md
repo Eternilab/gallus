@@ -163,12 +163,17 @@ Passer ensuite à la section [Démarrage à partir du media d’installation](#d
 			<summary>Avec Git</summary>
 			<br>
 
-```git clone https://github.com/Eternilab/gallus.git; cd gallus```
+```
+git clone https://github.com/Eternilab/gallus.git; cd gallus
+```
 
 ou
 
-```git clone git@github.com:Eternilab/gallus.git; cd gallus```
-			<br>
+```
+git clone git@github.com:Eternilab/gallus.git; cd gallus
+```
+
+<br>
 			<br>
 		</details>
 	</td>
@@ -178,7 +183,9 @@ ou
 		<details>
 			<summary>Avec Powershell</summary>
 			<br>
-```Invoke-WebRequest -URI https://github.com/Eternilab/gallus/archive/refs/heads/main.zip -OutFile gallus.zip ; Expand-Archive -Path .\gallus.zip -DestinationPath . ; cd gallus-main```
+```
+Invoke-WebRequest -URI https://github.com/Eternilab/gallus/archive/refs/heads/main.zip -OutFile gallus.zip ; Expand-Archive -Path .\gallus.zip -DestinationPath . ; cd gallus-main
+```
 
 </tr>
 <tr>
