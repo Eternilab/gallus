@@ -183,6 +183,7 @@ git clone git@github.com:Eternilab/gallus.git; cd gallus
 		<details>
 			<summary>Avec Powershell</summary>
 			<br>
+
 ```
 Invoke-WebRequest -URI https://github.com/Eternilab/gallus/archive/refs/heads/main.zip -OutFile gallus.zip ; Expand-Archive -Path .\gallus.zip -DestinationPath . ; cd gallus-main
 ```
