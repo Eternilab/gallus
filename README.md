@@ -13,8 +13,6 @@
 [![Issues][issues-shield]][issues-url]
 [![Licence AGPLv3][license-shield]][license-url]
 
-
-
 <!-- LOGO DU PROJET -->
 <!--
 <br>
@@ -96,7 +94,6 @@ Le projet OpenSource [HardeningKitty](https://github.com/scipag/HardeningKitty) 
 
 L'automatisation utilisée dans ce projet utilise la technologie [MDT](https://learn.microsoft.com/en-us/mem/configmgr/mdt/) de Microsoft instrumentée grâce à [Powershell](https://learn.microsoft.com/en-us/powershell/scripting/overview).
 
-
 ### Propulsé par
 [![Powershell][Powershell-badge]][Powershell-url]
 [![Windows 11][Windows11-badge]][Windows11-url]
@@ -105,8 +102,6 @@ L'automatisation utilisée dans ce projet utilise la technologie [MDT](https://l
 [![JavaScript][JavaScript-badge]][JavaScript-url]
 
 <p align="right">(<a href="#haut-readme">retour au début</a>)</p>
-
-
 
 # Prérequis
 
@@ -185,8 +180,6 @@ ou
 			<br>
 ```Invoke-WebRequest -URI https://github.com/Eternilab/gallus/archive/refs/heads/main.zip -OutFile gallus.zip ; Expand-Archive -Path .\gallus.zip -DestinationPath . ; cd gallus-main```
 
-		</details>
-	</td>
 </tr>
 <tr>
 	<td>
@@ -197,8 +190,6 @@ Téléchargez l'ensemble des fichiers du dépôt dans le répertoire de travail.
 ou<br><br>
 Télécharger l'archive zip et l'extraire dans le répertoire de travail.
 
-		</details>
-	</td>
 </tr>
 </table>
 
