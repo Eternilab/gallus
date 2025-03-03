@@ -127,6 +127,8 @@ Il est possible d'utiliser Gallus sur un système ayant été installé grâce �
 
 Dans le cas ou un système Windows n'est pas disponible nativement, des solutions de virtualisations (VirtualBox, etc.) peuvent être utilisées pour héberger un système Microsoft Windows.
 
+<p align="right">(<a href="#haut-readme">retour au début</a>)</p>
+
 # Construction du média - Phase 1 : "Build"
 
 Bien que la volonté première de Gallus soit de limiter l'interaction utilisateur nécessaire pour obtenir un installateur, il est possible d'avoir accès à des options avancées (cf: [Installation uniquement (Usage avancé)](#installation-uniquement-usage-avanc%C3%A9)).
@@ -153,6 +155,8 @@ Gallus à produit un media d'installation au format ISO et vous propose de crée
 
 Passer ensuite à la section [Démarrage à partir du media d’installation](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2)
 </br>
+
+<p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
 ### Installation uniquement (Usage avancé)
 *Installe Gallus à l'emplacement désiré et vous permet d'exécuter [chaque commande](#usage--commandes) pour adapter votre utilisation de Gallus à vos besoins.*
@@ -201,8 +205,6 @@ Gallus étant installé manuellement, le script ```bootstrap.ps1```, utilisé pa
 
 <p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
-
-
 ### Usage & commandes
 
 Si vous avez installé Gallus avec [la méthode avancée](#installation-uniquement-usage-avanc%C3%A9), vous pouvez exécuter manuellement le script gallus.ps1 avec différents paramètres.
@@ -236,6 +238,8 @@ Il existe également le paramètre supplémentaire suivant :
 
 * ```-advancedDownloadAll``` : Télécharge l'ensemble des composants nécessaires à l’exécution de Gallus. Équivaut a appeler successivement gallus.ps1 trois fois avec, dans l’ordre, les paramètres ```-advancedDownloadTools```, ```-advancedDownloadWinImage```, ```-advancedDownloadHK```
 
+<p align="right">(<a href="#haut-readme">retour au début</a>)</p>
+
 ### Mode hors-ligne
 
 Le paramètre unique ```-advancedDownloadAll``` permet de ne plus nécessiter d'accès à Internet une fois exécuté. On peut donc ensuite travailler hors-ligne en enchainant les commandes suivantes :<br/>
@@ -244,7 +248,6 @@ Le paramètre unique ```-advancedDownloadAll``` permet de ne plus nécessiter d'
 ```.\gallus.ps1 -advancedExtractWinImage```<br/>
 ```.\gallus.ps1 -make```<br/>
 ```.\gallus.ps1 -flash```
-
 
 <p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
@@ -280,6 +283,8 @@ Le système Windows est installé sans licence, à vous de fournir la vôtre pou
 
 Cette [Phase 2](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2) est répétable sur autant de postes que désiré.
 
+<p align="right">(<a href="#haut-readme">retour au début</a>)</p>
+
 # Problèmes potentiels
 
 Si votre problème n'est pas décrit dans les sous chapitres qui suivent, veuillez [contacter Eternilab](mailto:contact@eternilab.com) ou [signaler un bug](https://github.com/Eternilab/gallus/issues/new?labels=TODO(bug)&template=bug---.md).
@@ -306,6 +311,8 @@ Vous trouverez des informations ci-dessous, dans la section [Support de périph�
 Dans le cas contraire, un autre problème est survenu, cherchez la réponse dans ce fichier de journaux cité précédemment :
 
 ```X:\Windows\temp\SMSTSLog\smsts.log```
+
+<p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
 # Support de périphériques avec pilotes supplémentaires
 
@@ -359,6 +366,8 @@ Les nouveaux médias d'installation construits contiennent maintenant les driver
 
 On peut maintenant relancer [l'installation (Phase2)](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2).
 
+<p align="right">(<a href="#haut-readme">retour au début</a>)</p>
+
 # Analyse des journaux d'installation
 
 Comme spécifié dans la section [Problèmes d'accès au disque](#probl%C3%A8mes-dacc%C3%A8s-au-disque), il est facilement possible d’accéder aux journaux d'installation de la sous-étape 1 de la phase 2 (cf. [Démarrage à partir du media d’installation](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation-phase-2)) lors de l'installation en allant lire le fichier suivant :
@@ -381,8 +390,6 @@ FIXME
 Accédez aux [tickets](https://github.com/Eternilab/gallus/issues) pour une liste exhaustive des fonctionnalités demandées, en cours de développement ou des problèmes connus.
 
 <p align="right">(<a href="#haut-readme">retour au début</a>)</p>
-
-
 
 # Contribuer
 
@@ -412,15 +419,11 @@ git push origin MyAmazingFeature
 
 <p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
-
-
 # Licence
 
 Distribué sous licence AGPLv3. Voir [Licence.txt](https://github.com/Eternilab/gallus/LICENCE.txt) pour plus d'information.
 
 <p align="right">(<a href="#haut-readme">retour au début</a>)</p>
-
-
 
 # Contact
 
@@ -429,7 +432,6 @@ Eternilab - [@eternilab](https://twitter.com/eternilab) - [tech@eternilab.com](m
 Lien du dépôt : [https://github.com/Eternilab/gallus](https://github.com/Eternilab/gallus)
 
 <p align="right">(<a href="#haut-readme">retour au début</a>)</p>
-
 
 <!-- Remerciements -->
 <!-- les remerciements aux contributions seront ajoutés ici
