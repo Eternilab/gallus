@@ -141,12 +141,13 @@ buildSansInit :
 bootstrap:
   stage: build
   before_script:
-    - if [ -d -path "C:\Gallus" ]; remove-item -path "C:\Gallus" -recurse -force
+    - if (Test-Path -PathType Container -Path "C:\Gallus") { Remove-item -path "C:\Gallus" -recurse -force }
   script:
     - New-Item -ItemType Directory -Force -Path "\Gallus"
-    - cd \Gallus ; Set-ExecutionPolicy Bypass -Scope Process -Force
-    - "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072"
-    - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/bootsrap.ps1'))) main"
+    - cd \Gallus
+    - Set-ExecutionPolicy Bypass -Scope Process -Force
+    - [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+    - & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/bootsrap.ps1'))) main
     - .\gallus.ps1 -full
     - cd \Gallus\GMedia\
     - $isoPath = "C:\Gallus\GMedia\LiteTouchMedia.iso"
