@@ -15,7 +15,7 @@ default:
 installgit:
   stage: build
   script: |
-    winget install --id Git.Git -e --source winget
+    winget install --silent --id Git.Git --exact --source winget
 
 
 verifCode:
@@ -120,13 +120,21 @@ verifTaille:
   stage: build
   script: |
     $tailleFichier = (Get-ChildItem "C:\Gallus\GMedia\LiteTouchMedia.iso").Length
-    if ($tailleFichier -ge 4GB) {if ($tailleFichier -le 32GB) { Write-Host "Le fichier est compris entre 4 Go et 32 Go"; exit 0 } else { Write-Host "Le fichier dépasse 32 Go" ; exit 1} } else { Write-Host "Le fichier est inférieur à 4 Go"; exit 1 }
+    if ($tailleFichier -ge 4GB) {
+      if ($tailleFichier -le 32GB) {
+        Write-Host "Le fichier est compris entre 4 Go et 32 Go"; exit 0
+      } else {
+        Write-Host "Le fichier dépasse 32 Go" ; exit 1
+      }
+    } else {
+      Write-Host "Le fichier est inférieur à 4 Go"; exit 1
+    }
 
 
 initSansBootstrap:
   stage: build
   script: |
-    ! "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) gallus_download_tools"
+    ! & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) gallus_download_tools
 
 buildSansInit:
   stage: build
@@ -134,9 +142,9 @@ buildSansInit:
     New-Item -ItemType Directory -Force -Path "\Gallus"
     cd \Gallus
     Set-ExecutionPolicy Bypass -Scope Process -Force
-    "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072"
-    "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -oneliner"
-    ! "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -build"
+    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+    & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -oneliner
+    ! & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -build
 
 bootstrap:
   stage: build
