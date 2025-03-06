@@ -155,7 +155,7 @@ bootstrap:
     cd \Gallus
     Set-ExecutionPolicy Bypass -Scope Process -Force
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-    & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/bootsrap.ps1'))) main
+    & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/bootstrap.ps1'))) main
     .\gallus.ps1 -full
     cd \Gallus\GMedia\
     $isoPath = "C:\Gallus\GMedia\LiteTouchMedia.iso"
