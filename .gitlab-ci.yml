@@ -24,7 +24,7 @@ verifCode:
     Install-Module -Name PSScriptAnalyzer -Force
     & "C:\Program Files\Git\cmd\git.exe" clone https://github.com/Eternilab/gallus C:\
   script: |
-    Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-ScriptAnalyzer -path C:\gallus\gallus
+    Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-ScriptAnalyzer -path C:\gallus
 
 initSansBootstrap:
   stage: build
