@@ -22,7 +22,7 @@ verifCode:
   stage: build
   before_script: |
     #Install-Module -Name PSScriptAnalyzer -Force
-    & "C:\Program Files\Git\git.exe" clone https://github.com/Eternilab/gallus C:\
+    & "C:\Program Files\Git\cmd\git.exe" clone https://github.com/Eternilab/gallus C:\
   script: |
     Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-ScriptAlanyzer -path C:\gallus-main\gallus-main
 
