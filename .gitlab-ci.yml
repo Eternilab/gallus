@@ -15,7 +15,7 @@ default:
 installgit:
   stage: build
   script: |
-    winget install --silent --id Git.Git --exact --source winget
+    $null = winget install --silent --id Git.Git --exact --source winget
 
 
 verifCode:
