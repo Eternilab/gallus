@@ -15,7 +15,8 @@ installGit:
   stage: build
   script: |
     winget install --silent --id Git.Git --exact --source winget
-    ! ( & "C:\Program Files\Git\cmd\git.exe" )
+    & "C:\Program Files\Git\cmd\git.exe"
+    $LastExitCode = 0
 
 verifCode:
   stage: build
@@ -31,7 +32,8 @@ verifCode:
 initSansBootstrap:
   stage: build
   script: |
-    ! { & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) gallus_download_tools }
+    & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) gallus_download_tools
+    $LastExitCode = 0
 
     #makeSansInit:
     #  stage: build
