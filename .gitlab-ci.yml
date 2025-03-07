@@ -93,13 +93,13 @@ verifTaille:
 
 montageIso:
   stage: build
-  script: |
-    cd C:\Gallus\GMedia\
-    .\LiteTouchMedia.iso
-    $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
-    $a = -join($isom, ":")
-    cd $a
-    exit 0
+  script:
+    - cd C:\Gallus\GMedia\
+    - .\LiteTouchMedia.iso
+    - $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
+    - $a = -join($isom, ":")
+    - cd $a
+    - exit 0
   after_script: |
     $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
     $a = -join($isom, ":")
