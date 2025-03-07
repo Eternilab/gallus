@@ -94,17 +94,17 @@ verifTaille:
 montageIso:
   stage: build
   script:
-    - cd C:\Gallus\GMedia\
-    - .\LiteTouchMedia.iso
-    - $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
-    - $a = -join($isom, ":")
-    - cd $a
-    - Get-ChildItem
+    cd C:\Gallus\GMedia\
+    .\LiteTouchMedia.iso
+    $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
+    $a = -join($isom, ":")
+    cd $a
+    Get-ChildItem
   after_script:
-    - $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
-    - $a = -join($isom, ":")
-    - $driveEject = New-Object -comObject Shell.Application
-    - $driveEject.NameSpace(17).ParseName($a).InvokeVerb("Eject")
+    $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
+    $a = -join($isom, ":")
+    $driveEject = New-Object -comObject Shell.Application
+    $driveEject.NameSpace(17).ParseName($a).InvokeVerb("Eject")
 
 verifPrésence:
   stage: build
@@ -112,66 +112,66 @@ verifPrésence:
     cd C:\Gallus\GMedia\
     .\LiteTouchMedia.iso
   script: |
-    Start-Sleep -Seconds 2
-    $verif1 = "D:\Deploy\Scripts\HardeningKitty.psd1"
+    $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
+    $verif1 = "$isom:\Deploy\Scripts\HardeningKitty.psd1"
     if (-not (test-path $verif1)) {write-host "$verif1 n'est pas présent"; exit 1} else { write-host "$verif1 est présent"}
-    $verif2 = "D:\Deploy\Scripts\finding_list_cis_microsoft_windows_11_enterprise_22h2_machine.csv"
+    $verif2 = "$isom:\Deploy\Scripts\finding_list_cis_microsoft_windows_11_enterprise_22h2_machine.csv"
     if (-not (test-path $verif2)) {write-host "$verif2 n'est pas présent"; exit 1} else { write-host "$verif2 est présent"}
-    $verif3 = "D:\Deploy\Scripts\media.tag"
+    $verif3 = "$isom:\Deploy\Scripts\media.tag"
     if (-not (test-path $verif3)) {write-host "$verif3 n'est pas présent"; exit 1} else { write-host "$verif3 est présent"}
-    $verif4 = "D:\Deploy\Scripts\AuditingScript.ps1"
+    $verif4 = "$isom:\Deploy\Scripts\AuditingScript.ps1"
     if (-not (test-path $verif4)) {write-host "$verif4 n'est pas présent"; exit 1} else { write-host "$verif4 est présent"}
-    $verif5 = "D:\Deploy\Scripts\CopyAuditingFiles.ps1"
+    $verif5 = "$isom:\Deploy\Scripts\CopyAuditingFiles.ps1"
     if (-not (test-path $verif5)) {write-host "$verif5 n'est pas présent"; exit 1} else { write-host "$verif5 est présent"}
-    $verif6 = "D:\Deploy\Scripts\CopyGallusFiles.wsf"
+    $verif6 = "$isom:\Deploy\Scripts\CopyGallusFiles.wsf"
     if (-not (test-path $verif6)) {write-host "$verif6 n'est pas présent"; exit 1} else { write-host "$verif6 est présent"}
-    $verif7 = "D:\Deploy\Scripts\Eternilab.png"
+    $verif7 = "$isom:\Deploy\Scripts\Eternilab.png"
     if (-not (test-path $verif7)) {write-host "$verif7 n'est pas présent"; exit 1} else { write-host "$verif7 est présent"}
-    $verif8 = "D:\Deploy\Scripts\GenerateGHITable.ps1"
+    $verif8 = "$isom:\Deploy\Scripts\GenerateGHITable.ps1"
     if (-not (test-path $verif8)) {write-host "$verif8 n'est pas présent"; exit 1} else { write-host "$verif8 est présent"}
-    $verif9 = "D:\Deploy\Scripts\GHI.csv"
+    $verif9 = "$isom:\Deploy\Scripts\GHI.csv"
     if (-not (test-path $verif9)) {write-host "$verif9 n'est pas présent"; exit 1} else { write-host "$verif9 est présent"}
-    $verif10 = "D:\Deploy\Scripts\HardeningScript.ps1"
+    $verif10 = "$isom:\Deploy\Scripts\HardeningScript.ps1"
     if (-not (test-path $verif10)) {write-host "$verif10 n'est pas présent"; exit 1} else { write-host "$verif10 est présent"}
-    $verif11 = "D:\Deploy\Scripts\ReportScript.js"
+    $verif11 = "$isom:\Deploy\Scripts\ReportScript.js"
     if (-not (test-path $verif11)) {write-host "$verif11 n'est pas présent"; exit 1} else { write-host "$verif11 est présent"}
-    $verif12 = "D:\Deploy\Scripts\ReportStyle.css"
+    $verif12 = "$isom:\Deploy\Scripts\ReportStyle.css"
     if (-not (test-path $verif12)) {write-host "$verif12 n'est pas présent"; exit 1} else { write-host "$verif12 est présent"}
-    $verif13 = "D:\Deploy\Scripts\Variables.ps1"
+    $verif13 = "$isom:\Deploy\Scripts\Variables.ps1"
     if (-not (test-path $verif13)) {write-host "$verif13 n'est pas présent"; exit 1} else { write-host "$verif13 est présent"}
-    $verif14 = "D:\Deploy\Operating Systems\Win11x64_EntN_en-US_22H2\sources\boot.wim"
+    $verif14 = "$isom:\Deploy\Operating Systems\Win11x64_EntN_en-US_22H2\sources\boot.wim"
     if (-not (test-path $verif14)) {write-host "$verif14 n'est pas présent"; exit 1} else { write-host "$verif14 est présent"}
-    $verif15 = "D:\Deploy\Operating Systems\Win11x64_EntN_en-US_22H2\sources\install.wim"
+    $verif15 = "$isom:\Deploy\Operating Systems\Win11x64_EntN_en-US_22H2\sources\install.wim"
     if (-not (test-path $verif15)) {write-host "$verif15 n'est pas présent"; exit 1} else { write-host "$verif15 est présent"}
-    $verif = "D:\Deploy\Control\ApplicationGroups.xml"
+    $verif = "$isom:\Deploy\Control\ApplicationGroups.xml"
     if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\Applications.xml"
+    $verif = "$isom:\Deploy\Control\Applications.xml"
     if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\Bootstrap.ini"
+    $verif = "$isom:\Deploy\Control\Bootstrap.ini"
     if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\CustomSettings.ini"
+    $verif = "$isom:\Deploy\Control\CustomSettings.ini"
     if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\DriverGroups.xml"
+    $verif = "$isom:\Deploy\Control\DriverGroups.xml"
     if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\Drivers.xml"
+    $verif = "$isom:\Deploy\Control\Drivers.xml"
     if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\OperatingSystemGroups.xml"
+    $verif = "$isom:\Deploy\Control\OperatingSystemGroups.xml"
     if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\OperatingSystems.xml"
+    $verif = "$isom:\Deploy\Control\OperatingSystems.xml"
     if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\PackageGroups.xml"
+    $verif = "$isom:\Deploy\Control\PackageGroups.xml"
     if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\Packages.xml"
+    $verif = "$isom:\Deploy\Control\Packages.xml"
     if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\SelectionProfileGroups.xml"
+    $verif = "$isom:\Deploy\Control\SelectionProfileGroups.xml"
     if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\SelectionProfiles.xml"
+    $verif = "$isom:\Deploy\Control\SelectionProfiles.xml"
     if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\Settings.xml"
+    $verif = "$isom:\Deploy\Control\Settings.xml"
     if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\TaskSequenceGroups.xml"
+    $verif = "$isom:\Deploy\Control\TaskSequenceGroups.xml"
     if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\Version.xml"
+    $verif = "$isom:\Deploy\Control\Version.xml"
     if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
   after_script: |
     $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
