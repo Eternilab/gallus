@@ -15,7 +15,7 @@ installGit:
   stage: build
   script: |
     winget install --silent --id Git.Git --exact --source winget
-    ! & "C:\Program Files\Git\cmd\git.exe"
+    ! (& "C:\Program Files\Git\cmd\git.exe")
 
 verifCode:
   stage: build
