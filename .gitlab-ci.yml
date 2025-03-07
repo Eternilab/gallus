@@ -100,7 +100,7 @@ montageIso:
     - $a = -join($isom, ":")
     - cd $a
     - Get-ChildItem
-  after_script: |
+  after_script:
     - $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
     - $a = -join($isom, ":")
     - $driveEject = New-Object -comObject Shell.Application
@@ -108,11 +108,11 @@ montageIso:
 
 verifPrésence:
   stage: build
-  before_script: |
-    cd C:\Gallus\GMedia\
-    .\LiteTouchMedia.iso
+  before_script:
+    - cd C:\Gallus\GMedia\
+    - .\LiteTouchMedia.iso
   script: |
-    D:
+    cd D:
     Get-ChildItem
     cd Deploy
     Get-ChildItem
