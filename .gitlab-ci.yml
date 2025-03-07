@@ -108,14 +108,11 @@ montageIso:
 
 verifPrésence:
   stage: build
-  before_script:
-    - cd C:\Gallus\GMedia\
-    - .\LiteTouchMedia.iso
+  before_script: |
+    cd C:\Gallus\GMedia\
+    .\LiteTouchMedia.iso
   script: |
-    cd D:
-    Get-ChildItem
-    cd Deploy
-    Get-ChildItem
+    Start-Sleep -Seconds 2
     $verif1 = "D:\Deploy\Scripts\HardeningKitty.psd1"
     if (-not (test-path $verif1)) {write-host "$verif1 n'est pas présent"; exit 1} else { write-host "$verif1 est présent"}
     $verif2 = "D:\Deploy\Scripts\finding_list_cis_microsoft_windows_11_enterprise_22h2_machine.csv"
