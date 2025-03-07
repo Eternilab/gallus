@@ -11,158 +11,160 @@ default:
     - amd64
     - windows
 
-installgit:
+installGit:
   stage: build
   script: |
-    $null = winget install --silent --id Git.Git --exact --source winget | Out-Null
+    winget install --silent --id Git.Git --exact --source winget
     ! & "C:\Program Files\Git\cmd\git.exe"
 
 verifCode:
   stage: build
   before_script: |
-    if (Test-Path -PathType Container -Path "C:\Gallus") { Remove-item -path "C:\Gallus" -recurse -force }
+    if (Test-Path -PathType Container -Path C:\gallus-code") { Remove-item -Path C:\gallus-code -recurse -force }
     Install-Module -Name PSScriptAnalyzer -Force
-    & "C:\Program Files\Git\cmd\git.exe" clone https://github.com/Eternilab/gallus C:\
+    & "C:\Program Files\Git\cmd\git.exe" clone https://github.com/Eternilab/gallus C:\gallus-code
   script: |
-    Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-ScriptAnalyzer -path C:\gallus
-
-initSansBootstrap:
-  stage: build
-  script: |
-    ! & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) gallus_download_tools
-
-makeSansInit:
-  stage: build
-  before_script: |
-    if (Test-Path -PathType Container -Path "C:\Gallus") { Remove-item -path "C:\Gallus" -recurse -force }
-  script: |
-    New-Item -ItemType Directory -Force -Path "\Gallus"
-    cd \Gallus
-    Set-ExecutionPolicy Bypass -Scope Process -Force
-    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-    & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/bootstrap.ps1'))) main
-    .\gallus.ps1 -make
-
-bootstrap:
-  stage: build
-  before_script: |
-    if (Test-Path -PathType Container -Path "C:\Gallus") { Remove-item -path "C:\Gallus" -recurse -force }
-  script: |
-    New-Item -ItemType Directory -Force -Path "\Gallus"
-    cd \Gallus
-    Set-ExecutionPolicy Bypass -Scope Process -Force
-    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-    & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/bootstrap.ps1'))) main
-    .\gallus.ps1 -full
-    cd \Gallus\GMedia\
-    $isoPath = "C:\Gallus\GMedia\LiteTouchMedia.iso"
-    if (-not (test-path $isoPath)) {write-output "fichier n'existe pas" ; exit 2 }
-    $fs=[System.IO.File]::OpenRead($isoPath)
-    $fs.Seek(32769, [System.IO.SeekOrigin]::Begin) | Out-Null; $buffer=New-Object byte[] 5
-    $fs.Read($buffer, 0, 5) | Out-Null
-    $fs.Close()
-    $signature = [System.Text.Encoding]::ASCII.GetString($buffer)
-    $fs.Close()
-    if ($signature -eq "CD001") { write-output "L'iso est un 9660" ; exit 0} else {wirte-output "Le fichier n'est pas un iso 9660" ; exit 1}
-
-verifTaille:
-  stage: build
-  script: |
-    $tailleFichier = (Get-ChildItem "C:\Gallus\GMedia\LiteTouchMedia.iso").Length
-    if ($tailleFichier -ge 4GB) {
-      if ($tailleFichier -le 32GB) {
-        Write-Host "Le fichier est compris entre 4 Go et 32 Go"; exit 0
-      } else {
-        Write-Host "Le fichier dépasse 32 Go" ; exit 1
-      }
-    } else {
-      Write-Host "Le fichier est inférieur à 4 Go"; exit 1
-    }
-
-montageIso:
-  stage: build
-  script: |
-    cd C:\Gallus\GMedia\
-    .\LiteTouchMedia.iso
-    $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
-    $a = -join($isom, ":")
-    cd $a
-    exit 0
+    Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-ScriptAnalyzer -path C:\gallus-code
   after_script: |
-    $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
-    $a = -join($isom, ":")
-    $driveEject = New-Object -comObject Shell.Application
-    $driveEject.NameSpace(17).ParseName($a).InvokeVerb("Eject")
+    Remove-item -path C:\Gallus-code -recurse -force
 
-verifPrésence:
-  stage: build
-  before_script: |
-    cd C:\Gallus\GMedia\
-    .\LiteTouchMedia.iso
-  script: |
-    $verif1 = "D:\Deploy\Scripts\HardeningKitty.psd1"
-    if (-not (test-path $verif1)) {write-host "$verif1 n'est pas présent"; exit 1} else { write-host "$verif1 est présent"}
-    $verif2 = "D:\Deploy\Scripts\finding_list_cis_microsoft_windows_11_enterprise_22h2_machine.csv"
-    if (-not (test-path $verif2)) {write-host "$verif2 n'est pas présent"; exit 1} else { write-host "$verif2 est présent"}
-    $verif3 = "D:\Deploy\Scripts\media.tag"
-    if (-not (test-path $verif3)) {write-host "$verif3 n'est pas présent"; exit 1} else { write-host "$verif3 est présent"}
-    $verif4 = "D:\Deploy\Scripts\AuditingScript.ps1"
-    if (-not (test-path $verif4)) {write-host "$verif4 n'est pas présent"; exit 1} else { write-host "$verif4 est présent"}
-    $verif5 = "D:\Deploy\Scripts\CopyAuditingFiles.ps1"
-    if (-not (test-path $verif5)) {write-host "$verif5 n'est pas présent"; exit 1} else { write-host "$verif5 est présent"}
-    $verif6 = "D:\Deploy\Scripts\CopyGallusFiles.wsf"
-    if (-not (test-path $verif6)) {write-host "$verif6 n'est pas présent"; exit 1} else { write-host "$verif6 est présent"}
-    $verif7 = "D:\Deploy\Scripts\Eternilab.png"
-    if (-not (test-path $verif7)) {write-host "$verif7 n'est pas présent"; exit 1} else { write-host "$verif7 est présent"}
-    $verif8 = "D:\Deploy\Scripts\GenerateGHITable.ps1"
-    if (-not (test-path $verif8)) {write-host "$verif8 n'est pas présent"; exit 1} else { write-host "$verif8 est présent"}
-    $verif9 = "D:\Deploy\Scripts\GHI.csv"
-    if (-not (test-path $verif9)) {write-host "$verif9 n'est pas présent"; exit 1} else { write-host "$verif9 est présent"}
-    $verif10 = "D:\Deploy\Scripts\HardeningScript.ps1"
-    if (-not (test-path $verif10)) {write-host "$verif10 n'est pas présent"; exit 1} else { write-host "$verif10 est présent"}
-    $verif11 = "D:\Deploy\Scripts\ReportScript.js"
-    if (-not (test-path $verif11)) {write-host "$verif11 n'est pas présent"; exit 1} else { write-host "$verif11 est présent"}
-    $verif12 = "D:\Deploy\Scripts\ReportStyle.css"
-    if (-not (test-path $verif12)) {write-host "$verif12 n'est pas présent"; exit 1} else { write-host "$verif12 est présent"}
-    $verif13 = "D:\Deploy\Scripts\Variables.ps1"
-    if (-not (test-path $verif13)) {write-host "$verif13 n'est pas présent"; exit 1} else { write-host "$verif13 est présent"}
-    $verif14 = "D:\Deploy\Operating Systems\Win11x64_EntN_en-US_22H2\sources\boot.wim"
-    if (-not (test-path $verif14)) {write-host "$verif14 n'est pas présent"; exit 1} else { write-host "$verif14 est présent"}
-    $verif15 = "D:\Deploy\Operating Systems\Win11x64_EntN_en-US_22H2\sources\install.wim"
-    if (-not (test-path $verif15)) {write-host "$verif15 n'est pas présent"; exit 1} else { write-host "$verif15 est présent"}
-    $verif = "D:\Deploy\Control\ApplicationGroups.xml"
-    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\Applications.xml"
-    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\Bootstrap.ini"
-    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\CustomSettings.ini"
-    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\DriverGroups.xml"
-    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\Drivers.xml"
-    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\OperatingSystemGroups.xml"
-    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\OperatingSystems.xml"
-    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\PackageGroups.xml"
-    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\Packages.xml"
-    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\SelectionProfileGroups.xml"
-    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\SelectionProfiles.xml"
-    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\Settings.xml"
-    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\TaskSequenceGroups.xml"
-    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-    $verif = "D:\Deploy\Control\Version.xml"
-    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-  after_script: |
-    $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
-    $a = -join($isom, ":")
-    $driveEject = New-Object -comObject Shell.Application
-    $driveEject.NameSpace(17).ParseName($a).InvokeVerb("Eject")
-
+    #initSansBootstrap:
+    #  stage: build
+    #  script: |
+    #    ! & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) gallus_download_tools
+    #
+    #makeSansInit:
+    #  stage: build
+    #  before_script: |
+    #    if (Test-Path -PathType Container -Path "C:\Gallus") { Remove-item -path "C:\Gallus" -recurse -force }
+    #  script: |
+    #    New-Item -ItemType Directory -Force -Path "\Gallus"
+    #    cd \Gallus
+    #    Set-ExecutionPolicy Bypass -Scope Process -Force
+    #    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+    #    & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/bootstrap.ps1'))) main
+    #    .\gallus.ps1 -make
+    #
+    #bootstrap:
+    #  stage: build
+    #  before_script: |
+    #    if (Test-Path -PathType Container -Path "C:\Gallus") { Remove-item -path "C:\Gallus" -recurse -force }
+    #  script: |
+    #    New-Item -ItemType Directory -Force -Path "\Gallus"
+    #    cd \Gallus
+    #    Set-ExecutionPolicy Bypass -Scope Process -Force
+    #    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+    #    & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/bootstrap.ps1'))) main
+    #    .\gallus.ps1 -full
+    #    cd \Gallus\GMedia\
+    #    $isoPath = "C:\Gallus\GMedia\LiteTouchMedia.iso"
+    #    if (-not (test-path $isoPath)) {write-output "fichier n'existe pas" ; exit 2 }
+    #    $fs=[System.IO.File]::OpenRead($isoPath)
+    #    $fs.Seek(32769, [System.IO.SeekOrigin]::Begin) | Out-Null; $buffer=New-Object byte[] 5
+    #    $fs.Read($buffer, 0, 5) | Out-Null
+    #    $fs.Close()
+    #    $signature = [System.Text.Encoding]::ASCII.GetString($buffer)
+    #    $fs.Close()
+    #    if ($signature -eq "CD001") { write-output "L'iso est un 9660" ; exit 0} else {wirte-output "Le fichier n'est pas un iso 9660" ; exit 1}
+    #
+    #verifTaille:
+    #  stage: build
+    #  script: |
+    #    $tailleFichier = (Get-ChildItem "C:\Gallus\GMedia\LiteTouchMedia.iso").Length
+    #    if ($tailleFichier -ge 4GB) {
+    #      if ($tailleFichier -le 32GB) {
+    #        Write-Host "Le fichier est compris entre 4 Go et 32 Go"; exit 0
+    #      } else {
+    #        Write-Host "Le fichier dépasse 32 Go" ; exit 1
+    #      }
+    #    } else {
+    #      Write-Host "Le fichier est inférieur à 4 Go"; exit 1
+    #    }
+    #
+    #montageIso:
+    #  stage: build
+    #  script: |
+    #    cd C:\Gallus\GMedia\
+    #    .\LiteTouchMedia.iso
+    #    $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
+    #    $a = -join($isom, ":")
+    #    cd $a
+    #    exit 0
+    #  after_script: |
+    #    $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
+    #    $a = -join($isom, ":")
+    #    $driveEject = New-Object -comObject Shell.Application
+    #    $driveEject.NameSpace(17).ParseName($a).InvokeVerb("Eject")
+    #
+    #verifPrésence:
+    #  stage: build
+    #  before_script: |
+    #    cd C:\Gallus\GMedia\
+    #    .\LiteTouchMedia.iso
+    #  script: |
+    #    $verif1 = "D:\Deploy\Scripts\HardeningKitty.psd1"
+    #    if (-not (test-path $verif1)) {write-host "$verif1 n'est pas présent"; exit 1} else { write-host "$verif1 est présent"}
+    #    $verif2 = "D:\Deploy\Scripts\finding_list_cis_microsoft_windows_11_enterprise_22h2_machine.csv"
+    #    if (-not (test-path $verif2)) {write-host "$verif2 n'est pas présent"; exit 1} else { write-host "$verif2 est présent"}
+    #    $verif3 = "D:\Deploy\Scripts\media.tag"
+    #    if (-not (test-path $verif3)) {write-host "$verif3 n'est pas présent"; exit 1} else { write-host "$verif3 est présent"}
+    #    $verif4 = "D:\Deploy\Scripts\AuditingScript.ps1"
+    #    if (-not (test-path $verif4)) {write-host "$verif4 n'est pas présent"; exit 1} else { write-host "$verif4 est présent"}
+    #    $verif5 = "D:\Deploy\Scripts\CopyAuditingFiles.ps1"
+    #    if (-not (test-path $verif5)) {write-host "$verif5 n'est pas présent"; exit 1} else { write-host "$verif5 est présent"}
+    #    $verif6 = "D:\Deploy\Scripts\CopyGallusFiles.wsf"
+    #    if (-not (test-path $verif6)) {write-host "$verif6 n'est pas présent"; exit 1} else { write-host "$verif6 est présent"}
+    #    $verif7 = "D:\Deploy\Scripts\Eternilab.png"
+    #    if (-not (test-path $verif7)) {write-host "$verif7 n'est pas présent"; exit 1} else { write-host "$verif7 est présent"}
+    #    $verif8 = "D:\Deploy\Scripts\GenerateGHITable.ps1"
+    #    if (-not (test-path $verif8)) {write-host "$verif8 n'est pas présent"; exit 1} else { write-host "$verif8 est présent"}
+    #    $verif9 = "D:\Deploy\Scripts\GHI.csv"
+    #    if (-not (test-path $verif9)) {write-host "$verif9 n'est pas présent"; exit 1} else { write-host "$verif9 est présent"}
+    #    $verif10 = "D:\Deploy\Scripts\HardeningScript.ps1"
+    #    if (-not (test-path $verif10)) {write-host "$verif10 n'est pas présent"; exit 1} else { write-host "$verif10 est présent"}
+    #    $verif11 = "D:\Deploy\Scripts\ReportScript.js"
+    #    if (-not (test-path $verif11)) {write-host "$verif11 n'est pas présent"; exit 1} else { write-host "$verif11 est présent"}
+    #    $verif12 = "D:\Deploy\Scripts\ReportStyle.css"
+    #    if (-not (test-path $verif12)) {write-host "$verif12 n'est pas présent"; exit 1} else { write-host "$verif12 est présent"}
+    #    $verif13 = "D:\Deploy\Scripts\Variables.ps1"
+    #    if (-not (test-path $verif13)) {write-host "$verif13 n'est pas présent"; exit 1} else { write-host "$verif13 est présent"}
+    #    $verif14 = "D:\Deploy\Operating Systems\Win11x64_EntN_en-US_22H2\sources\boot.wim"
+    #    if (-not (test-path $verif14)) {write-host "$verif14 n'est pas présent"; exit 1} else { write-host "$verif14 est présent"}
+    #    $verif15 = "D:\Deploy\Operating Systems\Win11x64_EntN_en-US_22H2\sources\install.wim"
+    #    if (-not (test-path $verif15)) {write-host "$verif15 n'est pas présent"; exit 1} else { write-host "$verif15 est présent"}
+    #    $verif = "D:\Deploy\Control\ApplicationGroups.xml"
+    #    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    #    $verif = "D:\Deploy\Control\Applications.xml"
+    #    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    #    $verif = "D:\Deploy\Control\Bootstrap.ini"
+    #    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    #    $verif = "D:\Deploy\Control\CustomSettings.ini"
+    #    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    #    $verif = "D:\Deploy\Control\DriverGroups.xml"
+    #    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    #    $verif = "D:\Deploy\Control\Drivers.xml"
+    #    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    #    $verif = "D:\Deploy\Control\OperatingSystemGroups.xml"
+    #    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    #    $verif = "D:\Deploy\Control\OperatingSystems.xml"
+    #    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    #    $verif = "D:\Deploy\Control\PackageGroups.xml"
+    #    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    #    $verif = "D:\Deploy\Control\Packages.xml"
+    #    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    #    $verif = "D:\Deploy\Control\SelectionProfileGroups.xml"
+    #    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    #    $verif = "D:\Deploy\Control\SelectionProfiles.xml"
+    #    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    #    $verif = "D:\Deploy\Control\Settings.xml"
+    #    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    #    $verif = "D:\Deploy\Control\TaskSequenceGroups.xml"
+    #    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    #    $verif = "D:\Deploy\Control\Version.xml"
+    #    if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
+    #  after_script: |
+    #    $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
+    #    $a = -join($isom, ":")
+    #    $driveEject = New-Object -comObject Shell.Application
+    #    $driveEject.NameSpace(17).ParseName($a).InvokeVerb("Eject")
+    #
