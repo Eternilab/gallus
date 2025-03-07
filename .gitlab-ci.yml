@@ -99,12 +99,12 @@ montageIso:
     - $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
     - $a = -join($isom, ":")
     - cd $a
-    - exit 0
+    - Get-ChildItem
   after_script: |
-    $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
-    $a = -join($isom, ":")
-    $driveEject = New-Object -comObject Shell.Application
-    $driveEject.NameSpace(17).ParseName($a).InvokeVerb("Eject")
+    - $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
+    - $a = -join($isom, ":")
+    - $driveEject = New-Object -comObject Shell.Application
+    - $driveEject.NameSpace(17).ParseName($a).InvokeVerb("Eject")
 
 verifPrésence:
   stage: build
@@ -112,6 +112,10 @@ verifPrésence:
     cd C:\Gallus\GMedia\
     .\LiteTouchMedia.iso
   script: |
+    D:
+    Get-ChildItem
+    cd Deploy
+    Get-ChildItem
     $verif1 = "D:\Deploy\Scripts\HardeningKitty.psd1"
     if (-not (test-path $verif1)) {write-host "$verif1 n'est pas présent"; exit 1} else { write-host "$verif1 est présent"}
     $verif2 = "D:\Deploy\Scripts\finding_list_cis_microsoft_windows_11_enterprise_22h2_machine.csv"
