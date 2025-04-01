@@ -1,8 +1,4 @@
 ---
-stages:
-  - linter
-  - build
-
 variables:
   GIT_STRATEGY: empty
 
@@ -11,63 +7,62 @@ default:
     - amd64
     - windows
 
+debb:
+  stage: .pre
+  script:
+    - echo $CI_PROJECT_DIR
+
 installGit:
-  stage: build
+  stage: .pre
   script: |
     winget install --silent --id Git.Git --exact --source winget
     & "C:\Program Files\Git\cmd\git.exe"
     $LastExitCode = 0
 
 verifCode:
-  stage: build
+  stage: .pre
+  needs: ["installGit"]
   before_script: |
-    if (Test-Path -PathType Container -Path "C:\gallus-code") { Remove-item -Path "C:\gallus-code" -recurse -force }
     Install-Module -Name PSScriptAnalyzer -Force
-    & "C:\Program Files\Git\cmd\git.exe" clone https://github.com/Eternilab/gallus "C:\gallus-code"
+    & "C:\Program Files\Git\cmd\git.exe" clone https://github.com/Eternilab/gallus gallus-code
   script: |
-    Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-ScriptAnalyzer -path "C:\gallus-code"
+    Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-ScriptAnalyzer -path gallus-code
   after_script: |
-    Remove-item -path "C:\gallus-code" -recurse -force
+    Remove-item -path gallus-code -recurse -force
 
 initSansBootstrap:
   stage: build
-  before_script: |
-    if (Test-Path -PathType Container -Path "C:\Gallus") { Remove-item -path "C:\Gallus" -recurse -force }
   script: |
-    New-Item -ItemType Directory -Force -Path "C:\Gallus"
-    cd "C:\Gallus"
+    New-Item -ItemType Directory -Force -Path gallus
+    cd gallus
     & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -init
     $LastExitCode = 0
   after_script: |
-    Remove-item -path "C:\gallus-code" -recurse -force
+    Remove-item -path gallus -recurse -force
 
 makeSansInit:
   stage: build
-  before_script: |
-    if (Test-Path -PathType Container -Path "C:\Gallus") { Remove-item -path "C:\Gallus" -recurse -force }
   script: |
-    New-Item -ItemType Directory -Force -Path "\Gallus"
-    cd \Gallus
+    New-Item -ItemType Directory -Force -Path gallus
+    cd gallus
     Set-ExecutionPolicy Bypass -Scope Process -Force
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
     & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/bootstrap.ps1'))) main
     .\gallus.ps1 -make
   after_script: |
-    Remove-item -path "C:\gallus-code" -recurse -force
+    Remove-item -path gallus -recurse -force
 
 bootstrap:
   stage: build
-  before_script: |
-    if (Test-Path -PathType Container -Path "C:\Gallus") { Remove-item -path "C:\Gallus" -recurse -force }
   script: |
-    New-Item -ItemType Directory -Force -Path "\Gallus"
-    cd \Gallus
+    New-Item -ItemType Directory -Force -Path gallus
+    cd gallus
     Set-ExecutionPolicy Bypass -Scope Process -Force
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
     & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/bootstrap.ps1'))) main
     .\gallus.ps1 -full
-    cd \Gallus\GMedia\
-    $isoPath = "C:\Gallus\GMedia\LiteTouchMedia.iso"
+    cd GMedia
+    $isoPath = "LiteTouchMedia.iso"
     if (-not (test-path $isoPath)) {write-output "fichier n'existe pas" ; exit 2 }
     $fs=[System.IO.File]::OpenRead($isoPath)
     $fs.Seek(32769, [System.IO.SeekOrigin]::Begin) | Out-Null; $buffer=New-Object byte[] 5
@@ -76,11 +71,17 @@ bootstrap:
     $signature = [System.Text.Encoding]::ASCII.GetString($buffer)
     $fs.Close()
     if ($signature -eq "CD001") { write-output "L'iso est un 9660" ; exit 0} else {wirte-output "Le fichier n'est pas un iso 9660" ; exit 1}
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - gallus
 
 verifTaille:
-  stage: build
+  stage: test
+  needs: ["bootstrap"]
   script: |
-    $tailleFichier = (Get-ChildItem "C:\Gallus\GMedia\LiteTouchMedia.iso").Length
+    cd gallus
+    $tailleFichier = (Get-ChildItem "GMedia\LiteTouchMedia.iso").Length
     if ($tailleFichier -ge 4GB) {
       if ($tailleFichier -le 32GB) {
         Write-Host "Le fichier est compris entre 4 Go et 32 Go"; exit 0
@@ -92,25 +93,20 @@ verifTaille:
     }
 
 montageIso:
-  stage: build
+  stage: test
+  needs: ["bootstrap"]
   script: |
-    cd C:\Gallus\GMedia\
+    cd gallus
+    cd GMedia
     .\LiteTouchMedia.iso
     $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
     $a = -join($isom, ":")
     cd $a
     Get-ChildItem
-  after_script: |
-    $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
-    $a = -join($isom, ":")
-    $driveEject = New-Object -comObject Shell.Application
-    $driveEject.NameSpace(17).ParseName($a).InvokeVerb("Eject")
 
-verifPrésence:
-  stage: build
-  before_script: |
-    cd C:\Gallus\GMedia\
-    .\LiteTouchMedia.iso
+verifPresence:
+  stage: test
+  needs: ["montageIso"]
   script: |
     Start-Sleep -Seconds 1
     $verif1 = "D:\Deploy\Scripts\HardeningKitty.psd1"
@@ -173,9 +169,12 @@ verifPrésence:
     if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
     $verif = "D:\Deploy\Control\Version.xml"
     if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
-  after_script: |
+
+demontageIso:
+  stage: .post
+  needs: ["verifPresence"]
+  script: |
     $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
     $a = -join($isom, ":")
     $driveEject = New-Object -comObject Shell.Application
     $driveEject.NameSpace(17).ParseName($a).InvokeVerb("Eject")
-
