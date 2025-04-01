@@ -1,4 +1,4 @@
-param(
+﻿param(
      [Parameter()]
      [string]$Ref="refs/tags/v0.3"
  )
