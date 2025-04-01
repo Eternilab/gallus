@@ -1,7 +1,7 @@
 ---
 variables:
   GIT_STRATEGY: empty
-  GALLUS_DIR: "C:\gallus"
+  GALLUS_DIR: 'C:\gallus'
 
 default:
   tags:
