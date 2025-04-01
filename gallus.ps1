@@ -1,4 +1,4 @@
-param(
+﻿param(
 	[switch]$init,
 	[switch]$advancedDownloadAll,
 	[switch]$advancedDownloadTools,

@@ -7,11 +7,6 @@ default:
     - amd64
     - windows
 
-debb:
-  stage: .pre
-  script:
-    - echo $CI_PROJECT_DIR
-
 installGit:
   stage: .pre
   script: |
