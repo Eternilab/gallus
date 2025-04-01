@@ -14,34 +14,34 @@ param(
 	# [switch]$clean,
 	# [switch]$update,
 	# [switch]$makeupdated,
-	[switch]$full  
+	[switch]$full
 	)
-	
+
 
 #Definition des Fonctions--------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #Affichage de l'aide
 function aide {
-	write-host "	
+	Write-Output "
 Parametres de base :
-	
+
 -init				= Mise en place des dependances necessaires au fonctionnement de Gallus
 -make 				= Construit les fichiers d'installation et produit une ISO demarrable
 -flash 				= Produit un media d'installation USB demarrable (UEFI uniquement) a partir des fichiers d'installation
 -full				= Execute l'ensemble des etapes de Gallus de maniere nominale avec les options par defaut. Equivaut a appeler successivement gallus.ps1 trois fois avec, dans l’ordre, les parametres -init, -make et -flash
-		
+
 Parametres avancees :
-		
+
 -advancedDownloadTools		= Telecharge les installateurs des outils ADK et MDT sur le site de Microsoft
 -advancedSetupTools		= Installe les outils Microsoft ADK et MDT en mode silencieux
 -advancedDownloadWinImage	= Telecharge l’image (format ESD) de l’installateur officiel de Windows 11 depuis les serveurs Microsoft
 -advancedExtractWinImage	= Extrait du format ESD l’image Windows et WinPE au format WIM
 -advancedImportDriver		= Récupère les pilotes supplémentaires depuis les dossiers ..\drivers\Storage et ..\drivers\Network
 -advancedDownloadHK		= Telecharge l’outil de durcissement HardeningKitty et le fichier de durcissement machine CIS correspondant a la version de l’image Windows
--advancedCleanupMDT		= Supprime les fichiers residuels d'une potentielle execution precedente de MDT 
+-advancedCleanupMDT		= Supprime les fichiers residuels d'une potentielle execution precedente de MDT
 -advancedRunMDT			= Execution de MDT avec les parametres et les composants de Gallus pour construire les fichiers d’installation. Produit egalement une ISO demarrable
 -advancedDownloadAll		= Telecharge l’ensemble des composants necessaires à l’execution de Gallus. Equivaut a appeler successivement gallus.ps1 trois fois avec, dans l’ordre, les parametres -advancedDownloadTools, -advancedDownloadWinImage, -advancedDownloadHK
-	"
+"
 }
 # 1----------------------------------------------------------------------------------------------------------------------------------------------------------------
 function download_tools{
@@ -199,7 +199,7 @@ Set-ItemProperty -Path "GALLUSMEDIA:\" -Name SupportX86 -Value False
 # 15
 Set-ItemProperty -Path "DS001:\" -Name Boot.x64.SelectionProfile -Value "gallus_winPE"
 Set-ItemProperty -Path "GALLUSMEDIA:\" -Name Boot.x64.SelectionProfile -Value "gallus_winPE"
-# 16          
+# 16
 Copy-Item -Path $PWD\conf\Bootstrap.ini -Destination $PWD\DSGallus\Control\Bootstrap.ini
 Copy-Item -Path $PWD\conf\Bootstrap.ini -Destination $PWD\GMedia\Content\Deploy\Control\Bootstrap.ini
 Copy-Item -Path $PWD\conf\CustomSettings.ini -Destination $PWD\DSGallus\Control\CustomSettings.ini
@@ -212,9 +212,9 @@ Write-Output -ForegroundColor Green "8.7 - Generation du contenu du media d'inst
 Update-MDTMedia -Path "DS001:\Media\GALLUSMEDIA"
 Write-Output ""
 Write-Output -ForegroundColor Green "Le media d'installation au format ISO est disponible ici : $PWD\GMedia\LiteTouch.iso"
-write-host -foregroundcolor green "Il peut etre utilise pour installer Windows 11 Enterprise N 22h2 sur un machine x64 uefi sans besoin de connexion internet"
-write-host -foregroundcolor green "Le systeme d'exploitation sera durcis (securise) automatiquement au premier demarrage"
-write-host ""
+Write-Output -foregroundcolor green "Il peut etre utilise pour installer Windows 11 Enterprise N 22h2 sur un machine x64 uefi sans besoin de connexion internet"
+Write-Output -foregroundcolor green "Le systeme d'exploitation sera durcis (securise) automatiquement au premier demarrage"
+Write-Output ""
 }
 # 9---------------------------------------------------------------------------------------------------------------------------------------------------------------
 function build_USB_media {
@@ -223,7 +223,7 @@ Write-Output ""
 Write-Output -ForegroundColor Green "!!! Attention les fichiers presents sur le support vont etre supprimes !!!"
 Write-Output -ForegroundColor Green "Si vous voulez interrompre le processus utilisez le raccourcis clavier Ctrl + C"
 $DestDrive = Read-Host -Prompt 'Veuillez saisir la lettre correspondant a un volume du support de stockage amovible (ex: "F")'
-write-host ""
+Write-Output ""
 if (-not (Get-Volume -ErrorAction SilentlyContinue $DestDrive)) {
   Write-Output -ForegroundColor Red "Le volume ${DestDrive}: n'exite pas"
   Write-Output -ForegroundColor Red "Pour relancer la creation du media d'installation sur support de stockage amovible,"
@@ -247,8 +247,8 @@ DISM /Quiet /Split-Image /ImageFile:"GMedia\Content\Deploy\Operating Systems\Win
 ((Get-Content -Path "${DestDrive}:\Deploy\Control\OperatingSystems.xml") -replace 'install.wim','install.swm') | Set-Content -Path "${DestDrive}:\Deploy\Control\OperatingSystems.xml"
 ((Get-Content -Path "${DestDrive}:\Deploy\Control\GALLUS\Unattend.xml") -replace 'install.wim','install.swm') | Set-Content -Path "${DestDrive}:\Deploy\Control\GALLUS\Unattend.xml"
 Write-Output -ForegroundColor Green "Le media d'installation ${DestDrive}: est pret."
-write-host -foregroundcolor green "Il peut etre utilise pour installer Windows 11 Enterprise N 22h2 sur un machine x64 uefi sans besoin de connexion internet"
-write-host -foregroundcolor green "Le systeme d'exploitation sera durcis (securise) automatiquement au premier demarrage"
+Write-Output -foregroundcolor green "Il peut etre utilise pour installer Windows 11 Enterprise N 22h2 sur un machine x64 uefi sans besoin de connexion internet"
+Write-Output -foregroundcolor green "Le systeme d'exploitation sera durcis (securise) automatiquement au premier demarrage"
 }
 
 
@@ -262,7 +262,7 @@ elseif ($init)					{ &download_tools; &setup_tools; &download_windows_image ; &e
 elseif ($make)					{ &cleanup_MDT; &run_MDT }
 elseif ($flash)					{ &build_USB_media }
 
-#Equivaut à l'appel successif avec les paramètres : -init ; -flash ; -build 
+#Equivaut à l'appel successif avec les paramètres : -init ; -flash ; -build
 elseif ($full)					{ &download_tools; &setup_tools ; &download_windows_image ; &extract_windows_image; &import_drivers ; &download_HardeningKitty ; &cleanup_MDT ; &run_MDT ; &build_USB_media }
 
 #Paramètres avancés
