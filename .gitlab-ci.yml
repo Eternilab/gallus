@@ -26,8 +26,11 @@ verifCode:
   before_script: |
     Install-Module -Name PSScriptAnalyzer -Force
     & "C:\Program Files\Git\cmd\git.exe" clone https://github.com/Eternilab/gallus $GALLUS_DIR
+    cd $GALLUS_DIR
+    & "C:\Program Files\Git\cmd\git.exe" checkout $CI_COMMIT_SHA
   script: |
-    Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-ScriptAnalyzer -path $GALLUS_DIR
+    Set-ExecutionPolicy Bypass -Scope Process -Force
+    Invoke-ScriptAnalyzer -path $GALLUS_DIR
   after_script:
     - Remove-item -recurse -force -path $GALLUS_DIR
 
@@ -37,7 +40,8 @@ initSansBootstrap:
     - New-Item -ItemType Directory -Force -Path $GALLUS_DIR
   script: |
     cd $GALLUS_DIR
-    & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/gallus.ps1'))) -init
+    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+    & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/$CI_COMMIT_SHA/gallus.ps1'))) -init
     $LastExitCode = 0
   after_script:
     - Remove-item -recurse -force -path $GALLUS_DIR
@@ -50,7 +54,7 @@ makeSansInit:
     cd $GALLUS_DIR
     Set-ExecutionPolicy Bypass -Scope Process -Force
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-    & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/bootstrap.ps1'))) main
+    & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/$CI_COMMIT_SHA/bootstrap.ps1'))) $CI_COMMIT_SHA
     .\gallus.ps1 -make
   after_script:
     - Remove-item -recurse -force -path $GALLUS_DIR
@@ -63,7 +67,7 @@ bootstrap:
     cd $GALLUS_DIR
     Set-ExecutionPolicy Bypass -Scope Process -Force
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-    & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/bootstrap.ps1'))) main
+    & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/$CI_COMMIT_SHA/bootstrap.ps1'))) $CI_COMMIT_SHA
     .\gallus.ps1 -full
 
 verifISO:
@@ -86,7 +90,7 @@ verifISO:
       Write-Output "L'iso est un 9660"
       exit 0
     } else {
-      wirte-output "Le fichier n'est pas un iso 9660"
+      Write-Output "Le fichier n'est pas un iso 9660"
       exit 1
     }
 
