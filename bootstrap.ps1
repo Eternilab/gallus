@@ -32,8 +32,8 @@ $null = New-Item -ItemType Directory -Path $PWD\conf
 $null = New-Item -ItemType Directory -Path $PWD\scripts
 
 # Download parts
-Write-Output -ForegroundColor Green "0 - Téléchargement des éléments de Gallus"
+Write-Host -ForegroundColor Green "0 - Téléchargement des éléments de Gallus"
 foreach ($part in $parts) {
  Invoke-WebRequest -Uri $baseURL$part -OutFile $PWD\$part
 }
-Write-Output -ForegroundColor Green "0 - Gallus a bien été téléchargé"
+Write-Host -ForegroundColor Green "0 - Gallus a bien été téléchargé"

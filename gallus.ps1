@@ -22,7 +22,7 @@
 
 #Affichage de l'aide
 function aide {
-	Write-Output "
+	Write-Host "
 Parametres de base :
 
 -init				= Mise en place des dependances necessaires au fonctionnement de Gallus
@@ -45,7 +45,7 @@ Parametres avancees :
 }
 # 1----------------------------------------------------------------------------------------------------------------------------------------------------------------
 function download_tools{
-	Write-Output -ForegroundColor Green "1 - Telechargement des outils Microsoft necessaires (ADK et MDT)"
+	Write-Host -ForegroundColor Green "1 - Telechargement des outils Microsoft necessaires (ADK et MDT)"
 # Cleanup potential old files
 Remove-Item -Recurse -Force -Path $PWD\toolsdl -ErrorAction SilentlyContinue
 # Create directory
@@ -63,20 +63,20 @@ $ProgressPreference = 'Continue'
 }
 # 2---------------------------------------------------------------------------------------------------------------------------------------------------------------
 function setup_tools {
-	Write-Output -ForegroundColor Green "2 - Installation des outils Microsoft (ADK et MDT)"
+	Write-Host -ForegroundColor Green "2 - Installation des outils Microsoft (ADK et MDT)"
 # Install ADK
 Start-Process -Wait -FilePath $PWD\toolsdl\adksetup.exe -ArgumentList "/features OptionId.DeploymentTools OptionId.ICDConfigurationDesigner /quiet /ceip off"
-Write-Output -ForegroundColor Green "2.1 - Windows ADK a ete installe"
+Write-Host -ForegroundColor Green "2.1 - Windows ADK a ete installe"
 # Install ADK WinPE
 Start-Process -Wait -FilePath $PWD\toolsdl\adkwinpesetup.exe -ArgumentList "/features OptionId.WindowsPreinstallationEnvironment /quiet /ceip off"
-Write-Output -ForegroundColor Green "2.2 - Windows ADP WinPE a ete installe"
+Write-Host -ForegroundColor Green "2.2 - Windows ADP WinPE a ete installe"
 # Install MDT
 Start-Process -Wait -FilePath $PWD\toolsdl\mdt.msi -ArgumentList "/quiet"
-Write-Output -ForegroundColor Green "2.3 - MDT a ete installe"
+Write-Host -ForegroundColor Green "2.3 - MDT a ete installe"
 }
 # 3---------------------------------------------------------------------------------------------------------------------------------------------------------------
 function download_windows_image {
-	Write-Output -ForegroundColor Green "3 - Telechargement de l'image Windows 11 x64 22H2 officielle"
+	Write-Host -ForegroundColor Green "3 - Telechargement de l'image Windows 11 x64 22H2 officielle"
 # Cleanup potential old files
 Remove-Item -Recurse -Force -Path $PWD\windl -ErrorAction SilentlyContinue
 # Create directory
@@ -90,13 +90,13 @@ $ProgressPreference = 'Continue'
 }
 # 4---------------------------------------------------------------------------------------------------------------------------------------------------------------
 function extract_windows_image {
-	Write-Output -ForegroundColor Green "4 - Extraction des elements necessaires depuis l'image officielle de Windows 11 x64 22H2"
+	Write-Host -ForegroundColor Green "4 - Extraction des elements necessaires depuis l'image officielle de Windows 11 x64 22H2"
 # Cleanup potential old files
 Remove-Item -Recurse -Force -Path $PWD\Win11x64_EntN_en-US_22H2 -ErrorAction SilentlyContinue
 # Create directory
 $null = New-Item -ItemType Directory -Path $PWD\Win11x64_EntN_en-US_22H2
 # Extract setup files WIM
-Write-Output -ForegroundColor Green "4.1 - Extraction des fichiers d'installation"
+Write-Host -ForegroundColor Green "4.1 - Extraction des fichiers d'installation"
 DISM /Quiet /Export-Image /SourceImageFile:$PWD\windl\win.esd /SourceIndex:1 /DestinationImageFile:$PWD\windl\setup.wim /Compress:max /CheckIntegrity
 # Create tmp directory
 $null = New-Item -ItemType Directory -Path $PWD\windl\tmp
@@ -108,17 +108,17 @@ DISM /Quiet /Unmount-Wim /MountDir:$PWD\windl\tmp /Discard
 Remove-Item -Recurse -Force -Path $PWD\windl\tmp
 Remove-Item -Recurse -Force -Path $PWD\windl\setup.wim
 # Extract WinPE image to boot.wim index 1
-Write-Output -ForegroundColor Green "4.2 - Extraction des fichiers Windows PE"
+Write-Host -ForegroundColor Green "4.2 - Extraction des fichiers Windows PE"
 DISM /Quiet /Export-Image /SourceImageFile:$PWD\windl\win.esd /SourceIndex:2 /DestinationImageFile:$PWD\Win11x64_EntN_en-US_22H2\sources\boot.wim /Compress:max /CheckIntegrity
 # Extract WinPE with Windows Setup to boot.wim index 2
 DISM /Quiet /Export-Image /SourceImageFile:$PWD\windl\win.esd /SourceIndex:3 /DestinationImageFile:$PWD\Win11x64_EntN_en-US_22H2\sources\boot.wim /Compress:max /CheckIntegrity
 # Extract Windows 11 Enterprise N WIM
-Write-Output -ForegroundColor Green "4.3 - Extraction de Windows 11 22H2 Enterprise N"
+Write-Host -ForegroundColor Green "4.3 - Extraction de Windows 11 22H2 Enterprise N"
 DISM /Quiet /Export-Image /SourceImageFile:$PWD\windl\win.esd /SourceIndex:7 /DestinationImageFile:$PWD\Win11x64_EntN_en-US_22H2\sources\install.wim /Compress:max /CheckIntegrity
 }
 # 5---------------------------------------------------------------------------------------------------------------------------------------------------------------
 function import_drivers {
-	Write-Output -ForegroundColor Green "5 - Recuperation des drivers supplementaires"
+	Write-Host -ForegroundColor Green "5 - Recuperation des drivers supplementaires"
 # Cleanup potential old files
 Remove-Item -Recurse -Force -Path $PWD\drivers -ErrorAction SilentlyContinue
 # Create directory
@@ -134,7 +134,7 @@ Copy-Item -Recurse -Path $PWD\..\drivers\Network\* -Destination $PWD\drivers\Net
 }
 # 6---------------------------------------------------------------------------------------------------------------------------------------------------------------
 function download_HardeningKitty {
-	Write-Output -ForegroundColor Green "6 - Telechargement de l'outil HardeningKitty et de la liste de durcissement CIS Windows 11 Enterprise 22H2"
+	Write-Host -ForegroundColor Green "6 - Telechargement de l'outil HardeningKitty et de la liste de durcissement CIS Windows 11 Enterprise 22H2"
 # Cleanup potential old files
 Remove-Item -Recurse -Force -Path $PWD\hkdl -ErrorAction SilentlyContinue
 # Create directory
@@ -146,7 +146,7 @@ Invoke-WebRequest -Uri https://raw.githubusercontent.com/scipag/HardeningKitty/m
 }
 # 7---------------------------------------------------------------------------------------------------------------------------------------------------------------
 function cleanup_MDT {
-	Write-Output -ForegroundColor Green "7 - Nettoyage d'eventuels anciens projets MDT"
+	Write-Host -ForegroundColor Green "7 - Nettoyage d'eventuels anciens projets MDT"
 # Remove PSDrives
 Remove-PSDrive -Name "GALLUSMEDIA" -ErrorAction SilentlyContinue
 Remove-PSDrive -Name "DS001" -ErrorAction SilentlyContinue
@@ -156,19 +156,19 @@ Remove-Item -Recurse -Force -Path "$PWD/DSGallus" -ErrorAction SilentlyContinue
 }
 # 8---------------------------------------------------------------------------------------------------------------------------------------------------------------
 function run_MDT {
-	Write-Output -ForegroundColor Green "8 - Fabrication de l'installateur grace a MDT"
-Write-Output -ForegroundColor Green "8.1 - Configuration de l'environnement de fabrication de l'installateur"
+	Write-Host -ForegroundColor Green "8 - Fabrication de l'installateur grace a MDT"
+Write-Host -ForegroundColor Green "8.1 - Configuration de l'environnement de fabrication de l'installateur"
 # 1
 Import-Module "C:\Program Files\Microsoft Deployment Toolkit\bin\MicrosoftDeploymentToolkit.psd1"
 $null = New-PSDrive -Name "DS001" -PSProvider "MDTProvider" -Root "$PWD\DSGallus" -Description "Gallus MDT Deployment Share" | add-MDTPersistentDrive
 # 2
 $null = New-Item -Path "DS001:\Operating Systems" -Enable "True" -Name "Win11" -Comments "" -ItemType "folder"
 # 3
-Write-Output -ForegroundColor Green "8.2 - Import du systeme d'exploitation dans l'environnement de fabrication"
+Write-Host -ForegroundColor Green "8.2 - Import du systeme d'exploitation dans l'environnement de fabrication"
 $null = Import-MDTOperatingSystem -Path "DS001:\Operating Systems\Win11" -SourcePath $PWD\Win11x64_EntN_en-US_22H2 -DestinationFolder "Win11x64_EntN_en-US_22H2"
 Rename-Item "DS001:\Operating Systems\Win11\Windows 11 Enterprise N in Win11x64_EntN_en-US_22H2 install.wim" "Win11x64_EntN_en-US_22H2 install.wim"
 # 4
-Write-Output -ForegroundColor Green "8.3 - Import de drivers dans l'environnement de fabrication (Optionnel)"
+Write-Host -ForegroundColor Green "8.3 - Import de drivers dans l'environnement de fabrication (Optionnel)"
 $null = New-item -Path "DS001:\Out-of-Box Drivers" -Enable "True" -Name "Network" -Comments "" -ItemType "folder"
 # 5
 $null = Import-MDTDriver -Path "DS001:\Out-of-Box Drivers\Network" -SourcePath "$PWD\drivers\Network"
@@ -182,10 +182,10 @@ Copy-Item -Path $PWD\hkdl\* -Destination $PWD\DSGallus\Scripts\
 # 9
 $null = New-item -Path "DS001:\Task Sequences" -Enable "True" -Name "Gallus" -Comments "" -ItemType "folder"
 # 10
-Write-Output -ForegroundColor Green "8.4 - Import de la sequence de taches Gallus_ts.xml"
+Write-Host -ForegroundColor Green "8.4 - Import de la sequence de taches Gallus_ts.xml"
 $null = Import-MDTTaskSequence -Path "DS001:\Task Sequences\Gallus" -Name "Gallus Defaut Task Sequence" -Template "$PWD\conf\Gallus_ts.xml" -Comments "" -ID "GALLUS" -Version "1.0" -OperatingSystemPath "DS001:\Operating Systems\Win11\Win11x64_EntN_en-US_22H2 install.wim" -FullName "Utilisateur Windows" -OrgName "Organization" -HomePage "about:blank" -AdminPassword "local"
 # 11
-Write-Output -ForegroundColor Green "8.5 - Configuration des parametres de l'installateur"
+Write-Host -ForegroundColor Green "8.5 - Configuration des parametres de l'installateur"
 $null = New-Item -Path "DS001:\Selection Profiles" -Enable "True" -Name "gallus_winPE" -Comments "" -Definition "<SelectionProfile><Include path=`"Operating Systems`" /><Include path=`"Out-of-Box Drivers\Storage`" /><Include path=`"Task Sequences\Gallus`" /></SelectionProfile>" -ReadOnly "False"
 # 12
 $null = New-Item -Path "DS001:\Selection Profiles" -Enable "True" -Name "gallus_win11" -Comments "" -Definition "<SelectionProfile><Include path=`"Applications`" /><Include path=`"Operating Systems`" /><Include path=`"Out-of-Box Drivers`" /><Include path=`"Packages`" /><Include path=`"Task Sequences`" /></SelectionProfile>" -ReadOnly "False"
@@ -205,32 +205,32 @@ Copy-Item -Path $PWD\conf\Bootstrap.ini -Destination $PWD\GMedia\Content\Deploy\
 Copy-Item -Path $PWD\conf\CustomSettings.ini -Destination $PWD\DSGallus\Control\CustomSettings.ini
 Copy-Item -Path $PWD\conf\CustomSettings.ini -Destination $PWD\GMedia\Content\Deploy\Control\CustomSettings.ini
 # 17
-Write-Output -ForegroundColor Green "8.6 - Generation de l'environnement de fabrication de l'installateur"
+Write-Host -ForegroundColor Green "8.6 - Generation de l'environnement de fabrication de l'installateur"
 Update-MDTDeploymentShare -Path "DS001:"
 # 18
-Write-Output -ForegroundColor Green "8.7 - Generation du contenu du media d'installation et generation de l'ISO"
+Write-Host -ForegroundColor Green "8.7 - Generation du contenu du media d'installation et generation de l'ISO"
 Update-MDTMedia -Path "DS001:\Media\GALLUSMEDIA"
-Write-Output ""
-Write-Output -ForegroundColor Green "Le media d'installation au format ISO est disponible ici : $PWD\GMedia\LiteTouch.iso"
-Write-Output -foregroundcolor green "Il peut etre utilise pour installer Windows 11 Enterprise N 22h2 sur un machine x64 uefi sans besoin de connexion internet"
-Write-Output -foregroundcolor green "Le systeme d'exploitation sera durcis (securise) automatiquement au premier demarrage"
-Write-Output ""
+Write-Host ""
+Write-Host -ForegroundColor Green "Le media d'installation au format ISO est disponible ici : $PWD\GMedia\LiteTouch.iso"
+Write-Host -foregroundcolor green "Il peut etre utilise pour installer Windows 11 Enterprise N 22h2 sur un machine x64 uefi sans besoin de connexion internet"
+Write-Host -foregroundcolor green "Le systeme d'exploitation sera durcis (securise) automatiquement au premier demarrage"
+Write-Host ""
 }
 # 9---------------------------------------------------------------------------------------------------------------------------------------------------------------
 function build_USB_media {
-	Write-Output -ForegroundColor Green "9 - Creation du media d'installation sur support de stockage amovible"
-Write-Output ""
-Write-Output -ForegroundColor Green "!!! Attention les fichiers presents sur le support vont etre supprimes !!!"
-Write-Output -ForegroundColor Green "Si vous voulez interrompre le processus utilisez le raccourcis clavier Ctrl + C"
+	Write-Host -ForegroundColor Green "9 - Creation du media d'installation sur support de stockage amovible"
+Write-Host ""
+Write-Host -ForegroundColor Green "!!! Attention les fichiers presents sur le support vont etre supprimes !!!"
+Write-Host -ForegroundColor Green "Si vous voulez interrompre le processus utilisez le raccourcis clavier Ctrl + C"
 $DestDrive = Read-Host -Prompt 'Veuillez saisir la lettre correspondant a un volume du support de stockage amovible (ex: "F")'
-Write-Output ""
+Write-Host ""
 if (-not (Get-Volume -ErrorAction SilentlyContinue $DestDrive)) {
-  Write-Output -ForegroundColor Red "Le volume ${DestDrive}: n'exite pas"
-  Write-Output -ForegroundColor Red "Pour relancer la creation du media d'installation sur support de stockage amovible,"
-  Write-Output -ForegroundColor Red "veuillez relancer le script 9-gallus_build_USB_media.ps1"
+  Write-Host -ForegroundColor Red "Le volume ${DestDrive}: n'exite pas"
+  Write-Host -ForegroundColor Red "Pour relancer la creation du media d'installation sur support de stockage amovible,"
+  Write-Host -ForegroundColor Red "veuillez relancer le script 9-gallus_build_USB_media.ps1"
   exit 1
 }
-Write-Output -ForegroundColor Green "9.1 - Formattage du support de stockage"
+Write-Host -ForegroundColor Green "9.1 - Formattage du support de stockage"
 $disk=(Get-Partition -DriveLetter "$DestDrive").DiskId
 Clear-Disk -Confirm:$False -RemoveData -RemoveOEM -Path $disk
 if ((Get-Disk -Path $disk).Size -gt 34359738368) {
@@ -240,22 +240,22 @@ else {
 $null = New-Partition -DiskPath $disk -UseMaximumSize -DriveLetter "$DestDrive"
 }
 $null = Format-Volume -DriveLetter $DestDrive -FileSystem FAT32
-Write-Output -ForegroundColor Green "9.2 - Generation du media amovible d'installation sur ${DestDrive}:"
+Write-Host -ForegroundColor Green "9.2 - Generation du media amovible d'installation sur ${DestDrive}:"
 ROBOCOPY "GMedia\Content" "${DestDrive}:" /nfl /ndl /njh /njs /nc /ns /np /s /max:3800000000
 # ROBOCOPY ajoute un saut de ligne à la sortie standard
 DISM /Quiet /Split-Image /ImageFile:"GMedia\Content\Deploy\Operating Systems\Win11x64_EntN_en-US_22H2\sources\install.wim" /SWMFile:"${DestDrive}:\Deploy\Operating Systems\Win11x64_EntN_en-US_22H2\sources\install.swm" /FileSize:3800
 ((Get-Content -Path "${DestDrive}:\Deploy\Control\OperatingSystems.xml") -replace 'install.wim','install.swm') | Set-Content -Path "${DestDrive}:\Deploy\Control\OperatingSystems.xml"
 ((Get-Content -Path "${DestDrive}:\Deploy\Control\GALLUS\Unattend.xml") -replace 'install.wim','install.swm') | Set-Content -Path "${DestDrive}:\Deploy\Control\GALLUS\Unattend.xml"
-Write-Output -ForegroundColor Green "Le media d'installation ${DestDrive}: est pret."
-Write-Output -foregroundcolor green "Il peut etre utilise pour installer Windows 11 Enterprise N 22h2 sur un machine x64 uefi sans besoin de connexion internet"
-Write-Output -foregroundcolor green "Le systeme d'exploitation sera durcis (securise) automatiquement au premier demarrage"
+Write-Host -ForegroundColor Green "Le media d'installation ${DestDrive}: est pret."
+Write-Host -foregroundcolor green "Il peut etre utilise pour installer Windows 11 Enterprise N 22h2 sur un machine x64 uefi sans besoin de connexion internet"
+Write-Host -foregroundcolor green "Le systeme d'exploitation sera durcis (securise) automatiquement au premier demarrage"
 }
 
 
 #Appels des fonctions-----------------------------------------------------------------------------------------------------------------------
 
 #Limitation du nombre de paramètres à 1
-if ($PSBoundParameters.Count -gt 1) {Write-Output -ForegroundColor red "Vous ne pouvez utiliser qu'un seul parametre a la fois " ; &aide ; exit 1}
+if ($PSBoundParameters.Count -gt 1) {Write-Host -ForegroundColor red "Vous ne pouvez utiliser qu'un seul parametre a la fois " ; &aide ; exit 1}
 
 #Paramètres de bases
 elseif ($init)					{ &download_tools; &setup_tools; &download_windows_image ; &extract_windows_image ; &import_drivers; &download_HardeningKitty }
