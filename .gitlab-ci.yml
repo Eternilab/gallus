@@ -34,30 +34,30 @@ verifCode:
   after_script:
     - Remove-item -recurse -force -path $GALLUS_DIR
 
-initSansBootstrap:
-  stage: build
-  before_script:
-    - New-Item -ItemType Directory -Force -Path $GALLUS_DIR
-  script: |
-    cd $GALLUS_DIR
-    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-    & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/$CI_COMMIT_SHA/gallus.ps1'))) -init
-    $LastExitCode = 0
-  after_script:
-    - Remove-item -recurse -force -path $GALLUS_DIR
-
-makeSansInit:
-  stage: build
-  before_script:
-    - New-Item -ItemType Directory -Force -Path $GALLUS_DIR
-  script: |
-    cd $GALLUS_DIR
-    Set-ExecutionPolicy Bypass -Scope Process -Force
-    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-    & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/$CI_COMMIT_SHA/bootstrap.ps1'))) $CI_COMMIT_SHA
-    .\gallus.ps1 -make
-  after_script:
-    - Remove-item -recurse -force -path $GALLUS_DIR
+#initSansBootstrap:
+#  stage: build
+#  before_script:
+#    - New-Item -ItemType Directory -Force -Path $GALLUS_DIR
+#  script: |
+#    cd $GALLUS_DIR
+#    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+#    & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/$CI_COMMIT_SHA/gallus.ps1'))) -init
+#    $LastExitCode = 0
+#  after_script:
+#    - Remove-item -recurse -force -path $GALLUS_DIR
+#
+#makeSansInit:
+#  stage: build
+#  before_script:
+#    - New-Item -ItemType Directory -Force -Path $GALLUS_DIR
+#  script: |
+#    cd $GALLUS_DIR
+#    Set-ExecutionPolicy Bypass -Scope Process -Force
+#    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+#    & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/$CI_COMMIT_SHA/bootstrap.ps1'))) $CI_COMMIT_SHA
+#    .\gallus.ps1 -make
+#  after_script:
+#    - Remove-item -recurse -force -path $GALLUS_DIR
 
 bootstrap:
   stage: build
