@@ -11,7 +11,7 @@ default:
 cleanup:
   stage: .pre
   script: |
-    Remove-item -recurse -force -path $GALLUS_DIR
+    Remove-item -recurse -force -path $GALLUS_DIR -ErrorAction SilentlyContinue
     exit 0
 
 installGit:
@@ -19,7 +19,7 @@ installGit:
   script: |
     winget install --silent --id Git.Git --exact --source winget
     & "C:\Program Files\Git\cmd\git.exe"
-    $LastExitCode = 0
+    exit 0
 
 verifCode:
   stage: .pre
@@ -29,8 +29,8 @@ verifCode:
     & "C:\Program Files\Git\cmd\git.exe" clone https://github.com/Eternilab/gallus $GALLUS_DIR
     cd $GALLUS_DIR
     & "C:\Program Files\Git\cmd\git.exe" checkout $CI_COMMIT_SHA
-  script: |
     Set-ExecutionPolicy Bypass -Scope Process -Force
+  script: |
     Invoke-ScriptAnalyzer -path $GALLUS_DIR
   after_script:
     - Remove-item -recurse -force -path $GALLUS_DIR
