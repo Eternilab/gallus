@@ -4,7 +4,7 @@
 #
 # On choisi d'utiliser Write-Host pour la sortie en couleur,
 # puisque depuis la version 5.x de Powershell (Win 10+), Write-Host est un wrapper autour de Write-Information :
-[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '', Scope='Script', Target='*')]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '', Scope='Function', Target='*')]
 param(
      [Parameter()]
      [string]$Ref="refs/tags/v0.3"
