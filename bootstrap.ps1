@@ -27,6 +27,8 @@ $parts=@(
 "README.md"
 )
 
+Write-Host -ForegroundColor Green "Exécution de bootstrap.ps1 :"
+
 # Cleanup potential old files-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Remove-Item -Recurse -Force -Path $PWD\conf -ErrorAction SilentlyContinue
 Remove-Item -Recurse -Force -Path $PWD\scripts -ErrorAction SilentlyContinue
@@ -40,4 +42,4 @@ Write-Host -ForegroundColor Green "0 - Téléchargement des éléments de Gallus
 foreach ($part in $parts) {
  Invoke-WebRequest -Uri $baseURL$part -OutFile $PWD\$part
 }
-Write-Host -ForegroundColor Green "0 - Gallus a bien été téléchargé"
+Write-Host -ForegroundColor Green "0.1 - Gallus a bien été téléchargé"

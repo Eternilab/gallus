@@ -215,9 +215,9 @@ Update-MDTDeploymentShare -Path "DS001:"
 Write-Host -ForegroundColor Green "8.7 - Génération du contenu du média d'installation et génération de l'ISO"
 Update-MDTMedia -Path "DS001:\Media\GALLUSMEDIA"
 Write-Host ""
-Write-Host -ForegroundColor Green "Le média d'installation au format ISO est disponible ici : $PWD\GMedia\LiteTouch.iso"
-Write-Host -foregroundcolor green "Il peut être utilisé pour installer Windows 11 Enterprise N 22h2 sur un machine x64 UEFI sans besoin de connexion internet"
-Write-Host -foregroundcolor green "Le système d'exploitation sera durcis (sécurisé) automatiquement au premier démarrage"
+Write-Host -ForegroundColor Green "Le média d'installation au format ISO est disponible ici : $PWD\GMedia\LiteTouchMedia.iso"
+Write-Host -foregroundcolor Green "Il peut être utilisé pour installer Windows 11 Enterprise N 22h2 sur un machine x64 UEFI sans besoin de connexion internet"
+Write-Host -foregroundcolor Green "Le système d'exploitation sera durcis (sécurisé) automatiquement au premier démarrage"
 Write-Host ""
 }
 # 9---------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -251,15 +251,16 @@ DISM /Quiet /Split-Image /ImageFile:"GMedia\Content\Deploy\Operating Systems\Win
 ((Get-Content -Path "${DestDrive}:\Deploy\Control\OperatingSystems.xml") -replace 'install.wim','install.swm') | Set-Content -Path "${DestDrive}:\Deploy\Control\OperatingSystems.xml"
 ((Get-Content -Path "${DestDrive}:\Deploy\Control\GALLUS\Unattend.xml") -replace 'install.wim','install.swm') | Set-Content -Path "${DestDrive}:\Deploy\Control\GALLUS\Unattend.xml"
 Write-Host -ForegroundColor Green "Le média d'installation ${DestDrive}: est prêt."
-Write-Host -foregroundcolor green "Il peut être utilisé pour installer Windows 11 Enterprise N 22h2 sur un machine x64 UEFI sans besoin de connexion internet"
-Write-Host -foregroundcolor green "Le système d'exploitation sera durcis (sécurisé) automatiquement au premier démarrage"
+Write-Host -foregroundcolor Green "Il peut être utilisé pour installer Windows 11 Enterprise N 22h2 sur un machine x64 UEFI sans besoin de connexion internet"
+Write-Host -foregroundcolor Green "Le système d'exploitation sera durcis (sécurisé) automatiquement au premier démarrage"
 }
 
+Write-Host -ForegroundColor Green "Exécution de gallus.ps1 :"
 
 #Appels des fonctions-----------------------------------------------------------------------------------------------------------------------
 
 #Limitation du nombre de paramètres à 1
-if ($PSBoundParameters.Count -gt 1) {Write-Host -ForegroundColor red "Vous ne pouvez utiliser qu'un seul paramètre à la fois " ; &aide ; exit 1}
+if ($PSBoundParameters.Count -gt 1) {Write-Host -ForegroundColor Red "Vous ne pouvez utiliser qu'un seul paramètre à la fois " ; &aide ; exit 1}
 
 #Paramètres de bases
 elseif ($init)					{ &download_tools; &setup_tools; &download_windows_image ; &extract_windows_image ; &import_drivers; &download_HardeningKitty }
