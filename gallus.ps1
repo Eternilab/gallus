@@ -1,7 +1,10 @@
 ﻿# <- ATTENTION ne pas supprimer !!!
 # Les caractères invisible (BOM : Byte Order Mask) précédent ce commentaire,
-# permettent de faire en sorte que PowerShell 5.1 supporte correctement
-# les caractères accentués (en UTF-8) dans la suite du script.
+# permettent de faire en sorte que PowerShell 5.1 supporte correctement les caractères accentués (en UTF-8) dans la suite du script.
+#
+# On choisi d'utiliser Write-Host pour la sortie en couleur,
+# puisque depuis la version 5.x de Powershell (Win 10+), Write-Host est un wrapper autour de Write-Information :
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '', Scope='Function', Target='*')]
 param(
 	[switch]$init,
 	[switch]$advancedDownloadAll,
