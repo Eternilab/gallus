@@ -4,7 +4,7 @@
 #
 # On choisi d'utiliser Write-Host pour la sortie en couleur,
 # puisque depuis la version 5.x de Powershell (Win 10+), Write-Host est un wrapper autour de Write-Information :
-[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '', Scope='Script', Target='*')]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '', Scope='Function', Target='*')]
 param(
 	[switch]$init,
 	[switch]$advancedDownloadAll,
@@ -258,6 +258,7 @@ Write-Host -foregroundcolor Green "Il peut être utilisé pour installer Windows
 Write-Host -foregroundcolor Green "Le système d'exploitation sera durcis (sécurisé) automatiquement au premier démarrage"
 }
 
+function gallus_main {
 Write-Host -ForegroundColor Green "Exécution de gallus.ps1 :"
 
 #Appels des fonctions-----------------------------------------------------------------------------------------------------------------------
@@ -286,3 +287,6 @@ elseif ($advancedRunMDT) 			{ &build_USB_media }
 
 #Affichage des paramètres disponibles si aucun n'est spécifié
 else 										{ &aide }
+}
+
+gallus_main
