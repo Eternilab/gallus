@@ -8,6 +8,17 @@ default:
     - amd64
     - windows
 
+cleanup:
+  stage: .pre
+  script: |
+    if (Test-Path -Path "$GALLUS_DIR") {
+      Write-Output "Le dossier $GALLUS_DIR existe !"
+      Write-Output "Suppression du dossier ..."
+      Remove-item -recurse -force -path "$GALLUS_DIR"
+    } else {
+      Write-Output "Le dossier $GALLUS_DIR n'existe pas"
+    }
+
 installNuget:
   stage: .pre
   script:
@@ -24,26 +35,15 @@ installWinget:
   after_script:
     - winget
 
+# winget ne sera pas dispnible dans le chemin ($Env:Path) du runner si ce dernier s'execute en tant que NT AUTHORITY\SYSTEM
+
 installGit:
   stage: .pre
   needs: ["installWinget"]
   script:
-    - whoami
-    - echo $Env:Path
     - winget install --silent --id Git.Git --exact --source winget
   after_script:
     - '& "C:\Program Files\Git\cmd\git.exe"'
-
-cleanup:
-  stage: .pre
-  script: |
-    if (Test-Path -Path "$GALLUS_DIR") {
-      Write-Output "Le dossier $GALLUS_DIR existe !"
-      Write-Output "Suppression du dossier ..."
-      Remove-item -recurse -force -path "$GALLUS_DIR"
-    } else {
-      Write-Output "Le dossier $GALLUS_DIR n'existe pas"
-    }
 
 verifCode:
   stage: .pre
