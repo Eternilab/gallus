@@ -1,4 +1,8 @@
-﻿param(
+﻿# <- ATTENTION ne pas supprimer !!!
+# Les caractères invisible (BOM : Byte Order Mask) précédent ce commentaire,
+# permettent de faire en sorte que PowerShell 5.1 supporte correctement
+# les caractères accentués (en UTF-8) dans la suite du script.
+param(
      [Parameter()]
      [string]$Ref="refs/tags/v0.3"
  )
