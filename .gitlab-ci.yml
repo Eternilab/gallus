@@ -10,77 +10,82 @@ default:
 
 cleanup:
   stage: .pre
-  script: |
-    Remove-item -recurse -force -path $GALLUS_DIR -ErrorAction SilentlyContinue
-    exit 0
+  script:
+    - Remove-item -recurse -force -path "$GALLUS_DIR" -ErrorAction SilentlyContinue
+    - exit 0
 
 installGit:
   stage: .pre
-  script: |
-    winget install --silent --id Git.Git --exact --source winget
-    & "C:\Program Files\Git\cmd\git.exe"
-    exit 0
+  script:
+    - winget install --silent --id Git.Git --exact --source winget
+    - '& "C:\Program Files\Git\cmd\git.exe"'
+    - exit 0
 
 verifCode:
   stage: .pre
   needs: ["installGit", "cleanup"]
   before_script: |
-    Install-Module -Name PSScriptAnalyzer -Force
-    & "C:\Program Files\Git\cmd\git.exe" clone https://github.com/Eternilab/gallus $GALLUS_DIR
-    cd $GALLUS_DIR
-    & "C:\Program Files\Git\cmd\git.exe" checkout $CI_COMMIT_SHA
-    Set-ExecutionPolicy Bypass -Scope Process -Force
+    - Install-Module -Name PSScriptAnalyzer -Force
+    - "& \"C:\\Program Files\\Git\\cmd\\git.exe\" clone https://github.com/Eternilab/gallus \"$GALLUS_DIR\""
+    - cd "$GALLUS_DIR"
+    - "& \"C:\\Program Files\\Git\\cmd\\git.exe\" checkout $CI_COMMIT_SHA"
+    - Set-ExecutionPolicy Bypass -Scope Process -Force
   script:
-    - Invoke-ScriptAnalyzer -path $GALLUS_DIR
+    - Invoke-ScriptAnalyzer -path "$GALLUS_DIR"
   after_script:
-    - Remove-item -recurse -force -path $GALLUS_DIR
+    - Set-ExecutionPolicy Restricted -Scope Process -Force
+    - Remove-item -recurse -force -path "$GALLUS_DIR"
 
 #initSansBootstrap:
 #  stage: build
 #  before_script:
-#    - New-Item -ItemType Directory -Force -Path $GALLUS_DIR
+#    - New-Item -ItemType Directory -Force -Path "$GALLUS_DIR"
 #  script: |
-#    cd $GALLUS_DIR
+#    cd "$GALLUS_DIR"
 #    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
 #    & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/Eternilab/gallus/$CI_COMMIT_SHA/gallus.ps1"))) -init
 #    $LastExitCode = 0
 #  after_script:
-#    - Remove-item -recurse -force -path $GALLUS_DIR
+#    - Remove-item -recurse -force -path "$GALLUS_DIR"
 #
 #makeSansInit:
 #  stage: build
 #  before_script:
-#    - New-Item -ItemType Directory -Force -Path $GALLUS_DIR
+#    - New-Item -ItemType Directory -Force -Path "$GALLUS_DIR"
 #  script: |
-#    cd $GALLUS_DIR
-#    Set-ExecutionPolicy Bypass -Scope Process -Force
+#    cd "$GALLUS_DIR"
 #    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
 #    & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/Eternilab/gallus/$CI_COMMIT_SHA/bootstrap.ps1"))) $CI_COMMIT_SHA
+#    Set-ExecutionPolicy Bypass -Scope Process -Force
 #    .\gallus.ps1 -make
+#    Set-ExecutionPolicy Restricted -Scope Process -Force
 #  after_script:
-#    - Remove-item -recurse -force -path $GALLUS_DIR
+#    - Remove-item -recurse -force -path "$GALLUS_DIR"
 
-bootstrap:
+runBootstrap:
   stage: build
+  needs: ["verifCode"]
   before_script:
-    - New-Item -ItemType Directory -Force -Path $GALLUS_DIR
-    - cd $GALLUS_DIR
+    - New-Item -ItemType Directory -Force -Path "$GALLUS_DIR"
+    - cd "$GALLUS_DIR"
   script:
     - "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072"
     - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString(\"https://raw.githubusercontent.com/Eternilab/gallus/$CI_COMMIT_SHA/bootstrap.ps1\"))) $CI_COMMIT_SHA"
 
-gallusFull:
+runGallusFull:
   stage: build
-  needs: ["bootstrap"]
+  needs: ["runBootstrap"]
   before_script:
-    - cd $GALLUS_DIR
+    - cd "$GALLUS_DIR"
     - Set-ExecutionPolicy Bypass -Scope Process -Force
   script:
     - .\gallus.ps1 -full
+  after_script:
+    - Set-ExecutionPolicy Restricted -Scope Process -Force
 
 verifISO:
   stage: test
-  needs: ["gallusFull"]
+  needs: ["runGallusFull"]
   script: |
     $isoPath = "$GALLUS_DIR\GMedia\LiteTouchMedia.iso"
     if (-not (test-path $isoPath)) {
@@ -106,7 +111,7 @@ verifTaille:
   stage: test
   needs: ["gallusFull"]
   script: |
-    $tailleFichier = (Get-ChildItem $GALLUS_DIR\GMedia\LiteTouchMedia.iso).Length
+    $tailleFichier = (Get-ChildItem "$GALLUS_DIR\GMedia\LiteTouchMedia.iso").Length
     if ($tailleFichier -ge 4GB) {
       if ($tailleFichier -le 32GB) {
         Write-Output "Le fichier est compris entre 4 Go et 32 Go"; exit 0
@@ -123,7 +128,7 @@ montageIso:
   stage: test
   needs: ["verifISO", "verifTaille"]
   script: |
-    cd $GALLUS_DIR\GMedia
+    cd "$GALLUS_DIR\GMedia"
     .\LiteTouchMedia.iso
     $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
     $a = -join($isom, ":")
