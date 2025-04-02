@@ -8,17 +8,6 @@ default:
     - amd64
     - windows
 
-cleanup:
-  stage: .pre
-  script: |
-    if (Test-Path -Path "$GALLUS_DIR") {
-      Write-Output "Le dossier $GALLUS_DIR existe !"
-      Write-Output "Suppression du dossier ..."
-      Remove-item -recurse -force -path "$GALLUS_DIR"
-    } else {
-      Write-Output "Le dossier $GALLUS_DIR n'existe pas"
-    }
-
 installNuget:
   stage: .pre
   script:
@@ -38,15 +27,26 @@ installWinget:
 installGit:
   stage: .pre
   needs: ["installWinget"]
-  script: |
+  script:
     - winget install --silent --id Git.Git --exact --source winget
   after_script:
     - '& "C:\Program Files\Git\cmd\git.exe"'
 
+cleanup:
+  stage: .pre
+  script: |
+    if (Test-Path -Path "$GALLUS_DIR") {
+      Write-Output "Le dossier $GALLUS_DIR existe !"
+      Write-Output "Suppression du dossier ..."
+      Remove-item -recurse -force -path "$GALLUS_DIR"
+    } else {
+      Write-Output "Le dossier $GALLUS_DIR n'existe pas"
+    }
+
 verifCode:
   stage: .pre
   needs: ["installGit", "cleanup"]
-  before_script: |
+  before_script:
     - Install-Module -Name PSScriptAnalyzer -Force
     - "& \"C:\\Program Files\\Git\\cmd\\git.exe\" clone https://github.com/Eternilab/gallus \"$GALLUS_DIR\""
     - cd "$GALLUS_DIR"
