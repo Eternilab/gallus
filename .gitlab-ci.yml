@@ -10,16 +10,16 @@ default:
 
 cleanup:
   stage: .pre
-  script:
-    - Remove-item -recurse -force -path "$GALLUS_DIR" -ErrorAction Continue
-    - $LastExitCode = 0
+  script: |
+    Remove-item -recurse -force -path "$GALLUS_DIR" -ErrorAction Continue
+    $LastExitCode = 0
 
 installGit:
   stage: .pre
-  script:
-    - "& winget install --silent --id Git.Git --exact --source winget"
+  script: |
+    winget install --silent --id Git.Git --exact --source winget
+  after_script:
     - '& "C:\Program Files\Git\cmd\git.exe"'
-    - $LastExitCode = 0
 
 verifCode:
   stage: .pre
