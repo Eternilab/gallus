@@ -10,8 +10,9 @@ default:
 
 cleanup:
   stage: .pre
-  script:
-    - Remove-item -recurse -force -path $GALLUS_DIR
+  script: |
+    Remove-item -recurse -force -path $GALLUS_DIR
+    exit 0
 
 installGit:
   stage: .pre
