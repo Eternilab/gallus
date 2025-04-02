@@ -25,7 +25,7 @@ verifCode:
   stage: .pre
   needs: ["installGit", "cleanup"]
   before_script:
-    - install-Module -Name PSScriptAnalyzer -Force
+    - "Install-Module -Name PSScriptAnalyzer -Force"
     - & "C:\Program Files\Git\cmd\git.exe" clone https://github.com/Eternilab/gallus $GALLUS_DIR
     - cd $GALLUS_DIR
     - & "C:\Program Files\Git\cmd\git.exe" checkout $CI_COMMIT_SHA
