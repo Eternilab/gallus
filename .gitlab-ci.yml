@@ -29,7 +29,6 @@ verifCode:
     & "C:\Program Files\Git\cmd\git.exe" clone https://github.com/Eternilab/gallus $GALLUS_DIR
     cd $GALLUS_DIR
     & "C:\Program Files\Git\cmd\git.exe" checkout $CI_COMMIT_SHA
-    Set-ExecutionPolicy Bypass -Scope Process -Force
   script: |
     Invoke-ScriptAnalyzer -path $GALLUS_DIR
   after_script:
