@@ -109,7 +109,7 @@ verifISO:
 
 verifTaille:
   stage: test
-  needs: ["gallusFull"]
+  needs: ["runGallusFull"]
   script: |
     $tailleFichier = (Get-ChildItem "$GALLUS_DIR\GMedia\LiteTouchMedia.iso").Length
     if ($tailleFichier -ge 4GB) {
