@@ -11,14 +11,14 @@ default:
 cleanup:
   stage: .pre
   script:
-    - Remove-item -recurse -force -path "$GALLUS_DIR"
+    - Remove-item -recurse -force -path "$GALLUS_DIR" -ErrorAction Continue
     - exit 0
 
 installGit:
   stage: .pre
   script:
-    - winget install --silent --id Git.Git --exact --source winget
-    - "& \"C:\\Program Files\\Git\\cmd\\git.exe\""
+    - "winget install --silent --id Git.Git --exact --source winget"
+    - '& "C:\Program Files\Git\cmd\git.exe"'
     - exit 0
 
 verifCode:
