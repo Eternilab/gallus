@@ -258,13 +258,20 @@ Write-Host -foregroundcolor Green "Il peut être utilisé pour installer Windows
 Write-Host -foregroundcolor Green "Le système d'exploitation sera durcis (sécurisé) automatiquement au premier démarrage"
 }
 
-function gallus_main {
+function print_begin {
 Write-Host -ForegroundColor Green "Exécution de gallus.ps1 :"
+}
 
 #Appels des fonctions-----------------------------------------------------------------------------------------------------------------------
 
 #Limitation du nombre de paramètres à 1
-if ($PSBoundParameters.Count -gt 1) {Write-Host -ForegroundColor Red "Vous ne pouvez utiliser qu'un seul paramètre à la fois " ; &aide ; exit 1}
+if ($PSBoundParameters.Count -gt 1) {
+  Write-Error "Vous ne pouvez utiliser qu'un seul paramètre à la fois "
+  &aide
+  exit 1
+}
+
+print_begin
 
 #Paramètres de bases
 elseif ($init)					{ &download_tools; &setup_tools; &download_windows_image ; &extract_windows_image ; &import_drivers; &download_HardeningKitty }
@@ -287,6 +294,3 @@ elseif ($advancedRunMDT) 			{ &build_USB_media }
 
 #Affichage des paramètres disponibles si aucun n'est spécifié
 else 										{ &aide }
-}
-
-gallus_main

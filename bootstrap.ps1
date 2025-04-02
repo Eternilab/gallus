@@ -10,6 +10,10 @@ param(
      [string]$Ref="refs/tags/v0.3"
  )
 
+function bootstrap_main {
+param(
+     [string]$Ref=""
+ )
 # List of Gallus parts------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 $baseURL="https://raw.githubusercontent.com/Eternilab/gallus/$Ref/"
 $parts=@(
@@ -46,3 +50,6 @@ foreach ($part in $parts) {
  Invoke-WebRequest -Uri $baseURL$part -OutFile $PWD\$part
 }
 Write-Host -ForegroundColor Green "0.1 - Gallus a bien été téléchargé"
+}
+
+bootstrap_main "$Ref"
