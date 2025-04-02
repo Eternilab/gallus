@@ -262,35 +262,35 @@ function print_begin {
 Write-Host -ForegroundColor Green "Exécution de gallus.ps1 :"
 }
 
+print_begin
+
 #Appels des fonctions-----------------------------------------------------------------------------------------------------------------------
 
 #Limitation du nombre de paramètres à 1
 if ($PSBoundParameters.Count -gt 1) {
   Write-Error "Vous ne pouvez utiliser qu'un seul paramètre à la fois "
-  &aide
+  aide
   exit 1
 }
 
-print_begin
-
 #Paramètres de bases
-elseif ($init)					{ &download_tools; &setup_tools; &download_windows_image ; &extract_windows_image ; &import_drivers; &download_HardeningKitty }
-elseif ($make)					{ &cleanup_MDT; &run_MDT }
-elseif ($flash)					{ &build_USB_media }
+elseif ($init)					{ download_tools; setup_tools; download_windows_image; extract_windows_image; import_drivers; download_HardeningKitty }
+elseif ($make)					{ cleanup_MDT; run_MDT }
+elseif ($flash)					{ build_USB_media }
 
 #Equivaut à l'appel successif avec les paramètres : -init ; -flash ; -build
-elseif ($full)					{ &download_tools; &setup_tools ; &download_windows_image ; &extract_windows_image; &import_drivers ; &download_HardeningKitty ; &cleanup_MDT ; &run_MDT ; &build_USB_media }
+elseif ($full)					{ download_tools; setup_tools; download_windows_image; extract_windows_image; import_drivers; download_HardeningKitty; cleanup_MDT; run_MDT; build_USB_media }
 
 #Paramètres avancés
-elseif ($advancedDownloadTools) 		{ &download_tools }
-elseif ($advancedDownloadWinImage) 		{ &download_windows_image }
-elseif ($advancedDownloadHK)			{ &download_HardeningKitty }
-elseif ($advancedDownloadAll) 			{ &download_tools ; &download_windows_image ; &download_HardeningKitty }
-elseif ($advancedImportDriver) 			{ &import_drivers }
-elseif ($advancedSetupTools) 			{ &setup_tools }
-elseif ($advancedExtractWinImage) 		{ &extract_windows_image }
-elseif ($advancedCleanupMDT) 			{ &cleanup_MDT }
-elseif ($advancedRunMDT) 			{ &build_USB_media }
+elseif ($advancedDownloadTools) 		{ download_tools }
+elseif ($advancedDownloadWinImage) 		{ download_windows_image }
+elseif ($advancedDownloadHK)			{ download_HardeningKitty }
+elseif ($advancedDownloadAll) 			{ download_tools; download_windows_image; download_HardeningKitty }
+elseif ($advancedImportDriver) 			{ import_drivers }
+elseif ($advancedSetupTools) 			{ setup_tools }
+elseif ($advancedExtractWinImage) 		{ extract_windows_image }
+elseif ($advancedCleanupMDT) 			{ cleanup_MDT }
+elseif ($advancedRunMDT) 			{ build_USB_media }
 
 #Affichage des paramètres disponibles si aucun n'est spécifié
-else 										{ &aide }
+else 										{ aide }
