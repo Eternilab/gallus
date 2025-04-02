@@ -64,16 +64,23 @@ bootstrap:
   stage: build
   before_script:
     - New-Item -ItemType Directory -Force -Path $GALLUS_DIR
-  script: |
-    cd $GALLUS_DIR
-    Set-ExecutionPolicy Bypass -Scope Process -Force
+    - cd $GALLUS_DIR
+  script:
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
     & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/Eternilab/gallus/$CI_COMMIT_SHA/bootstrap.ps1"))) $CI_COMMIT_SHA
-    .\gallus.ps1 -full
+
+gallusFull:
+  stage: build
+  needs: ["bootstrap"]
+  before_script:
+    - cd $GALLUS_DIR
+    - Set-ExecutionPolicy Bypass -Scope Process -Force
+  script:
+    - .\gallus.ps1 -full
 
 verifISO:
   stage: test
-  needs: ["bootstrap"]
+  needs: ["gallusFull"]
   script: |
     $isoPath = "$GALLUS_DIR\GMedia\LiteTouchMedia.iso"
     if (-not (test-path $isoPath)) {
@@ -97,7 +104,7 @@ verifISO:
 
 verifTaille:
   stage: test
-  needs: ["bootstrap"]
+  needs: ["gallusFull"]
   script: |
     $tailleFichier = (Get-ChildItem $GALLUS_DIR\GMedia\LiteTouchMedia.iso).Length
     if ($tailleFichier -ge 4GB) {
