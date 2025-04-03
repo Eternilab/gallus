@@ -236,7 +236,7 @@ function run_MDT {
 function build_USB_media {
   Write-Host -ForegroundColor Green "9 - Création du média d'installation sur support de stockage amovible"
   Write-Host ""
-  if ($null -eq $GALLUS_USB_DRIVE) {
+  if ($null -ne $GALLUS_USB_DRIVE) {
     Write-Host -ForegroundColor Green "La variable d'environnement `$GALLUS_USB_DRIVE à été définie,"
     Write-Host -ForegroundColor Green "elle va être utilisée pour choisir le volume de support de stockage amovible cible"
     if (($GALLUS_USB_DRIVE -like "[a-zA-Z]") -and
