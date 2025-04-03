@@ -11,6 +11,19 @@ default:
 cleanup:
   stage: .pre
   script: |
+    if (Get-Volume | where-object { $_.filesystem -eq "UDF"}) {
+      $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
+      $a = -join($isom, ":")
+      $driveEject = New-Object -comObject Shell.Application
+      $driveEject.NameSpace(17).ParseName($a).InvokeVerb("Eject")
+      for (($i = 0); $i -lt 10 -and (Get-Volume | where-object { $_.filesystem -eq "UDF"}); $i++) {
+        Start-Sleep -Seconds 1
+      }
+      if (Get-Volume | where-object { $_.filesystem -eq "UDF"}) {
+        Write-Output "Il reste une ISO montée sur la machine !"
+        exit 1
+      }
+    }
     if (Test-Path -Path "$GALLUS_DIR") {
       Write-Output "Le dossier $GALLUS_DIR existe !"
       Write-Output "Suppression du dossier ..."
@@ -159,6 +172,13 @@ montageIso:
   script: |
     cd "$GALLUS_DIR\GMedia"
     .\LiteTouchMedia.iso
+    for (($i = 0); $i -lt 10 -and ! (Get-Volume | where-object { $_.filesystem -eq "UDF"}); $i++) {
+      Start-Sleep -Seconds 1
+    }
+    if ! (Get-Volume | where-object { $_.filesystem -eq "UDF"}) {
+      Write-Output "L'ISO ne se monte pas !"
+      exit 1
+    }
     $isom=Get-Volume | where-object { $_.filesystem -eq "UDF"} | Select-Object -ExpandProperty DriveLetter | oss
     $a = -join($isom, ":")
     cd $a
@@ -168,7 +188,6 @@ verifPresence:
   stage: test
   needs: ["montageIso"]
   script: |
-    Start-Sleep -Seconds 1
     $verif1 = "D:\Deploy\Scripts\HardeningKitty.psd1"
     if (-not (test-path $verif1)) {write-host "$verif1 n'est pas présent"; exit 1} else { write-host "$verif1 est présent"}
     $verif2 = "D:\Deploy\Scripts\finding_list_cis_microsoft_windows_11_enterprise_23h2_machine.csv"
@@ -238,3 +257,10 @@ demontageIso:
     $a = -join($isom, ":")
     $driveEject = New-Object -comObject Shell.Application
     $driveEject.NameSpace(17).ParseName($a).InvokeVerb("Eject")
+    for (($i = 0); $i -lt 10 -and (Get-Volume | where-object { $_.filesystem -eq "UDF"}); $i++) {
+      Start-Sleep -Seconds 1
+    }
+    if (Get-Volume | where-object { $_.filesystem -eq "UDF"}) {
+      Write-Output "Il reste une ISO montée sur la machine !"
+      exit 1
+    }
