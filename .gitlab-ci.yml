@@ -171,7 +171,7 @@ verifPresence:
     Start-Sleep -Seconds 1
     $verif1 = "D:\Deploy\Scripts\HardeningKitty.psd1"
     if (-not (test-path $verif1)) {write-host "$verif1 n'est pas présent"; exit 1} else { write-host "$verif1 est présent"}
-    $verif2 = "D:\Deploy\Scripts\finding_list_cis_microsoft_windows_11_enterprise_22h2_machine.csv"
+    $verif2 = "D:\Deploy\Scripts\finding_list_cis_microsoft_windows_11_enterprise_23h2_machine.csv"
     if (-not (test-path $verif2)) {write-host "$verif2 n'est pas présent"; exit 1} else { write-host "$verif2 est présent"}
     $verif3 = "D:\Deploy\Scripts\media.tag"
     if (-not (test-path $verif3)) {write-host "$verif3 n'est pas présent"; exit 1} else { write-host "$verif3 est présent"}
@@ -195,9 +195,9 @@ verifPresence:
     if (-not (test-path $verif12)) {write-host "$verif12 n'est pas présent"; exit 1} else { write-host "$verif12 est présent"}
     $verif13 = "D:\Deploy\Scripts\Variables.ps1"
     if (-not (test-path $verif13)) {write-host "$verif13 n'est pas présent"; exit 1} else { write-host "$verif13 est présent"}
-    $verif14 = "D:\Deploy\Operating Systems\Win11x64_EntN_en-US_22H2\sources\boot.wim"
+    $verif14 = "D:\Deploy\Operating Systems\Win11x64_EntN_en-US_23H2\sources\boot.wim"
     if (-not (test-path $verif14)) {write-host "$verif14 n'est pas présent"; exit 1} else { write-host "$verif14 est présent"}
-    $verif15 = "D:\Deploy\Operating Systems\Win11x64_EntN_en-US_22H2\sources\install.wim"
+    $verif15 = "D:\Deploy\Operating Systems\Win11x64_EntN_en-US_23H2\sources\install.wim"
     if (-not (test-path $verif15)) {write-host "$verif15 n'est pas présent"; exit 1} else { write-host "$verif15 est présent"}
     $verif = "D:\Deploy\Control\ApplicationGroups.xml"
     if (-not (test-path $verif)) {write-host "$verif n'est pas présent"; exit 1} else { write-host "$verif est présent"}
