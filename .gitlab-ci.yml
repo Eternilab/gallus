@@ -40,8 +40,13 @@ installWinget:
 installGit:
   stage: .pre
   needs: ["installWinget"]
-  script:
-    - winget install --silent --id Git.Git --exact --source winget
+  script: |
+    winget list --id Git.Git --exact --source winget
+    if ($LASTEXITCODE) {
+      winget install --id Git.Git --exact --source winget
+    } else {
+      Write-Output "Git est déjà installé"
+    }
   after_script:
     - '& "C:\Program Files\Git\cmd\git.exe"'
 
