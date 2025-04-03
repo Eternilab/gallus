@@ -122,7 +122,7 @@ runGallusFull:
   needs: ["runBootstrap"]
   before_script:
 # Pour être certain de ne pas exécuter l'étape flash
-    - Remove-Variable -ErrorAction SilentlyContinue -Name GALLUS_USB_DRIVE
+    - if ($null -eq $GALLUS_USB_DRIVE) {Remove-Variable -Name GALLUS_USB_DRIVE}
     - cd "$GALLUS_DIR"
     - Set-ExecutionPolicy Bypass -Scope Process -Force
   script:
