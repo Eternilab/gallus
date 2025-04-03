@@ -7,16 +7,16 @@
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '', Scope='Function', Target='*')]
 param(
      [Parameter()]
-     [string]$Ref="refs/tags/v0.3"
+     [string]$Ref = "refs/tags/v0.3"
  )
 
 function bootstrap_main {
 param(
-     [string]$Ref=""
+     [string]$Ref = ""
  )
 # List of Gallus parts------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-$baseURL="https://raw.githubusercontent.com/Eternilab/gallus/$Ref/"
-$parts=@(
+$baseURL = "https://raw.githubusercontent.com/Eternilab/gallus/$Ref/"
+$parts = @(
 "conf/Bootstrap.ini",
 "conf/CustomSettings.ini",
 "conf/Gallus_ts.xml",

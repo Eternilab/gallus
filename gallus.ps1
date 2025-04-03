@@ -281,7 +281,7 @@ function build_USB_media {
   }
   Write-Host ""
   Write-Host -ForegroundColor Green "9.1 - Formattage du support de stockage ""${DestDrive}:"""
-  $disk=(Get-Partition -DriveLetter "$DestDrive").DiskId
+  $disk = (Get-Partition -DriveLetter "$DestDrive").DiskId
   Clear-Disk -Confirm:$False -RemoveData -RemoveOEM -Path $disk
   if ((Get-Disk -Path $disk).Size -gt 34359738368) {
   $null = New-Partition -DiskPath $disk -Size 34359738368 -DriveLetter "$DestDrive"
