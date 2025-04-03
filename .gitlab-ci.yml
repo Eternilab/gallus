@@ -61,7 +61,7 @@ installGit:
       Write-Output "Git est déjà installé"
     }
   after_script:
-    - '& "C:\Program Files\Git\cmd\git.exe"'
+    - '& "C:\Program Files\Git\cmd\git.exe" --help'
 
 verifCode:
   stage: .pre
@@ -70,6 +70,7 @@ verifCode:
     - Install-Module -Name PSScriptAnalyzer -Force
     - "& \"C:\\Program Files\\Git\\cmd\\git.exe\" clone https://github.com/Eternilab/gallus \"$GALLUS_DIR\""
     - cd "$GALLUS_DIR"
+    - '& "C:\Program Files\Git\cmd\git.exe" config set advice.detachedHead false'
     - "& \"C:\\Program Files\\Git\\cmd\\git.exe\" checkout $CI_COMMIT_SHA"
     - Set-ExecutionPolicy Bypass -Scope Process -Force
   script:
@@ -86,7 +87,7 @@ verifCode:
 #    cd "$GALLUS_DIR"
 #    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
 #    & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/Eternilab/gallus/$CI_COMMIT_SHA/gallus.ps1"))) -init
-#    $LastExitCode = 0
+#    $LASTEXITCODE = 0
 #  after_script:
 #    - Remove-item -recurse -force -path "$GALLUS_DIR"
 #
@@ -111,6 +112,7 @@ runBootstrap:
     - New-Item -ItemType Directory -Force -Path "$GALLUS_DIR"
     - cd "$GALLUS_DIR"
   script:
+    - exit 1
     - "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072"
     - "& ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString(\"https://raw.githubusercontent.com/Eternilab/gallus/$CI_COMMIT_SHA/bootstrap.ps1\"))) $CI_COMMIT_SHA"
 
@@ -175,7 +177,7 @@ montageIso:
     for (($i = 0); $i -lt 10 -and ! (Get-Volume | where-object { $_.filesystem -eq "UDF"}); $i++) {
       Start-Sleep -Seconds 1
     }
-    if ! (Get-Volume | where-object { $_.filesystem -eq "UDF"}) {
+    if (! (Get-Volume | where-object { $_.filesystem -eq "UDF"})) {
       Write-Output "L'ISO ne se monte pas !"
       exit 1
     }
