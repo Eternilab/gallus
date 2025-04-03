@@ -123,6 +123,7 @@ runGallusFull:
   before_script:
     - cd "$GALLUS_DIR"
     - Set-ExecutionPolicy Bypass -Scope Process -Force
+    - Remove-Variable GALLUS_USB_DRIVE
   script:
     - .\gallus.ps1 -full
   after_script:

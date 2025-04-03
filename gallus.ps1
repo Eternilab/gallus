@@ -243,8 +243,9 @@ function build_USB_media {
         (Get-Volume -DriveLetter $GALLUS_USB_DRIVE -ErrorAction SilentlyContinue) -and
         ((Get-Volume -DriveLetter $GALLUS_USB_DRIVE).DriveType -eq "Removable"))
     {
-      $DestDrive = $GALLUS_USB_DISK
+      $DestDrive = $GALLUS_USB_DRIVE
     } else {
+      Write-Output "`$GALLUS_USB_DRIVE : $GALLUS_USB_DRIVE"
       Write-Error "La variable `$GALLUS_USB_DRIVE n'est pas définie à la lettre correspondant à un volume du support de stockage amovible valide (ex: ""F"")"
       exit 1
     }
