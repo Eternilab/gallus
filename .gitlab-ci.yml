@@ -2,6 +2,7 @@
 variables:
   GIT_STRATEGY: empty
   GALLUS_DIR: 'C:\gallus'
+  ErrorActionPreference: stop
 
 default:
   tags:
