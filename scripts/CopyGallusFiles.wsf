@@ -42,7 +42,7 @@ Class CopyGallusFiles
 
 		'// Those are the files copied by this script.
 		
-		FilesToCopy = Array("finding_list_cis_microsoft_windows_11_enterprise_22h2_machine.scv", _
+		FilesToCopy = Array("finding_list_cis_microsoft_windows_11_enterprise_23h2_machine.scv", _
 			"HardeningKitty.psd1", "HardeningKitty.psm1", "HardeningScript.ps1", "AuditingScript.ps1", _
 			"Eternilab.png", "ReportScript.js", "ReportStyle.css", "tsorter.min.js", _
 			"CopyAuditingFiles.ps1", "Variables.ps1")

@@ -65,7 +65,7 @@ $CopyFilesList = (
 
 $HKModule = ".\HardeningKitty.psm1"
 
-$findinglist = ".\finding_list_cis_microsoft_windows_11_enterprise_22h2_machine.csv"
+$findinglist = ".\finding_list_cis_microsoft_windows_11_enterprise_23h2_machine.csv"
 
 $HKLogOutputFile = "$TargetPath\Auditreport.txt"
 $HKCsvOutputFile = "$TargetPath\AuditReport.csv"

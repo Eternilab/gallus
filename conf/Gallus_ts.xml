@@ -415,7 +415,7 @@
       </defaultVarList>
     </step>
     <group name="Custom Tasks" disable="false" continueOnError="false" expand="true" description="">
-      <step type="BDD_RunPowerShellAction" name="Harden System" description="Run Hardening Kitty on the deployed Machine, in HailMary mode, applying all security measures stored in the finding_list_cis_microsoft_windows_11_enterprise_22h2_machine.csv file." disable="false" continueOnError="false" successCodeList="0 3010">
+      <step type="BDD_RunPowerShellAction" name="Harden System" description="Run Hardening Kitty on the deployed Machine, in HailMary mode, applying all security measures stored in the finding_list_cis_microsoft_windows_11_enterprise_23h2_machine.csv file." disable="false" continueOnError="false" successCodeList="0 3010">
         <defaultVarList>
           <variable name="ScriptName" property="ScriptName">%SCRIPTROOT%\HardeningScript.ps1</variable>
           <variable name="Parameters" property="Parameters"></variable>
@@ -431,7 +431,7 @@
         </defaultVarList>
         <action>cscript.exe "%SCRIPTROOT%\ZTIPowerShell.wsf</action>
       </step>
-      <step type="BDD_RunPowerShellAction" name="Audit System" description="Run Hardening Kitty on the deployed Machine, in Audit mode, verifying all security measures stored in the finding_list_cis_microsoft_windows_11_enterprise_22h2_machine.csv file." disable="false" continueOnError="false" successCodeList="0 3010">
+      <step type="BDD_RunPowerShellAction" name="Audit System" description="Run Hardening Kitty on the deployed Machine, in Audit mode, verifying all security measures stored in the finding_list_cis_microsoft_windows_11_enterprise_23h2_machine.csv file." disable="false" continueOnError="false" successCodeList="0 3010">
         <defaultVarList>
           <variable name="ScriptName" property="ScriptName">%SCRIPTROOT%\AuditingScript.ps1</variable>
           <variable name="Parameters" property="Parameters"></variable>
