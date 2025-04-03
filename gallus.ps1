@@ -236,17 +236,51 @@ function run_MDT {
 function build_USB_media {
   Write-Host -ForegroundColor Green "9 - Création du média d'installation sur support de stockage amovible"
   Write-Host ""
-  Write-Host -ForegroundColor Green "!!! Attention les fichiers présents sur le support vont être supprimés !!!"
-  Write-Host -ForegroundColor Green "Si vous voulez interrompre le processus utilisez le raccourcis clavier Ctrl + C"
-  $DestDrive = Read-Host -Prompt 'Veuillez saisir la lettre correspondant à un volume du support de stockage amovible (ex: "F")'
-  Write-Host ""
-  if (-not (Get-Volume -ErrorAction SilentlyContinue $DestDrive)) {
-    Write-Host -ForegroundColor Red "Le volume ${DestDrive}: n'existe pas"
-    Write-Host -ForegroundColor Red "Pour relancer la création du média d'installation sur support de stockage amovible,"
-    Write-Host -ForegroundColor Red "veuillez relancer le script 9-gallus_build_USB_media.ps1"
-    exit 1
+  if ($GALLUS_USB_DRIVE -ne $null) {
+    Write-Host -ForegroundColor Green "La variable d'environnement `$GALLUS_USB_DRIVE à été définie,"
+    Write-Host -ForegroundColor Green "elle va être utilisée pour choisir le volume de support de stockage amovible cible"
+    if (($GALLUS_USB_DRIVE -like "[a-zA-Z]") -and
+        (Get-Volume -DriveLetter $GALLUS_USB_DRIVE -ErrorAction SilentlyContinue) -and
+        ((Get-Volume -DriveLetter $GALLUS_USB_DRIVE).DriveType -eq "Removable"))
+    {
+      $DestDrive = $GALLUS_USB_DISK
+    } else {
+      Write-Error "La variable `$GALLUS_USB_DRIVE n'est pas définie à la lettre correspondant à un volume du support de stockage amovible valide (ex: ""F"")"
+      exit 1
+    }
+  } else {
+    if (-not [Environment]::UserInteractive) {
+      Write-Output "Gallus ne s'execute pas en mode interactif, la prise en charge de support de stockage amovible est donc désactivée par défaut"
+      Write-Output "Si vous voulez tout de même créer un média d'installation sur support de stockage amovible dans ce cas,"
+      Write-Output "veuillez définir la variable d'environnement `$GALLUS_USB_DRIVE avec la lettre correspondant à un volume du support de stockage amovible (ex: ""F"")"
+      return
+    } else {
+      Write-Host -ForegroundColor Yellow "!!! Attention les fichiers présents sur le support vont être supprimés !!!"
+      Write-Host -ForegroundColor Green "Si vous voulez interrompre le processus, utilisez le raccourcis clavier Ctrl + c"
+      $DestDrive = Read-Host -Prompt 'Pour continuer, veuillez saisir la lettre correspondant à un volume de support de stockage amovible (ex: "F")'
+      for (($i = 0); ($i -lt 5) -and
+	      -not (($DestDrive -like "[a-zA-Z]") -and
+	      (Get-Volume -DriveLetter $DestDrive -ErrorAction SilentlyContinue) -and
+	      ((Get-Volume -DriveLetter $DestDrive).DriveType -eq "Removable")); $i++)
+      {
+        Write-Host -ForegroundColor Yellow "La saisie ne correspond pas à une lettre de volume de support de stockage amovible valide !"
+        Write-Host -ForegroundColor Green "Si vous voulez interrompre le processus, utilisez le raccourcis clavier Ctrl + c"
+        Write-Host -ForegroundColor Green "Essai(s) restants : $i"
+        $DestDrive = Read-Host -Prompt "Veuillez saisir la lettre correspondant à un volume de support de stockage amovible valide"
+      }
+      if (-not ($GALLUS_USB_DRIVE -like "[a-zA-Z]") -and
+	      (Get-Volume -DriveLetter $GALLUS_USB_DRIVE -ErrorAction SilentlyContinue) -and
+	      ((Get-Volume -DriveLetter $GALLUS_USB_DRIVE).DriveType -eq "Removable"))
+      {
+        Write-Host -ForegroundColor Red "La saisie ne correspond pas à une lettre de volume de support de stockage amovible valide !"
+        Write-Host -ForegroundColor White "Pour relancer la création du média d'installation sur support de stockage amovible,"
+        Write-Host -ForegroundColor White "veuillez relancer le script gallus.ps1 avec l'argument ""-flash"""
+        exit 1
+      }
+    }
   }
-  Write-Host -ForegroundColor Green "9.1 - Formattage du support de stockage"
+  Write-Host ""
+  Write-Host -ForegroundColor Green "9.1 - Formattage du support de stockage ""${DestDrive}:"""
   $disk=(Get-Partition -DriveLetter "$DestDrive").DiskId
   Clear-Disk -Confirm:$False -RemoveData -RemoveOEM -Path $disk
   if ((Get-Disk -Path $disk).Size -gt 34359738368) {
@@ -256,7 +290,7 @@ function build_USB_media {
   $null = New-Partition -DiskPath $disk -UseMaximumSize -DriveLetter "$DestDrive"
   }
   $null = Format-Volume -DriveLetter $DestDrive -FileSystem FAT32
-  Write-Host -ForegroundColor Green "9.2 - Génération du média amovible d'installation sur ${DestDrive}:"
+  Write-Host -ForegroundColor Green "9.2 - Génération du média amovible d'installation sur ""${DestDrive}:"""
   ROBOCOPY "GMedia\Content" "${DestDrive}:" /nfl /ndl /njh /njs /nc /ns /np /s /max:3800000000
   # ROBOCOPY ajoute un saut de ligne à la sortie standard
   DISM /Quiet /Split-Image /ImageFile:"GMedia\Content\Deploy\Operating Systems\Win11x64_EntN_en-US_23H2\sources\install.wim" /SWMFile:"${DestDrive}:\Deploy\Operating Systems\Win11x64_EntN_en-US_23H2\sources\install.swm" /FileSize:3800
