@@ -2,6 +2,7 @@
 variables:
   GIT_STRATEGY: empty
   GALLUS_DIR: 'C:\gallus'
+# Arret du pipline lorsque un script PowerShell produit une erreur
   ErrorActionPreference: stop
 
 default:
