@@ -76,7 +76,7 @@ verifCode:
     - "& \"C:\\Program Files\\Git\\cmd\\git.exe\" checkout $CI_COMMIT_SHA"
     - Set-ExecutionPolicy Bypass -Scope Process -Force
   script:
-    - Invoke-ScriptAnalyzer -path "$GALLUS_DIR"
+    - Invoke-ScriptAnalyzer -EnableExit -Path "$GALLUS_DIR"
   after_script:
     - Set-ExecutionPolicy Restricted -Scope Process -Force
     - Remove-item -recurse -force -path "$GALLUS_DIR"
