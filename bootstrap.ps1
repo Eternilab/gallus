@@ -7,7 +7,7 @@
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '', Scope='Function', Target='*')]
 param(
      [Parameter()]
-     [string]$Ref = "refs/tags/v0.3"
+     [string]$Ref = "refs/tags/v0.5"
  )
 
 function bootstrap_main {
