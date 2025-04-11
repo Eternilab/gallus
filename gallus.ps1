@@ -334,7 +334,7 @@ elseif ($advancedImportDriver) 			{ import_drivers }
 elseif ($advancedSetupTools) 			{ setup_tools }
 elseif ($advancedExtractWinImage) 		{ extract_windows_image }
 elseif ($advancedCleanupMDT) 			{ cleanup_MDT }
-elseif ($advancedRunMDT) 			{ build_USB_media }
+elseif ($advancedRunMDT) 			{ run_MDT }
 
 #Affichage des paramètres disponibles si aucun n'est spécifié
-else 										{ aide }
+else 						{ aide }
