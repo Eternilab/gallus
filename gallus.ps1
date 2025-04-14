@@ -269,9 +269,9 @@ function build_USB_media {
         Write-Host -ForegroundColor Green "Essai(s) restants : $i"
         $DestDrive = Read-Host -Prompt "Veuillez saisir la lettre correspondant à un volume de support de stockage amovible valide"
       }
-      if (-not (($GALLUS_USB_DRIVE -like "[a-zA-Z]") -and
-	      (Get-Volume -DriveLetter $GALLUS_USB_DRIVE -ErrorAction SilentlyContinue) -and
-	      ((Get-Volume -DriveLetter $GALLUS_USB_DRIVE).DriveType -eq "Removable")))
+      if (-not (($DestDrive -like "[a-zA-Z]") -and
+	      (Get-Volume -DriveLetter $DestDrive -ErrorAction SilentlyContinue) -and
+	      ((Get-Volume -DriveLetter $DestDrive).DriveType -eq "Removable")))
       {
         Write-Host -ForegroundColor Red "La saisie ne correspond pas à une lettre de volume de support de stockage amovible valide !"
         Write-Host -ForegroundColor White "Pour relancer la création du média d'installation sur support de stockage amovible,"
