@@ -153,7 +153,7 @@ mkdir \Gallus; cd \Gallus; Set-ExecutionPolicy Bypass -Scope Process -Force; [Sy
 
 Exemple d'execution de la phase 1 :
 
-![][gallus-screenshot]
+![Capture d'écran de Gallus][gallus-screenshot]
 
 Attendez la fin de son exécution, qui peut prendre 20 à 30 minutes.
 
