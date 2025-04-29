@@ -463,7 +463,7 @@ TODO :
 <!-- LIENS ET IMAGES MARKDOWN -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [gallus-logo]: images/gallus-logo
-[gallus-screenshot]: images/gallus-screenshot
+[gallus-screenshot]: images/gallus-screenshot.png
 
 [contributors-shield]: https://img.shields.io/github/contributors/Eternilab/gallus.svg?style=for-the-badge
 [contributors-url]: https://github.com/Eternilab/gallus/graphs/contributors
