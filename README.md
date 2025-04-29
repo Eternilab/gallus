@@ -70,8 +70,6 @@
 
 # À propos du projet
 
-![Capture d'écran de Gallus.][gallus-screenshot]
-
 Ce projet (Gallus) a pour but de générer des médias d'installation (ISO, USB) du système d'exploitation Microsoft Windows 11.
 
 La mise en œuvre de Gallus s'effectue en deux phases :
@@ -152,6 +150,11 @@ Deux modes d'installation/usage sont donc détaillés ci-après.
 ```powershell
 mkdir \Gallus; cd \Gallus; Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/bootstrap.ps1'))); .\gallus.ps1 -full
 ```
+
+Exemple d'execution de la phase 1 :
+
+![][gallus-screenshot]
+
 Attendez la fin de son exécution, qui peut prendre 20 à 30 minutes.
 
 Gallus à produit un media d'installation au format ISO et vous propose de créer une clé USB d'installation.
@@ -459,10 +462,8 @@ TODO :
 
 <!-- LIENS ET IMAGES MARKDOWN -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-<!--
 [gallus-logo]: images/gallus-logo
 [gallus-screenshot]: images/gallus-screenshot
--->
 
 [contributors-shield]: https://img.shields.io/github/contributors/Eternilab/gallus.svg?style=for-the-badge
 [contributors-url]: https://github.com/Eternilab/gallus/graphs/contributors
