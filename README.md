@@ -18,7 +18,7 @@
 <br>
 <div align="center">
   <a href="https://github.com/Eternilab/gallus">
-    <img src="images/gallus-logo.png" alt="Logo Gallus" width="320" height="320">
+    <img src="images/gallus-logo.png" alt="Logo Gallus" width="160" height="160">
   </a>
 
 <!-- TITRE -->
