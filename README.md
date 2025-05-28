@@ -14,13 +14,12 @@
 [![Licence AGPLv3][license-shield]][license-url]
 
 <!-- LOGO DU PROJET -->
-<!--
+
 <br>
 <div align="center">
   <a href="https://github.com/Eternilab/gallus">
-    <img src="TODO" alt=Logo Gallus" width="80" height="80">
+    <img src="images/gallus-screenshot.png" alt="Logo Gallus" width="80" height="80">
   </a>
--->
 
 <!-- TITRE -->
 <h1 align="center">Gallus</h1>
@@ -306,6 +305,10 @@ Si votre problème n'est pas décrit dans les sous chapitres qui suivent, veuill
 
 Dans le cas où l'installation échoue lors de la première sous-phase (font d'écran gris avec le texte suivant en haut à droite : ```Windows Deployement Toolkit```), avec une fenêtre d'erreur nommée ```Script Error``` contenant le message d'erreur ```An error has occured in the script on this page```, par dessus une fenêtre ```Deployment Summary``` avec le sous-titre ```Failure``` et le message ```Operating system deployment did not complete successfully```, il est fort probable qu'il manque des pilotes pour permettre au système WinPE (Windows Preinstallation Environment, système d'exploitation utilisé en phase 2 (cf. [A propos du projet](#%C3%A0-propos-du-projet)) d'accéder au disque.
 
+Capture d'écran du problème :
+
+![Capture d'écran][gallus-script-disk-access-error]
+
 Pour s'assurer qu'il s'agit bien de ce problème, cliquez sur la croix rouge en haut à droite de la première fenêtre puis faites de même avec la deuxième.
 
 Une invite de commande ```cmd.exe``` devrait s'ouvrir.
@@ -462,8 +465,9 @@ TODO :
 
 <!-- LIENS ET IMAGES MARKDOWN -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[gallus-logo]: images/gallus-logo
+[gallus-logo]: images/gallus-logo.png
 [gallus-screenshot]: images/gallus-screenshot.png
+[gallus-script-disk-access-error]: images/script-disk-access-error.png
 
 [contributors-shield]: https://img.shields.io/github/contributors/Eternilab/gallus.svg?style=for-the-badge
 [contributors-url]: https://github.com/Eternilab/gallus/graphs/contributors
