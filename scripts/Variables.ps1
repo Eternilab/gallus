@@ -23,14 +23,14 @@
 # Desktop by default
 $TargetPath = [System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::Desktop) + "\GallusAuditReport\"
 
-$CssFile = "$TargetPath\ReportStyle.css"
-$JsFile = "$TargetPath\ReportScript.js"
+$CssFile = "./ReportStyle.css"
+$JsFile = "./ReportScript.js"
 
 $HtmlFooter = "</div><script src=$($JsFile)></script>"
 
 $Charset = "ISO-8859-1"
 
-$EternilabLogo = "$TargetPath\Eternilab.png"
+$EternilabLogo = "./Eternilab.png"
 
 function Generate-Header {
 
