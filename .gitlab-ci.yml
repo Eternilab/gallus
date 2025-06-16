@@ -87,7 +87,7 @@ verifCode:
           $contents[0] -eq 0xEF -and $contents[1] -eq 0xBB -and $contents[2] -eq 0xBF
         }
       }
-      (echo "$GALLUS_DIR\bootstrap.ps1" | ContainsBOM) -and (echo "$GALLUS_DIR\gallus.ps1" | ContainsBOM)
+      Get-ChildItem "$GALLUS_DIR\*.ps1" | ContainsBOM
   after_script:
     - Set-ExecutionPolicy Restricted -Scope Process -Force
     - Remove-item -recurse -force -path "$GALLUS_DIR"
