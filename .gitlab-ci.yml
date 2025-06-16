@@ -2,7 +2,7 @@
 variables:
   GIT_STRATEGY: empty
   GALLUS_DIR: 'C:\gallus'
-# Arret du pipline lorsque un script PowerShell produit une erreur
+  # Arret du pipline lorsque un script PowerShell produit une erreur
   ErrorActionPreference: stop
 
 default:
@@ -77,6 +77,17 @@ verifCode:
     - Set-ExecutionPolicy Bypass -Scope Process -Force
   script:
     - Invoke-ScriptAnalyzer -EnableExit -Path "$GALLUS_DIR"
+    - |
+      Function ContainsBOM {
+        return $input | where {
+          $contents = new-object byte[] 3
+          $stream = [System.IO.File]::OpenRead($_.FullName)
+          $stream.Read($contents, 0, 3) | Out-Null
+          $stream.Close()
+          $contents[0] -eq 0xEF -and $contents[1] -eq 0xBB -and $contents[2] -eq 0xBF
+        }
+      }
+      (echo "$GALLUS_DIR\bootstrap.ps1" | ContainsBOM) -and (echo "$GALLUS_DIR\gallus.ps1" | ContainsBOM)
   after_script:
     - Set-ExecutionPolicy Restricted -Scope Process -Force
     - Remove-item -recurse -force -path "$GALLUS_DIR"
@@ -121,7 +132,7 @@ runGallusFull:
   stage: build
   needs: ["runBootstrap"]
   before_script:
-# Pour être certain de ne pas exécuter l'étape flash
+    # Pour être certain de ne pas exécuter l'étape flash
     - if ($null -ne $GALLUS_USB_DRIVE) {Remove-Variable -Name GALLUS_USB_DRIVE}
     - cd "$GALLUS_DIR"
     - Set-ExecutionPolicy Bypass -Scope Process -Force
