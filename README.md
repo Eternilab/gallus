@@ -138,7 +138,7 @@ Ainsi les choix par défaut de la configuration de Gallus peuvent être modifié
 * Création de multiples médias d'installation
 * Réutilisation d'un poste de construction ayant déjà servi pour construire un média d'installation, suite à une mise à jour des images d'installation de Microsoft Windows.
 
-Deux modes d'installation/usage sont donc détaillés ci-après. 
+Deux modes d'installation/usage sont donc détaillés ci-après.
 
 ### Installation et exécution (Rapide, TLDR)
 *Installe Gallus à la racine du système et l'exécute de manière nominale avec les options par défaut.*
@@ -146,7 +146,7 @@ Deux modes d'installation/usage sont donc détaillés ci-après.
 1. Sur une machine Windows, ouvrez une instance de Powershell avec des droits d'administration.
 2. (Optionnel) [Ajouter des drivers supplémentaires nécessaires à l'installation](#support-de-p%C3%A9riph%C3%A9riques-avec-pilotes-suppl%C3%A9mentaires)
 3. (Optionnel) [Ajouter des logiciels supplémentaires nécessaires à l'installation](#installation-de-logiciels-suppl%C3%A9mentaires)
-4. Exécutez cette commande dans Powershell : 
+4. Exécutez cette commande dans Powershell :
 ```powershell
 mkdir \Gallus; cd \Gallus; Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; & ([scriptblock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Eternilab/gallus/main/bootstrap.ps1'))); .\gallus.ps1 -full
 ```
@@ -301,7 +301,7 @@ Cette [Phase 2](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation---phas
 # Problèmes potentiels
 
 Si votre problème n'est pas décrit dans les sous chapitres qui suivent, veuillez [contacter Eternilab](mailto:contact@eternilab.com) ou [signaler un bug](https://github.com/Eternilab/gallus/issues/new?labels=TODO(bug)&template=bug---.md).
-	
+
 ### Problèmes d'accès au disque
 
 Dans le cas où l'installation échoue lors de la première sous-phase (font d'écran gris avec le texte suivant en haut à droite : ```Windows Deployement Toolkit```), avec une fenêtre d'erreur nommée ```Script Error``` contenant le message d'erreur ```An error has occured in the script on this page```, par dessus une fenêtre ```Deployment Summary``` avec le sous-titre ```Failure``` et le message ```Operating system deployment did not complete successfully```, il est fort probable qu'il manque des pilotes pour permettre au système WinPE (Windows Preinstallation Environment, système d'exploitation utilisé en phase 2 (cf. [A propos du projet](#%C3%A0-propos-du-projet)) d'accéder au disque.
@@ -316,7 +316,9 @@ Une invite de commande ```cmd.exe``` devrait s'ouvrir.
 
 Executez la commande suivante :
 
-```notepad.exe ..\temp\SMSTSLog\smsts.log```
+```
+notepad.exe ..\temp\SMSTSLog\smsts.log
+```
 
 L'éditeur de texte Notepad devrait s’ouvrir en vous montrant les journaux d'installation produits jusqu'ici.
 
@@ -327,7 +329,9 @@ Vous trouverez des informations ci-dessous, dans la section [Support de périph�
 
 Dans le cas contraire, un autre problème est survenu, cherchez la réponse dans ce fichier de journaux cité précédemment :
 
-```X:\Windows\temp\SMSTSLog\smsts.log```
+```
+X:\Windows\temp\SMSTSLog\smsts.log
+```
 
 <p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
@@ -358,10 +362,11 @@ Une fois l'ensemble de pilotes récupérés (ou uniquement les pilotes nécessai
 
 Le but est de mettre ces fichiers dans l’arborescence suivante à la racine du système de fichier du disque C: :
 ```
-Drivers
-├── Network
-└── Storage
-Gallus
+C:
+├──Drivers
+│  ├──Network
+│  └──Storage
+└──Gallus
 ```
 
 Que ce soit le premier ou deuxième cas (ensemble de fichiers ou .cab), si possible il est mieux de séparer les pilotes réseau et stockage dans les dossiers correspondants, sinon on pourra mettre l'ensemble dans le dossier ```Storage```.
@@ -385,28 +390,28 @@ On peut maintenant relancer [l'installation (Phase2)](#d%C3%A9marrage-%C3%A0-par
 
 # Installation de logiciels supplémentaires
 
-Pour ajouter des applications à votre config vous devez créer un dossier AppGallus à la racine de votre ordinateur.
+Pour ajouter des applications à votre installateur Gallus, vous devez créer un dossier AppGallus à la racine de votre ordinateur.
 
-Dans le dossier AppGallus vous devez créer un ficher pour chaque logiciel que vous voulez ajouté (le nom du dossier n'a pas d'importance mais il est conseillé de mettre le nom du logiciel à installer).
+Dans le dossier AppGallus vous devez créer un sous-dossier pour chaque logiciel que vous voulez ajouté (le nom du sous-dossier n'a pas d'importance mais il est conseillé de mettre le nom du logiciel à installer).
 
-Dans ce second dossier vous devez mettre : 
+Dans ce second dossier vous devez mettre :
 
--  l'installateur de votre logiciel (Par exemple pour Notepad++ : `npp.8.7.9.Installer.x64.exe /S`)
--  Un fichier command.txt dans lequel vous inscrirez la commande powershell d'installation silencieuse de votre logiciel (Il est conseillé d'écrire " [nom_du_logiciel]  installation silencieuse" sur vote navigateur internet pour trouver la commande d'installation silencieuse.
-) 
-
+1. L'installateur de votre logiciel (Par exemple pour Notepad++ : `npp.8.7.9.Installer.x64.exe`)
+2. Un fichier command.txt dans lequel vous devez écrire la commande d'installation silencieuse de votre logiciel (Vous pouvez chercher "[nom_du_logiciel] installation silencieuse" sur vote moteur de recherche préféré pour trouver les paramètres d'installation silencieuse.
+Attention, le script en question sera executé par PowerShell.
+)
 
 Votre dossier AppGallus devrait donc ressembler à celà :
 
 ```
 C:
 ├──AppGallus
-│         ├──Logiciel_1
-│         │        ├──installateur.exe
-│         │        └──command.txt
-│         ├──...
-│         ├──Logiciel_n
-│         └──Logiciel_n+1
+│  ├──Logiciel_1
+│  │  ├──installateur.exe
+│  │  └──command.txt
+│  ├──...
+│  ├──Logiciel_n
+│  └──Logiciel_n+1
 ├──Drivers
 └──Gallus
 ```
