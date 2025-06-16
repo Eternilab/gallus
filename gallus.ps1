@@ -199,6 +199,25 @@ function run_MDT {
   # 10
   Write-Host -ForegroundColor Green "8.4 - Import de la séquence de taches Gallus_ts.xml"
   $null = Import-MDTTaskSequence -Path "DS001:\Task Sequences\Gallus" -Name "Gallus Defaut Task Sequence" -Template "$PWD\conf\Gallus_ts.xml" -Comments "" -ID "GALLUS" -Version "1.0" -OperatingSystemPath "DS001:\Operating Systems\Win11\Win11x64_EntN_en-US_23H2 install.wim"
+  # 10.1 recupération des apps
+  Write-Host -ForegroundColor Green "8.4.1 - Ajout des applications à installer"
+  foreach ($file in $(Get-ChildItem -Directory $PWD\..\AppGallus)) {
+    $nom = $file.name
+    $cmd = Get-Content "$PWD\..\AppGallus\$nom\command.txt"
+    $null = Import-MDTApplication -path "DS001:\Applications" -enable "True" -Name "$nom" -ShortName "$nom" -Version "" -Publisher "" -Language "" -CommandLine "$cmd" -WorkingDirectory ".\Applications\$nom" -ApplicationSourcePath "$PWD\..\AppGallus\$nom" -DestinationFolder "$nom" -Verbose
+  }
+  # 10.2 création du bundle
+  Write-Host -ForegroundColor Green "8.4.2 - Création du bundle des applications à installer"
+  $apps = foreach ($app in $(Get-ChildItem "DS001:\Applications")) {$app.guid}
+  $null = Import-MDTApplication -Path "DS001:\Applications" -enable "True" -Name "bundle" -ShortName "bundle" -Bundle
+  Set-ItemProperty "DS001:\Applications\bundle" Dependency @($apps)
+  # 10.3 import du bundle dans le ts
+  Write-Host -ForegroundColor Green "8.4.3 - Mise à jour du Task Sequence avec le bundle d'applications à installer"
+  $BundleGUID = Get-ItemPropertyValue "DS001:\Applications\bundle" guid
+  $TSPath = "$PWD\DSGallus\Control\GALLUS\ts.xml"
+  $TSXML = [xml](Get-Content $TSPath)
+  $TSXML.sequence.group | Where {$_.Name -eq "State Restore"} | ForEach-Object {$_.step} | Where {$_.Name -eq "Install Applications"} | ForEach-Object {$_.defaultVarList.variable} | Where {$_.name -eq "ApplicationGUID"} | ForEach-Object {$_.InnerText = "$BundleGUID"}
+  $TSXML.Save("$PWD\DSGallus\Control\GALLUS\ts.xml")
   # 11
   Write-Host -ForegroundColor Green "8.5 - Configuration des paramètres de l'installateur"
   $null = New-Item -Path "DS001:\Selection Profiles" -Enable "True" -Name "gallus_winPE" -Comments "" -Definition "<SelectionProfile><Include path=`"Operating Systems`" /><Include path=`"Out-of-Box Drivers\Storage`" /><Include path=`"Task Sequences\Gallus`" /></SelectionProfile>" -ReadOnly "False"
@@ -301,6 +320,7 @@ function build_USB_media {
   Write-Host -foregroundcolor Green "Il peut être utilisé pour installer Windows 11 Enterprise N 23h2 sur un machine x64 UEFI sans besoin de connexion internet"
   Write-Host -foregroundcolor Green "Le système d'exploitation sera durcis (sécurisé) automatiquement au premier démarrage"
 }
+
 
 function print_begin {
   Write-Host -ForegroundColor Green "Exécution de gallus.ps1 :"
