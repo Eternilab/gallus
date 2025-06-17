@@ -201,10 +201,10 @@ function run_MDT {
   $null = Import-MDTTaskSequence -Path "DS001:\Task Sequences\Gallus" -Name "Gallus Defaut Task Sequence" -Template "$PWD\conf\Gallus_ts.xml" -Comments "" -ID "GALLUS" -Version "1.0" -OperatingSystemPath "DS001:\Operating Systems\Win11\Win11x64_EntN_en-US_23H2 install.wim"
   # 10.1 recupération des apps
   Write-Host -ForegroundColor Green "8.4.1 - Ajout des applications à installer"
-  foreach ($file in $(Get-ChildItem -Directory $PWD\..\AppGallus)) {
-    $nom = $file.name
+  foreach ($dir in $(Get-ChildItem -Directory -Path $PWD\..\AppGallus)) {
+    $nom = $dir.name
     $cmd = Get-Content "$PWD\..\AppGallus\$nom\command.txt"
-    $null = Import-MDTApplication -path "DS001:\Applications" -enable "True" -Name "$nom" -ShortName "$nom" -Version "" -Publisher "" -Language "" -CommandLine "$cmd" -WorkingDirectory ".\Applications\$nom" -ApplicationSourcePath "$PWD\..\AppGallus\$nom" -DestinationFolder "$nom" -Verbose
+    $null = Import-MDTApplication -path "DS001:\Applications" -enable "True" -Name "$nom" -ShortName "$nom" -Version "" -Publisher "" -Language "" -CommandLine "$cmd" -WorkingDirectory ".\Applications\$nom" -ApplicationSourcePath "$PWD\..\AppGallus\$nom" -DestinationFolder "$nom"
   }
   # 10.2 création du bundle
   Write-Host -ForegroundColor Green "8.4.2 - Création du bundle des applications à installer"
