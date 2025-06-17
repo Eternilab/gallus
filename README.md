@@ -300,7 +300,7 @@ Cette [Phase 2](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation---phas
 
 # Problèmes potentiels
 
-Si votre problème n'est pas décrit dans les sous chapitres qui suivent, veuillez [contacter Eternilab](mailto:contact@eternilab.com) ou [signaler un bug](https://github.com/Eternilab/gallus/issues/new?labels=TODO(bug)&template=bug---.md).
+Si votre problème n'est pas décrit dans les sous chapitres qui suivent, veuillez [contacter Eternilab](mailto:contact@eternilab.com) ou [signaler un bug](https://github.com/Eternilab/gallus/issues/new?labels=bug&template=bug---.md).
 
 ### Problèmes d'accès au disque
 
