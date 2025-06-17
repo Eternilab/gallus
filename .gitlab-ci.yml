@@ -78,16 +78,18 @@ verifCode:
   script:
     - Invoke-ScriptAnalyzer -EnableExit -Path "$GALLUS_DIR"
     - |
-      Function ContainsBOM {
-        return $input | where {
-          $contents = new-object byte[] 3
-          $stream = [System.IO.File]::OpenRead($_.FullName)
-          $stream.Read($contents, 0, 3) | Out-Null
-          $stream.Close()
-          $contents[0] -eq 0xEF -and $contents[1] -eq 0xBB -and $contents[2] -eq 0xBF
+      Get-ChildItem "$GALLUS_DIR\*.ps1" | where {
+        $contents = new-object byte[] 3
+        $stream = [System.IO.File]::OpenRead($_.FullName)
+        $stream.Read($contents, 0, 3) | Out-Null
+        $stream.Close()
+        if ($contents[0] -ne 0xEF -or $contents[1] -ne 0xBB -or $contents[2] -ne 0xBF) {
+          Write-Error "Le fichier PS1 $_.FullName ne contient plus de BOM !"
+          exit 1
+        } else {
+          exit 0
         }
       }
-      Get-ChildItem "$GALLUS_DIR\*.ps1" | ContainsBOM
   after_script:
     - Set-ExecutionPolicy Restricted -Scope Process -Force
     - Remove-item -recurse -force -path "$GALLUS_DIR"
