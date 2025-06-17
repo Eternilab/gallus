@@ -187,6 +187,7 @@ function run_MDT {
     else {
       Write-Host -ForegroundColor Green "8.3.0 - Pas de dossier $PWD\$GALLUS_DRIVERS_PATH\ trouvé"
     }
+  }
   # 8
   Copy-Item -Path $PWD\scripts\* -Destination $PWD\DSGallus\Scripts\
   Copy-Item -Path $PWD\hkdl\* -Destination $PWD\DSGallus\Scripts\
