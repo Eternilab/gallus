@@ -233,7 +233,6 @@ Voici la liste de l'ensemble des actions et sous-actions effectuées par ```.\ga
   * ```-advancedSetupTools``` : Installe les outils Microsoft ADK et MDT en mode silencieux.
   * ```-advancedDownloadWinImage``` : Télécharge l'image (format ESD) de l'installateur officiel de Windows 11 depuis les serveurs Microsoft.
   * ```-advancedExtractWinImage``` : Extrait du format ESD l'image Windows et WinPE au format WIM.
-  * ```-advancedImportDriver``` : Récupère les pilotes supplémentaires depuis les dossiers ```..\drivers\Storage``` et ```..\drivers\Network```. cf [Support de périphériques avec pilotes supplémentaires](#support-de-p%C3%A9riph%C3%A9riques-avec-pilotes-suppl%C3%A9mentaires)
   * ```-advancedDownloadHardeningKitty``` : Télécharge l'outil de durcissement HardeningKitty et le fichier de durcissement machine CIS correspondant à la version de l'image Windows.
 
 * ```-make``` : Construit les fichiers d'installation et produit une ISO démarrable.

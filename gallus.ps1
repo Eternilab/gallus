@@ -13,7 +13,6 @@ param(
 	[switch]$advancedDownloadHK,
 	[switch]$advancedSetupTools,
 	[switch]$advancedExtractWinImage,
-	[switch]$advancedImportDriver,
 	[switch]$make,
 	[switch]$advancedCleanupMDT,
 	[switch]$advancedRunMDT,
@@ -43,7 +42,6 @@ Paramètres avancées :
 -advancedSetupTools		= Installe les outils Microsoft ADK et MDT en mode silencieux
 -advancedDownloadWinImage	= Télécharge l’image (format ESD) de l’installateur officiel de Windows 11 depuis les serveurs Microsoft
 -advancedExtractWinImage	= Extrait du format ESD l’image Windows et WinPE au format WIM
--advancedImportDriver		= Récupère les pilotes supplémentaires depuis les dossiers ..\drivers\Storage et ..\drivers\Network
 -advancedDownloadHK		= Télécharge l’outil de durcissement HardeningKitty et le fichier de durcissement machine CIS correspondant à la version de l’image Windows
 -advancedCleanupMDT		= Supprime les fichiers résiduels d'une potentielle exécution précédente de MDT
 -advancedRunMDT			= Exécution de MDT avec les paramètres et les composants de Gallus pour construire les fichiers d’installation. Produit également une ISO démarrable
@@ -129,21 +127,7 @@ function extract_windows_image {
 }
 
 # 5---------------------------------------------------------------------------------------------------------------------------------------------------------------
-function import_drivers {
-  Write-Host -ForegroundColor Green "5 - Récuperation des drivers supplémentaires"
-  # Cleanup potential old files
-  Remove-Item -Recurse -Force -Path $PWD\drivers -ErrorAction SilentlyContinue
-  # Create directory
-  $null = New-Item -ItemType Directory -Path $PWD\drivers
-  # Create directory
-  $null = New-Item -ItemType Directory -Path $PWD\drivers\Storage
-  # Create directory
-  $null = New-Item -ItemType Directory -Path $PWD\drivers\Network
-  # Download Storage Drivers
-  Copy-Item -Recurse -Path $PWD\..\drivers\Storage\* -Destination $PWD\drivers\Storage\ -ErrorAction SilentlyContinue
-  # Download Network Drivers
-  Copy-Item -Recurse -Path $PWD\..\drivers\Network\* -Destination $PWD\drivers\Network\ -ErrorAction SilentlyContinue
-}
+# Anciennement import_drivers
 
 # 6---------------------------------------------------------------------------------------------------------------------------------------------------------------
 function download_HardeningKitty {
@@ -182,15 +166,27 @@ function run_MDT {
   Write-Host -ForegroundColor Green "8.2 - Import du système d'exploitation dans l'environnement de fabrication"
   $null = Import-MDTOperatingSystem -Path "DS001:\Operating Systems\Win11" -SourcePath $PWD\Win11x64_EntN_en-US_23H2 -DestinationFolder "Win11x64_EntN_en-US_23H2"
   Rename-Item "DS001:\Operating Systems\Win11\Windows 11 Enterprise N in Win11x64_EntN_en-US_23H2 install.wim" "Win11x64_EntN_en-US_23H2 install.wim"
-  # 4
+  # Drivers
   Write-Host -ForegroundColor Green "8.3 - Import de drivers dans l'environnement de fabrication (Optionnel)"
-  $null = New-item -Path "DS001:\Out-of-Box Drivers" -Enable "True" -Name "Network" -Comments "" -ItemType "folder"
-  # 5
-  $null = Import-MDTDriver -Path "DS001:\Out-of-Box Drivers\Network" -SourcePath "$PWD\drivers\Network"
-  # 6
-  $null = New-item -Path "DS001:\Out-of-Box Drivers" -Enable "True" -Name "Storage" -Comments "" -ItemType "folder"
-  # 7
-  $null = Import-MDTDriver -Path "DS001:\Out-of-Box Drivers\Storage" -SourcePath "$PWD\drivers\Storage"
+  $GALLUS_DRIVERS_PATH="..\drivers"
+  if (Test-Path -PathType Container -Path $PWD\$GALLUS_DRIVERS_PATH\) {
+    if (Test-Path -PathType Container -Path $PWD\$GALLUS_DRIVERS_PATH\Network\) {
+      Write-Host -ForegroundColor Green "8.3.1 - Import de drivers réseau"
+      # 4
+      $null = New-item -Path "DS001:\Out-of-Box Drivers" -Enable "True" -Name "Network" -Comments "" -ItemType "folder"
+      # 5
+      $null = Import-MDTDriver -Path "DS001:\Out-of-Box Drivers\Network" -SourcePath "$PWD\$GALLUS_DRIVERS_PATH\Network"
+    }
+    if (Test-Path -PathType Container -Path $PWD\$GALLUS_DRIVERS_PATH\Storage\) {
+      Write-Host -ForegroundColor Green "8.3.2 - Import de drivers de stockage"
+      # 6
+      $null = New-item -Path "DS001:\Out-of-Box Drivers" -Enable "True" -Name "Storage" -Comments "" -ItemType "folder"
+      # 7
+      $null = Import-MDTDriver -Path "DS001:\Out-of-Box Drivers\Storage" -SourcePath "$PWD\$GALLUS_DRIVERS_PATH\Storage"
+    }
+    else {
+      Write-Host -ForegroundColor Green "8.3.0 - Pas de dossier $PWD\$GALLUS_DRIVERS_PATH\ trouvé"
+    }
   # 8
   Copy-Item -Path $PWD\scripts\* -Destination $PWD\DSGallus\Scripts\
   Copy-Item -Path $PWD\hkdl\* -Destination $PWD\DSGallus\Scripts\
@@ -200,26 +196,32 @@ function run_MDT {
   Write-Host -ForegroundColor Green "8.4 - Import de la séquence de taches Gallus_ts.xml"
   $null = Import-MDTTaskSequence -Path "DS001:\Task Sequences\Gallus" -Name "Gallus Defaut Task Sequence" -Template "$PWD\conf\Gallus_ts.xml" -Comments "" -ID "GALLUS" -Version "1.0" -OperatingSystemPath "DS001:\Operating Systems\Win11\Win11x64_EntN_en-US_23H2 install.wim"
   # 10.1 recupération des apps
-  Write-Host -ForegroundColor Green "8.4.1 - Ajout des applications à installer"
-  foreach ($dir in $(Get-ChildItem -Directory -Path $PWD\..\AppGallus)) {
-    $nom = $dir.name
-    $cmd = Get-Content "$PWD\..\AppGallus\$nom\command.txt"
-    $null = Import-MDTApplication -path "DS001:\Applications" -enable "True" -Name "$nom" -ShortName "$nom" -Version "" -Publisher "" -Language "" -CommandLine "$cmd" -WorkingDirectory ".\Applications\$nom" -ApplicationSourcePath "$PWD\..\AppGallus\$nom" -DestinationFolder "$nom"
+  Write-Host -ForegroundColor Green "8.5 - Import des applications dans l'environnement de fabrication (Optionnel)"
+  $GALLUS_APPS_PATH="..\AppGallus"
+  Write-Host -ForegroundColor Green "8.5.1 - Ajout des applications à installer"
+  if (Test-Path -PathType Container -Path $PWD\$GALLUS_APPS_PATH) {
+    foreach ($dir in $(Get-ChildItem -Directory -Path $PWD\$GALLUS_APPS_PATH)) {
+      $nom = $dir.name
+      $cmd = Get-Content "$PWD\$GALLUS_APPS_PATH\$nom\command.txt"
+      $null = Import-MDTApplication -path "DS001:\Applications" -enable "True" -Name "$nom" -ShortName "$nom" -Version "" -Publisher "" -Language "" -CommandLine "$cmd" -WorkingDirectory ".\Applications\$nom" -ApplicationSourcePath "$PWD\$GALLUS_APPS_PATH\$nom" -DestinationFolder "$nom"
+    }
+    # 10.2 création du bundle
+    Write-Host -ForegroundColor Green "8.5.2 - Création du bundle des applications à installer"
+    $apps = foreach ($app in $(Get-ChildItem "DS001:\Applications")) {$app.guid}
+    $null = Import-MDTApplication -Path "DS001:\Applications" -enable "True" -Name "bundle" -ShortName "bundle" -Bundle
+    Set-ItemProperty "DS001:\Applications\bundle" Dependency @($apps)
+    # 10.3 import du bundle dans le ts
+    Write-Host -ForegroundColor Green "8.5.3 - Mise à jour du Task Sequence avec le bundle d'applications à installer"
+    $BundleGUID = Get-ItemPropertyValue "DS001:\Applications\bundle" guid
+    $TSPath = "$PWD\DSGallus\Control\GALLUS\ts.xml"
+    $TSXML = [xml](Get-Content $TSPath)
+    $TSXML.sequence.group | Where {$_.Name -eq "State Restore"} | ForEach-Object {$_.step} | Where {$_.Name -eq "Install Applications"} | ForEach-Object {$_.defaultVarList.variable} | Where {$_.name -eq "ApplicationGUID"} | ForEach-Object {$_.InnerText = "$BundleGUID"}
+    $TSXML.Save("$PWD\DSGallus\Control\GALLUS\ts.xml")
+  } else {
+    Write-Host -ForegroundColor Green "8.5.0 - Pas de dossier $PWD\$GALLUS_APPS_PATH trouvé"
   }
-  # 10.2 création du bundle
-  Write-Host -ForegroundColor Green "8.4.2 - Création du bundle des applications à installer"
-  $apps = foreach ($app in $(Get-ChildItem "DS001:\Applications")) {$app.guid}
-  $null = Import-MDTApplication -Path "DS001:\Applications" -enable "True" -Name "bundle" -ShortName "bundle" -Bundle
-  Set-ItemProperty "DS001:\Applications\bundle" Dependency @($apps)
-  # 10.3 import du bundle dans le ts
-  Write-Host -ForegroundColor Green "8.4.3 - Mise à jour du Task Sequence avec le bundle d'applications à installer"
-  $BundleGUID = Get-ItemPropertyValue "DS001:\Applications\bundle" guid
-  $TSPath = "$PWD\DSGallus\Control\GALLUS\ts.xml"
-  $TSXML = [xml](Get-Content $TSPath)
-  $TSXML.sequence.group | Where {$_.Name -eq "State Restore"} | ForEach-Object {$_.step} | Where {$_.Name -eq "Install Applications"} | ForEach-Object {$_.defaultVarList.variable} | Where {$_.name -eq "ApplicationGUID"} | ForEach-Object {$_.InnerText = "$BundleGUID"}
-  $TSXML.Save("$PWD\DSGallus\Control\GALLUS\ts.xml")
   # 11
-  Write-Host -ForegroundColor Green "8.5 - Configuration des paramètres de l'installateur"
+  Write-Host -ForegroundColor Green "8.6 - Configuration des paramètres de l'installateur"
   $null = New-Item -Path "DS001:\Selection Profiles" -Enable "True" -Name "gallus_winPE" -Comments "" -Definition "<SelectionProfile><Include path=`"Operating Systems`" /><Include path=`"Out-of-Box Drivers\Storage`" /><Include path=`"Task Sequences\Gallus`" /></SelectionProfile>" -ReadOnly "False"
   # 12
   $null = New-Item -Path "DS001:\Selection Profiles" -Enable "True" -Name "gallus_win11" -Comments "" -Definition "<SelectionProfile><Include path=`"Applications`" /><Include path=`"Operating Systems`" /><Include path=`"Out-of-Box Drivers`" /><Include path=`"Packages`" /><Include path=`"Task Sequences`" /></SelectionProfile>" -ReadOnly "False"
@@ -239,10 +241,10 @@ function run_MDT {
   Copy-Item -Path $PWD\conf\CustomSettings.ini -Destination $PWD\DSGallus\Control\CustomSettings.ini
   Copy-Item -Path $PWD\conf\CustomSettings.ini -Destination $PWD\GMedia\Content\Deploy\Control\CustomSettings.ini
   # 17
-  Write-Host -ForegroundColor Green "8.6 - Génération de l'environnement de fabrication de l'installateur"
+  Write-Host -ForegroundColor Green "8.7 - Génération de l'environnement de fabrication de l'installateur"
   Update-MDTDeploymentShare -Path "DS001:"
   # 18
-  Write-Host -ForegroundColor Green "8.7 - Génération du contenu du média d'installation et génération de l'ISO"
+  Write-Host -ForegroundColor Green "8.8 - Génération du contenu du média d'installation et génération de l'ISO"
   Update-MDTMedia -Path "DS001:\Media\GALLUSMEDIA"
   Write-Host ""
   Write-Host -ForegroundColor Green "Le média d'installation au format ISO est disponible ici : $PWD\GMedia\LiteTouchMedia.iso"
@@ -338,19 +340,18 @@ if ($PSBoundParameters.Count -gt 1) {
 }
 
 #Paramètres de bases
-elseif ($init)					{ download_tools; setup_tools; download_windows_image; extract_windows_image; import_drivers; download_HardeningKitty }
+elseif ($init)					{ download_tools; setup_tools; download_windows_image; extract_windows_image; download_HardeningKitty }
 elseif ($make)					{ cleanup_MDT; run_MDT }
 elseif ($flash)					{ build_USB_media }
 
 #Equivaut à l'appel successif avec les paramètres : -init ; -flash ; -build
-elseif ($full)					{ download_tools; setup_tools; download_windows_image; extract_windows_image; import_drivers; download_HardeningKitty; cleanup_MDT; run_MDT; build_USB_media }
+elseif ($full)					{ download_tools; setup_tools; download_windows_image; extract_windows_image; download_HardeningKitty; cleanup_MDT; run_MDT; build_USB_media }
 
 #Paramètres avancés
 elseif ($advancedDownloadTools) 		{ download_tools }
 elseif ($advancedDownloadWinImage) 		{ download_windows_image }
 elseif ($advancedDownloadHK)			{ download_HardeningKitty }
 elseif ($advancedDownloadAll) 			{ download_tools; download_windows_image; download_HardeningKitty }
-elseif ($advancedImportDriver) 			{ import_drivers }
 elseif ($advancedSetupTools) 			{ setup_tools }
 elseif ($advancedExtractWinImage) 		{ extract_windows_image }
 elseif ($advancedCleanupMDT) 			{ cleanup_MDT }
