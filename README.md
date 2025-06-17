@@ -144,7 +144,7 @@ Deux modes d'installation/usage sont donc détaillés ci-après.
 *Installe Gallus à la racine du système et l'exécute de manière nominale avec les options par défaut.*
 
 1. Sur une machine Windows, ouvrez une instance de Powershell avec des droits d'administration.
-2. (Optionnel) [Ajouter des drivers supplémentaires nécessaires à l'installation](#support-de-p%C3%A9riph%C3%A9riques-avec-pilotes-suppl%C3%A9mentaires)
+2. (Optionnel) [Ajouter des pilotes supplémentaires nécessaires à l'installation](#support-de-p%C3%A9riph%C3%A9riques-avec-pilotes-suppl%C3%A9mentaires)
 3. (Optionnel) [Ajouter des logiciels supplémentaires nécessaires à l'installation](#installation-de-logiciels-suppl%C3%A9mentaires)
 4. Exécutez cette commande dans Powershell :
 ```powershell
@@ -237,7 +237,7 @@ Voici la liste de l'ensemble des actions et sous-actions effectuées par ```.\ga
 
 * ```-make``` : Construit les fichiers d'installation et produit une ISO démarrable.
   * ```-advancedCleanupMDT``` : Supprime les fichiers résiduels d'une potentielle exécution précédente de MDT.
-  * ```-advancedRunMDT``` : Exécution de MDT avec les paramètres et les composants de Gallus pour construire les fichiers d’installation. Produit également une ISO démarrable.
+  * ```-advancedRunMDT``` : Iport optionnel des pilotes et applications suivi de l'exécution de MDT avec les paramètres et les composants de Gallus pour construire les fichiers d’installation. Produit également une ISO démarrable.
 
 * ```-flash``` : Produit d'un média d'installation USB démarrable à partir des fichiers d'installation (sur UEFI uniquement, BIOS non supporté).
 
@@ -255,7 +255,6 @@ Il existe également le paramètre supplémentaire suivant :
 ### Mode hors-ligne
 
 Le paramètre unique ```-advancedDownloadAll``` permet de ne plus nécessiter d'accès à Internet une fois exécuté. On peut donc ensuite travailler hors-ligne en enchainant les commandes suivantes :<br>
-```.\gallus.ps1 -advancedImportDriver```<br>
 ```.\gallus.ps1 -advancedSetupTools```<br>
 ```.\gallus.ps1 -advancedExtractWinImage```<br>
 ```.\gallus.ps1 -make```<br>
@@ -340,7 +339,7 @@ Vu la diversité du parc des équipements sur lesquels Microsoft Windows peut fo
 
 Le périphérique dont le support de pilotes est indispensable lors de la phase 2 (cf. [A propos du projet](#%C3%A0-propos-du-projet)) est le disque (SSD, HDD, etc.). L'installateur à besoin d'accéder au disque lors de l'installation du système Microsoft Windows pour le structurer, le formater et y déployer les fichiers du système d'exploitation, sinon l'installation sera interrompue.
 
-Un autre périphérique peut être nécessaire, non pas pendant la phase d'installation à proprement parler, mais lorsque le système démarre les premières fois, il s'agit de la carte réseau, que ce soit filaire (Ethernet) ou sans-fil (Wifi). Avoir au moins une interface réseau utilisable une fois le système déployé permet d'installer d'autres drivers et logiciels, de mettre le système à jour et plus généralement d'accéder à Internet.
+Un autre périphérique peut être nécessaire, non pas pendant la phase d'installation à proprement parler, mais lorsque le système démarre les premières fois, il s'agit de la carte réseau, que ce soit filaire (Ethernet) ou sans-fil (Wifi). Avoir au moins une interface réseau utilisable une fois le système déployé permet d'installer d'autres pilotes et logiciels, de mettre le système à jour et plus généralement d'accéder à Internet.
 
 Il est donc nécessaire dans ces cas de fournir ces pilotes supplémentaires à Gallus lors de la phase 1 (cf. [A propos du projet](#%C3%A0-propos-du-projet)).
 
@@ -370,18 +369,17 @@ C:
 
 Que ce soit le premier ou deuxième cas (ensemble de fichiers ou .cab), si possible il est mieux de séparer les pilotes réseau et stockage dans les dossiers correspondants, sinon on pourra mettre l'ensemble dans le dossier ```Storage```.
 
-Vous pouvez maintenant lancer Gallus, les drivers seront importés dans le média d'installation.
+Vous pouvez maintenant lancer Gallus, les pilotes seront intégré au média d'installation.
 
 Si vous suivez les instructions de cette section suite à une interruption de l'installation dans la sous-étape 1, voici comment éviter d'avoir à relancer complètement Gallus pour produire le nouveau média d'installation contenant les bons pilotes supplémentaires :
 
 1. On crée, si elle n'existe pas encore, la structure de dossiers documentée ci-dessus à la racine du système de fichier sur le poste de construction.
-2. On met dans les dossiers ```Storage``` et ```Network``` les drivers obtenus.
-3. On exécute la commande ```gallus.ps1 -advancedImportDriver``` pour importer les drivers dans Gallus.
+2. On met dans les dossiers ```Storage``` et ```Network``` les pilotes obtenus.
 4. On exécute la commande ```gallus.ps1 -advancedCleanupMDT``` pour nettoyer les anciens fichiers d'installation.
-5. On exécute la commande ```gallus.ps1 -advancedRunMDT``` pour éxecuter MDT de nouveau avec les drivers.
+5. On exécute la commande ```gallus.ps1 -advancedRunMDT``` pour éxecuter MDT de nouveau avec les pilotes.
 6. (Optionnel) On exécute la commande ```gallus.ps1 -flash``` pour produire un média d'installation USB démarrable.
 
-Les nouveaux médias d'installation construits contiennent maintenant les drivers.
+Les nouveaux médias d'installation construits contiennent maintenant les pilotes.
 
 On peut maintenant relancer [l'installation (Phase2)](#d%C3%A9marrage-%C3%A0-partir-du-m%C3%A9dia-dinstallation---phase-2-install).
 
