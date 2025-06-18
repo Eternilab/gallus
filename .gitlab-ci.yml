@@ -65,34 +65,45 @@ installGit:
   after_script:
     - '& "C:\Program Files\Git\cmd\git.exe" --help'
 
-verifCode:
+gitClone:
   stage: .pre
   needs: ["cleanup", "installGit"]
-  before_script:
-    - Install-Module -Name PSScriptAnalyzer -Force
+  script:
     - "& \"C:\\Program Files\\Git\\cmd\\git.exe\" clone https://github.com/Eternilab/gallus \"$GALLUS_DIR\""
     - cd "$GALLUS_DIR"
     - '& "C:\Program Files\Git\cmd\git.exe" config set advice.detachedHead false'
     - "& \"C:\\Program Files\\Git\\cmd\\git.exe\" checkout $CI_COMMIT_SHA"
+
+checkPSCode:
+  stage: .pre
+  needs: ["gitClone"]
+  before_script:
+    - Install-Module -Name PSScriptAnalyzer -Force
+    - cd "$GALLUS_DIR"
     - Set-ExecutionPolicy Bypass -Scope Process -Force
   script:
     - Invoke-ScriptAnalyzer -EnableExit -Path "$GALLUS_DIR"
-    - |
-      Get-ChildItem "$GALLUS_DIR\*.ps1" | where {
-        $contents = new-object byte[] 3
-        $stream = [System.IO.File]::OpenRead($_.FullName)
-        $stream.Read($contents, 0, 3) | Out-Null
-        $stream.Close()
-        if ($contents[0] -ne 0xEF -or $contents[1] -ne 0xBB -or $contents[2] -ne 0xBF) {
-          Write-Error "Le fichier PS1 $_.FullName ne contient plus de BOM !"
-          exit 1
-        } else {
-          exit 0
-        }
-      }
   after_script:
     - Set-ExecutionPolicy Restricted -Scope Process -Force
-    - Remove-item -recurse -force -path "$GALLUS_DIR"
+
+checkPSBOM:
+  stage: .pre
+  needs: ["gitClone"]
+  before_script:
+    - cd "$GALLUS_DIR"
+  script: |
+    Get-ChildItem "$GALLUS_DIR\*.ps1" | where {
+      $contents = new-object byte[] 3
+      $stream = [System.IO.File]::OpenRead($_.FullName)
+      $stream.Read($contents, 0, 3) | Out-Null
+      $stream.Close()
+      if ($contents[0] -ne 0xEF -or $contents[1] -ne 0xBB -or $contents[2] -ne 0xBF) {
+        Write-Error "Le fichier PS1 $_.FullName ne contient plus de BOM !"
+        exit 1
+      } else {
+        exit 0
+      }
+    }
 
 #initSansBootstrap:
 #  stage: build
@@ -122,8 +133,9 @@ verifCode:
 
 runBootstrap:
   stage: build
-  needs: ["verifCode"]
+  needs: ["checkPSCode", "checkPSBOM"]
   before_script:
+    - Remove-item -recurse -force -path "$GALLUS_DIR"
     - New-Item -ItemType Directory -Force -Path "$GALLUS_DIR"
     - cd "$GALLUS_DIR"
   script:
