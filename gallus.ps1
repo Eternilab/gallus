@@ -199,8 +199,8 @@ function run_MDT {
   # 10.1 recupération des apps
   Write-Host -ForegroundColor Green "8.5 - Import des applications dans l'environnement de fabrication (Optionnel)"
   $GALLUS_APPS_PATH="..\AppGallus"
-  Write-Host -ForegroundColor Green "8.5.1 - Ajout des applications à installer"
   if (Test-Path -PathType Container -Path $PWD\$GALLUS_APPS_PATH) {
+    Write-Host -ForegroundColor Green "8.5.1 - Ajout des applications à installer"
     foreach ($dir in $(Get-ChildItem -Directory -Path $PWD\$GALLUS_APPS_PATH)) {
       $nom = $dir.name
       $cmd = Get-Content "$PWD\$GALLUS_APPS_PATH\$nom\command.txt"
