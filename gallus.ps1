@@ -200,24 +200,28 @@ function run_MDT {
   Write-Host -ForegroundColor Green "8.5 - Import des applications dans l'environnement de fabrication (Optionnel)"
   $GALLUS_APPS_PATH="..\AppGallus"
   if (Test-Path -PathType Container -Path $PWD\$GALLUS_APPS_PATH) {
-    Write-Host -ForegroundColor Green "8.5.1 - Ajout des applications à installer"
-    foreach ($dir in $(Get-ChildItem -Directory -Path $PWD\$GALLUS_APPS_PATH)) {
-      $nom = $dir.name
-      $cmd = Get-Content "$PWD\$GALLUS_APPS_PATH\$nom\command.txt"
-      $null = Import-MDTApplication -path "DS001:\Applications" -enable "True" -Name "$nom" -ShortName "$nom" -Version "" -Publisher "" -Language "" -CommandLine "$cmd" -WorkingDirectory ".\Applications\$nom" -ApplicationSourcePath "$PWD\$GALLUS_APPS_PATH\$nom" -DestinationFolder "$nom"
+    if (Test-Path -PathType Container -Path $PWD\$GALLUS_APPS_PATH\*) {
+      Write-Host -ForegroundColor Green "8.5.1 - Ajout des applications à installer"
+      foreach ($dir in $(Get-ChildItem -Directory -Path $PWD\$GALLUS_APPS_PATH)) {
+        $nom = $dir.name
+        $cmd = Get-Content "$PWD\$GALLUS_APPS_PATH\$nom\command.txt"
+        $null = Import-MDTApplication -path "DS001:\Applications" -enable "True" -Name "$nom" -ShortName "$nom" -Version "" -Publisher "" -Language "" -CommandLine "$cmd" -WorkingDirectory ".\Applications\$nom" -ApplicationSourcePath "$PWD\$GALLUS_APPS_PATH\$nom" -DestinationFolder "$nom"
+      }
+      # 10.2 création du bundle
+      Write-Host -ForegroundColor Green "8.5.2 - Création du bundle des applications à installer"
+      $apps = foreach ($app in $(Get-ChildItem "DS001:\Applications")) {$app.guid}
+      $null = Import-MDTApplication -Path "DS001:\Applications" -enable "True" -Name "bundle" -ShortName "bundle" -Bundle
+      Set-ItemProperty -Path "DS001:\Applications\bundle" -Name Dependency -Value @($apps)
+      # 10.3 import du bundle dans le ts
+      Write-Host -ForegroundColor Green "8.5.3 - Mise à jour du Task Sequence avec le bundle d'applications à installer"
+      $BundleGUID = Get-ItemPropertyValue "DS001:\Applications\bundle" guid
+      $TSPath = "$PWD\DSGallus\Control\GALLUS\ts.xml"
+      $TSXML = [xml](Get-Content $TSPath)
+      $TSXML.sequence.group | Where-Object {$_.Name -eq "State Restore"} | ForEach-Object {$_.step} | Where-Object {$_.Name -eq "Install Applications"} | ForEach-Object {$_.defaultVarList.variable} | Where-Object {$_.name -eq "ApplicationGUID"} | ForEach-Object {$_.InnerText = "$BundleGUID"}
+      $TSXML.Save("$PWD\DSGallus\Control\GALLUS\ts.xml")
+    } else {a
+      Write-Host -ForegroundColor Green "8.5.0 - Pas de sous-dossier dans $PWD\$GALLUS_APPS_PATH"
     }
-    # 10.2 création du bundle
-    Write-Host -ForegroundColor Green "8.5.2 - Création du bundle des applications à installer"
-    $apps = foreach ($app in $(Get-ChildItem "DS001:\Applications")) {$app.guid}
-    $null = Import-MDTApplication -Path "DS001:\Applications" -enable "True" -Name "bundle" -ShortName "bundle" -Bundle
-    Set-ItemProperty -Path "DS001:\Applications\bundle" -Name Dependency -Value @($apps)
-    # 10.3 import du bundle dans le ts
-    Write-Host -ForegroundColor Green "8.5.3 - Mise à jour du Task Sequence avec le bundle d'applications à installer"
-    $BundleGUID = Get-ItemPropertyValue "DS001:\Applications\bundle" guid
-    $TSPath = "$PWD\DSGallus\Control\GALLUS\ts.xml"
-    $TSXML = [xml](Get-Content $TSPath)
-    $TSXML.sequence.group | Where-Object {$_.Name -eq "State Restore"} | ForEach-Object {$_.step} | Where-Object {$_.Name -eq "Install Applications"} | ForEach-Object {$_.defaultVarList.variable} | Where-Object {$_.name -eq "ApplicationGUID"} | ForEach-Object {$_.InnerText = "$BundleGUID"}
-    $TSXML.Save("$PWD\DSGallus\Control\GALLUS\ts.xml")
   } else {
     Write-Host -ForegroundColor Green "8.5.0 - Pas de dossier $PWD\$GALLUS_APPS_PATH trouvé"
   }
