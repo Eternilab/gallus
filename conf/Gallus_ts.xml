@@ -276,12 +276,6 @@
     <step name="Post-Apply Cleanup" disable="false" continueOnError="false" successCodeList="0 3010" description="" startIn="">
       <action>cscript.exe "%SCRIPTROOT%\LTIApply.wsf" /post</action>
     </step>
-    <step type="BDD_RecoverDomainJoin" name="Recover From Domain " description="" disable="false" continueOnError="false" runIn="WinPEandFullOS" successCodeList="0 3010">
-      <defaultVarList>
-        <variable name="DomainErrorRecovery" property="DomainErrorRecovery">Auto</variable>
-      </defaultVarList>
-      <action>cscript.exe "%SCRIPTROOT%\ZTIDomainJoin.wsf" </action>
-    </step>
     <step name="Tattoo" disable="false" continueOnError="true" successCodeList="0 3010" description="" startIn="">
       <action>cscript.exe "%SCRIPTROOT%\ZTITatoo.wsf"</action>
     </step>
