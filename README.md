@@ -89,7 +89,7 @@ Lors de l'étape finale de l'installation en phase 2, des rapports de conformit�
 
 Le projet OpenSource [HardeningKitty](https://github.com/scipag/HardeningKitty) est utilisé pour appliquer et vérifier la sécurisation du poste déployé grâce au média d'installation construit par Gallus.
 
-L'automatisation utilisée dans ce projet utilise la technologie [MDT](https://learn.microsoft.com/en-us/mem/configmgr/mdt/) de Microsoft instrumentée grâce à [Powershell](https://learn.microsoft.com/en-us/powershell/scripting/overview).
+L'automatisation utilisée dans ce projet utilise la technologie [MDT](https://learn.microsoft.com/en-us/intune/configmgr/mdt/) de Microsoft en mode [LTI (Lite Touch Installation)](https://learn.microsoft.com/en-us/intune/configmgr/mdt/use-the-mdt#ChoosingLTIZTIorUDIDeployments) instrumentée grâce à [Powershell](https://learn.microsoft.com/en-us/powershell/scripting/overview).
 
 ### Clause de non-responsabilité
 
@@ -420,11 +420,17 @@ Comme spécifié dans la section [Problèmes d'accès au disque](#probl%C3%A8mes
 
 ```X:\Windows\temp\SMSTSLog\smsts.log```.
 
-Néanmoins l'accès à ce journal de cette manière n'est possible qu'en cas de problème entrainant l'interruption de l’exécution durant la première phase d’installation. Il sera accessible autrement une fois le système démarré, comme expliqué ci-après.
+Néanmoins l'accès à ce journal de cette manière n'est possible qu'en cas de problème entrainant l'interruption de l’exécution durant la première sous-étape de la phase 2.
 
-Voici comment accéder aux journaux d'installation lorsque le système est installé, ou directement sur le disque de la machine, dans le cas d'un problème lors des autres sous-étapes d'installation.
+Vous trouverez les journaux d'installation pour les phases suivantes ici durant l'installation :
 
-FIXME
+```C:\MININT\SMSOSD\OSDLogs```
+
+et ici une fois l'execution de MDT terminée :
+
+```C:\TEMP\DeploymentLogs```
+
+Pour plus de détails vous pouver vous référer à la [documentation officielle](https://learn.microsoft.com/en-us/troubleshoot/mem/configmgr/mdt/troubleshooting-reference#mdt-logs) (pour rappel, Gallus procède à un deploiement de type LTI).
 
 <p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
