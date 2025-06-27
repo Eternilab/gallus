@@ -21,6 +21,7 @@ $parts = @(
 "conf/CustomSettings.ini",
 "conf/Gallus_ts.xml",
 "scripts/AuditingScript.ps1",
+"scripts/ChangeDefaultUsersNames.ps1",
 "scripts/CopyAuditingFiles.ps1",
 "scripts/CopyGallusFiles.wsf",
 "scripts/Eternilab.png",
