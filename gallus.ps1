@@ -165,7 +165,7 @@ function run_MDT {
   Rename-Item "DS001:\Operating Systems\Win11\Windows 11 Enterprise N in Win11x64_EntN_en-US_23H2 install.wim" "Win11x64_EntN_en-US_23H2 install.wim"
   # Drivers
   Write-Host -ForegroundColor Green "7.3 - Import de drivers dans l'environnement de fabrication (Optionnel)"
-  $GALLUS_DRIVERS_PATH="..\drivers"
+  $GALLUS_DRIVERS_PATH="..\gallus_drivers"
   if (Test-Path -PathType Container -Path $PWD\$GALLUS_DRIVERS_PATH\) {
     if (Test-Path -PathType Container -Path $PWD\$GALLUS_DRIVERS_PATH\Network\) {
       Write-Host -ForegroundColor Green "7.3.1 - Import de drivers réseau"
@@ -195,7 +195,7 @@ function run_MDT {
   $null = Import-MDTTaskSequence -Path "DS001:\Task Sequences\Gallus" -Name "Gallus Defaut Task Sequence" -Template "$PWD\conf\Gallus_ts.xml" -Comments "" -ID "GALLUS" -Version "1.0" -OperatingSystemPath "DS001:\Operating Systems\Win11\Win11x64_EntN_en-US_23H2 install.wim"
   # 10.1 recupération des apps
   Write-Host -ForegroundColor Green "7.5 - Import des applications dans l'environnement de fabrication (Optionnel)"
-  $GALLUS_APPS_PATH="..\AppGallus"
+  $GALLUS_APPS_PATH="..\gallus_apps"
   if (Test-Path -PathType Container -Path $PWD\$GALLUS_APPS_PATH) {
     if (Test-Path -PathType Container -Path $PWD\$GALLUS_APPS_PATH\*) {
       Write-Host -ForegroundColor Green "7.5.1 - Ajout des applications à installer"

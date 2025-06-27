@@ -358,23 +358,33 @@ Une fois l'ensemble de pilotes récupérés (ou uniquement les pilotes nécessai
 * Un ensemble de fichiers avec extension .sys et .inf avec éventuellement des .cat (éventuellement des .dll et exe)
 * Un ou plusieurs fichiers .cab, contenant l'équivalent du premier point
 
-Le but est de mettre ces fichiers dans l’arborescence suivante à la racine du système de fichier du disque C: :
+On devra ensuite mettre ces fichiers dans des répertoires spécifiques pour que Gallus les prenne en compte.
+
+Au même niveau que le répertoire ```gallus``` (idéalement à la racine d'un volume, voir [Prérequis](#pr%C3%A9requis)) on créer un dossier ```gallus_drivers``` dans lequel on créer les sous-dossiers ```network``` et ```storage```.
+
+On obtient donc l’arborescence suivante :
 ```
 C:
-├──Drivers
-│  ├──Network
-│  └──Storage
-└──Gallus
+├──gallus
+└──gallus_drivers
+   ├──network
+   └──storage
 ```
 
-Que ce soit le premier ou deuxième cas (ensemble de fichiers ou .cab), si possible il est mieux de séparer les pilotes réseau et stockage dans les dossiers correspondants, sinon on pourra mettre l'ensemble dans le dossier ```Storage```.
+On transfère maintenant les fichiers de drivers dans ces dossiers.
+
+Quelque soit le format des drivers (ensemble de fichiers ou .cab), si possible il est mieux de séparer les pilotes réseau et stockage dans les dossiers correspondants.
+
+Si vous souhaitez ajouter également des drivers supplémentaires pour d'autres périphériques, vous pouvez les mettres dans un de ces deux dossiers.
+
+Il faut noter que les pilotes dans ```storage``` seront mis à disposition du système d'installation (WinPE) et intégrés au système installé, alors que les drivers présents dans ```network``` seront uniquement intégrés au système installé.
 
 Vous pouvez maintenant lancer Gallus, les pilotes seront intégré au média d'installation.
 
 Si vous suivez les instructions de cette section suite à une interruption de l'installation dans la sous-étape 1, voici comment éviter d'avoir à relancer complètement Gallus pour produire le nouveau média d'installation contenant les bons pilotes supplémentaires :
 
 1. On crée, si elle n'existe pas encore, la structure de dossiers documentée ci-dessus à la racine du système de fichier sur le poste de construction.
-2. On met dans les dossiers ```Storage``` et ```Network``` les pilotes obtenus.
+2. On met dans les dossiers ```storage``` et ```network``` les pilotes obtenus.
 4. On exécute la commande ```gallus.ps1 -advancedCleanupMDT``` pour nettoyer les anciens fichiers d'installation.
 5. On exécute la commande ```gallus.ps1 -advancedRunMDT``` pour éxecuter MDT de nouveau avec les pilotes.
 6. (Optionnel) On exécute la commande ```gallus.ps1 -flash``` pour produire un média d'installation USB démarrable.
@@ -387,30 +397,30 @@ On peut maintenant relancer [l'installation (Phase2)](#d%C3%A9marrage-%C3%A0-par
 
 # Installation de logiciels supplémentaires
 
-Pour ajouter des applications à votre installateur Gallus, vous devez créer un dossier AppGallus à la racine de votre ordinateur.
+Pour ajouter des applications à votre installateur Gallus, vous devez créer un dossier ```gallus_apps``` à la racine de votre ordinateur.
 
-Dans le dossier AppGallus vous devez créer un sous-dossier pour chaque logiciel que vous voulez ajouté (le nom du sous-dossier n'a pas d'importance mais il est conseillé de mettre le nom du logiciel à installer).
+Dans le dossier ```gallus_apps``` vous devez créer un sous-dossier pour chaque logiciel que vous voulez ajouté (le nom du sous-dossier n'a pas d'importance mais il est conseillé de mettre le nom du logiciel à installer).
 
 Dans ce second dossier vous devez mettre :
 
 1. L'installateur de votre logiciel (Par exemple pour Notepad++ : `npp.8.7.9.Installer.x64.exe`)
-2. Un fichier command.txt dans lequel vous devez écrire la commande d'installation silencieuse de votre logiciel (Vous pouvez chercher "[nom_du_logiciel] installation silencieuse" sur vote moteur de recherche préféré pour trouver les paramètres d'installation silencieuse.
-Attention, le script en question sera executé par PowerShell.
-)
+2. Un fichier command.txt dans lequel vous devez écrire la commande d'installation silencieuse de votre logiciel.
 
-Votre dossier AppGallus devrait donc ressembler à celà :
+Vous pouvez chercher "[nom_du_logiciel] installation silencieuse" sur vote moteur de recherche préféré pour trouver les paramètres d'installation silencieuse.
+
+L'arborescence du volume ou sera créé votre dossier ```gallus_apps``` devra donc ressembler à celà :
 
 ```
 C:
-├──AppGallus
-│  ├──Logiciel_1
+├──gallus
+├──gallus_apps
+│  ├──logiciel_1
 │  │  ├──installateur.exe
 │  │  └──command.txt
 │  ├──...
-│  ├──Logiciel_n
-│  └──Logiciel_n+1
-├──Drivers
-└──Gallus
+│  ├──logiciel_n
+│  └──logiciel_n+1
+└──gallus_drivers
 ```
 <p align="right">(<a href="#haut-readme">retour au début</a>)</p>
 
