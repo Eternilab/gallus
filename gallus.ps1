@@ -201,6 +201,10 @@ function run_MDT {
       Write-Host -ForegroundColor Green "7.5.1 - Ajout des applications à installer"
       foreach ($dir in $(Get-ChildItem -Directory -Path $PWD\$GALLUS_APPS_PATH)) {
         $nom = $dir.name
+	if (-not (Test-Path -PathType Leaf -Path $PWD\$GALLUS_APPS_PATH\$nom\command.txt)) {
+          Write-Error "Le fichier $PWD\$GALLUS_APPS_PATH\$nom\command.txt n'existe pas !"
+	  exit 1
+	}
         $cmd = Get-Content "$PWD\$GALLUS_APPS_PATH\$nom\command.txt"
         $null = Import-MDTApplication -path "DS001:\Applications" -enable "True" -Name "$nom" -ShortName "$nom" -Version "" -Publisher "" -Language "" -CommandLine "$cmd" -WorkingDirectory ".\Applications\$nom" -ApplicationSourcePath "$PWD\$GALLUS_APPS_PATH\$nom" -DestinationFolder "$nom"
       }
